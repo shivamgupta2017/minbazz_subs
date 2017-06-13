@@ -159,7 +159,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     })
     .state('app.step_1', {
-      url: '/step_1/:id/:unit_id/:unit/:weight/:is_subs',
+      url: '/step_1/:id/:unit_id/:unit/:weight/:is_subs/:is_package',
       views: {
         'menuContent': {
           templateUrl: 'templates/step_1.html',

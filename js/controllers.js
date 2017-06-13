@@ -1133,10 +1133,10 @@ Maestro.$getCategoryProducts($stateParams.id).then(function(res){
 	$pinroUiService.hideLoading();
 });
 
-$scope.subscribeProducts=function(id,unit_id,unit,weight){
+$scope.subscribeProducts=function(id,unit_id,unit,weight)
+{
 
-	alert('subscribeProducts');
-	$state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true});
+	$state.go('app.step_1',{id: id, unit: unit, unit_id: unit_id, weight: weight, is_subs: true, is_package: false});
 
 }
 
@@ -1181,6 +1181,10 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 	$scope.is_subs=$stateParams.is_subs;
 //	alert($scope.is_subs);
 //	alert('is_subs');
+  $scope.is_package=$stateParams.is_package;
+
+
+
 	$scope.selectSubscriptionType={};
 	$scope.subobject={
 		cust_id: AuthService.id(),
@@ -1232,7 +1236,7 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 		monthList: monthList,
       		callback: function (dates) {  //Mandatory
 			if(dates!=''){
-        		    retSelectedDates(dates);
+          retSelectedDates(dates);
 			    $scope.openTimePicker();
 			    $scope.showNextButton=false;
 			}
@@ -1262,27 +1266,155 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 
 
 /*post address */
-     $scope.addAddress = function(){
-			var postAdd={
-				"user_id":470,
-				"address":'dhoom colony',
-				"apartment":'rihi',
-				"zip":'452016',
-				"mobno":'9798989898'
+  $scope.check_zip_avail = function(){
+			 
+        $scope.new_address={};
+        var myPopup = $ionicPopup.show({
+        template: '<label>zip:<input type="text" ng-model="new_address.zip" required></label>',
+        title: 'Enter zip code',
+        subTitle: '',
+        scope: $scope,
+        buttons: [
+              { text: 'Cancel' },
+              {
+                text: '<b>Submit</b>',
+                type: 'button-dark',
+                onTap: function(e) {
 
-			};
-			$pinroUiService.showLoading();
-			Maestro.$postAddresses(postAdd).then(function(res){
-				//$scope.Addresses=res.data.response_data;
-				Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
-					$scope.Addresses=res.data.response_data;
-					$pinroUiService.hideLoading();
-				});
-			});
+                  
+                  if (!$scope.new_address.zip)
+                  {
+                          e.preventDefault();
+                  } else {
+                        return $scope.new_address;
+                    }
+                }
+        }           
+          ]
+      });
+    myPopup.then(function(res) 
+    {
+      $scope.zipa={};
+      $scope.zipa.zip=res.zip;
+      
+
+      $dataService.$checkZip($scope.zipa).then(function (res) 
+      {
+
+        if(res.data.response.status==1)
+        {
+
+          addAddress(res.data.response_data[0].postal_code);
+
+        }
+        else 
+        {
+          alert('sorry! our service is not available ');
+          alert('shivam gupta');
+        }
+
+      }, function (err) 
+      { 
+        
+        console.log(err);
+      
+      });
+
+
+      
+
+            
+    });
+
+      //alert('my popup over');
+      
+			
 	}
 /*post address end*/
 /***************************************************************************************************** ADDRESS END *********************/
 
+var addAddress=function(selected_zip)
+{
+
+  $scope.new_address={
+    'zip':selected_zip
+  }
+
+  var myPopup = $ionicPopup.show({
+        template: '<label>Address:<input type="text" ng-model="new_address.address" required></label><label>Street:<input type="text" ng-model="new_address.apartment" required></label><label>Contact no:<input type="text" ng-model="new_address.mobno" required></label>',
+        title: 'Enter Address',
+        subTitle: '',
+        scope: $scope,
+        buttons: [
+              { text: 'Cancel' },
+              {
+                text: '<b>Submit</b>',
+                type: 'button-dark',
+                onTap: function(e) {
+
+                  
+                  if ((!$scope.new_address.address)||(!$scope.new_address.apartment)||(!$scope.new_address.mobno))
+                  {
+                          e.preventDefault();
+                  } 
+                    else 
+                  { 
+                        return $scope.new_address;
+                  }
+                }
+        }           
+          ]
+      });
+
+    myPopup.then(function(res) 
+    { 
+       
+
+       
+        $scope.new_address.user_id = AuthService.id();
+       /* $scope.new_address.address = res.address;
+        $scope.new_address.apartment = res.street;
+        $scope.new_address.mobno = res.mobno;
+*/
+      
+
+      alert(JSON.stringify($scope.new_address));
+
+      $pinroUiService.showLoading();
+
+
+        Maestro.$postAddresses($scope.new_address).then(function(res){
+        
+//          alert('lassan');
+        if(res.data.response.status==1)
+        {
+  //        alert('lavda');
+          Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
+          $scope.Addresses=res.data.response_data;
+          });
+          $pinroUiService.hideLoading();
+
+
+        }
+      }, function (err) 
+      { 
+        console.log(err);
+      });
+
+
+      
+
+            
+    });
+        
+    
+
+
+
+  
+        
+          
+}
 
 
 
@@ -1367,24 +1499,40 @@ $scope.showPopup = function() {
 /*******************************open time picker************************************/
 $scope.openTimePicker=function(){
 	
+  
 
 	var ipObj1 = {
-    		callback: function (val) {  
-			var time="";    //Mandatory
+    		callback: function (val) 
+        {  
+
+
+
+           // alert('val,: '+val);
+
+			       var time="";    //Mandatory
       			 if (typeof (val) === 'undefined') {
         			console.log('Time not selected');
-      			} else {
-				alert('time ho gaya');
-        			var selectedTime = new Date(val * 1000);
+              
+      			} 
+            else 
+            {
+				    //alert('time ho gaya');
+        		var selectedTime = new Date(val * 1000);
         			if(selectedTime.getUTCHours()<10)
-					time=time+'0';
-				time=time+selectedTime.getUTCHours()+':';
-				if(selectedTime.getUTCMinutes()<10)
-					time=time+'0';
-				time=time+selectedTime.getUTCMinutes();
-				$scope.subobject.time_slot=time;
-				alert(JSON.stringify($scope.subobject));
-			}
+					     time=time+'0';
+				       time=time+selectedTime.getUTCHours()+':';
+				    if(selectedTime.getUTCMinutes()<10)
+				      	time=time+'0';
+				        time=time+selectedTime.getUTCMinutes();
+				        $scope.subobject.time_slot=time;
+				
+        alert('shivam gupta '+JSON.stringify($scope.subobject));
+        
+        
+
+
+
+    	}
     		},
     		inputTime: 68400,   //Optional
     		format: 12,         //Optional
@@ -1394,6 +1542,7 @@ $scope.openTimePicker=function(){
 	
 	
  	ionicTimePicker.openTimePicker(ipObj1);
+
 }
 
 /******************************* open time picker end **********************************/
@@ -3441,7 +3590,8 @@ $scope.$on("modal.shown", function(event, data){
 		else{
 		 alert($scope.zipcheck);
 				$scope.zipa.zip=$scope.zipcheck
-				$dataService.$checkZip($scope.zipa).then(function (res) {
+				$dataService.$checkZip($scope.zipa).then(function (res) 
+        {
 					if(res.data.response.status==1){
         					alert("success"+res.data.response_data[0].postal_code);
 					}
@@ -3456,7 +3606,7 @@ $scope.$on("modal.shown", function(event, data){
    						});
 					}
       				}, function (err) {
-					alert('err'+JSON.stringify(err));
+			//alert('err'+JSON.stringify(err));
         				console.log(err)
       				})
 		}
