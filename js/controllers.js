@@ -1236,8 +1236,15 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 		monthList: monthList,
       		callback: function (dates) {  //Mandatory
 			if(dates!=''){
-          retSelectedDates(dates);
-			    $scope.openTimePicker();
+//          alert('dates, '+dates);
+          
+          $scope.new_dates=retSelectedDates(dates);
+			     
+          // alert($scope.new_dates);
+          //alert($scope.new_dates);
+
+          $scope.openTimePicker($scope.new_dates);
+
 			    $scope.showNextButton=false;
 			}
       		}
@@ -1249,8 +1256,11 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 /*get customer address*/
 	$pinroUiService.showLoading();
 	Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
-		$scope.Addresses=res.data.response_data;
-		$pinroUiService.hideLoading();
+		//bhyankar
+
+    $scope.Addresses=res.data.response_data;
+//		alert('$scope.Address: '+JSON.stringify($scope.Addresses));
+    $pinroUiService.hideLoading();
 		//angular.element('#multidateopen').triggerHandler('click');
 	});
 /*get add end */
@@ -1258,8 +1268,9 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 
 
 /* select address  */
-	$scope.select_address=function(){
-		$scope.showPopup();
+	$scope.select_address=function(id){
+
+		$scope.showPopup(id);
 	}
 /*select address */
 
@@ -1378,7 +1389,7 @@ var addAddress=function(selected_zip)
 */
       
 
-      alert(JSON.stringify($scope.new_address));
+    //  alert(JSON.stringify($scope.new_address));
 
       $pinroUiService.showLoading();
 
@@ -1422,10 +1433,17 @@ var addAddress=function(selected_zip)
 /****************************************/
 var retSelectedDates = function (dates) {
       		//$scope.selectedDates.length = 0;
+          //alert('dates: '+dates+'length: '+dates.length);
+
       		for (var i = 0; i < dates.length; i++) {
-			var ddd=angular.copy(dates[i]);
+		      	var ddd=angular.copy(dates[i]);
+
         		$scope.selectedDates.push(ddd.getFullYear()+'-'+ddd.getMonth()+'-'+ddd.getDate());
       		}
+
+          return $scope.selectedDates;
+          //alert('selectedDates'+$scope.selectedDates);
+
     	};
 /***************************************/
 
@@ -1433,9 +1451,9 @@ var retSelectedDates = function (dates) {
 
 
 /********************popup for quantity**************/
-$scope.showPopup = function() {
+$scope.showPopup = function(selected_address_id) {
   	$scope.data = {};
-  	alert('show popup');
+  //	alert('show popup');
   // An elaborate, custom popup
   	var myPopup = $ionicPopup.show({
     		template: '<div class="qtyleft"></div><input class="qtycenter" type="text" ng-model="data.pin"> <div class="qtyright"></div>',
@@ -1448,12 +1466,14 @@ $scope.showPopup = function() {
         				text: '<b>Submit</b>',
         				type: 'button-dark',
         				onTap: function(e) {
-         					if (!$scope.data.pin) {
-            //don't allow the user to close unless he enters wifi password
+         					if (!$scope.data.pin) 
+                  {
             							e.preventDefault();
-          					} else {
+          				} 
+                  else 
+                  {
             						return $scope.data.pin;
-          					}
+          				}
         				}
 				}      			
     			]
@@ -1463,7 +1483,8 @@ $scope.showPopup = function() {
  		myPopup.then(function(res) {
 			if(isNaN(res)==false){
 				$scope.subobject.quantity=res;
-				alert(res);
+        $scope.subobject.add_id=selected_address_id;
+//fuckers
 			}
 			
   		});
@@ -1497,10 +1518,10 @@ $scope.showPopup = function() {
 
 
 /*******************************open time picker************************************/
-$scope.openTimePicker=function(){
+$scope.openTimePicker=function(dates){
 	
-  
 
+//shivam gupta 12345
 	var ipObj1 = {
     		callback: function (val) 
         {  
@@ -1512,12 +1533,15 @@ $scope.openTimePicker=function(){
 			       var time="";    //Mandatory
       			 if (typeof (val) === 'undefined') {
         			console.log('Time not selected');
-              
+              event.preventDefault();
+
       			} 
             else 
             {
-				    //alert('time ho gaya');
-        		var selectedTime = new Date(val * 1000);
+				    //alert('date aa gaayi');
+        	//	alert('dates :'+dates);
+
+            var selectedTime = new Date(val * 1000);
         			if(selectedTime.getUTCHours()<10)
 					     time=time+'0';
 				       time=time+selectedTime.getUTCHours()+':';
@@ -1525,10 +1549,64 @@ $scope.openTimePicker=function(){
 				      	time=time+'0';
 				        time=time+selectedTime.getUTCMinutes();
 				        $scope.subobject.time_slot=time;
-				
-        alert('shivam gupta '+JSON.stringify($scope.subobject));
-        
-        
+				        $scope.subobject.start_date=dates[0];
+                $scope.subobject.payment_type='postpaid';
+                $scope.subobject.payment_status='Successfull';
+                $scope.subobject.payment_mode='online';
+                $scope.subobject.current_status=1;
+                $scope.subobject.final_price='';
+
+
+
+
+//            alert(JSON.stringify($scope.subobject));
+
+        if($scope.subobject)
+        {
+           
+           var confirmPopup = $ionicPopup.confirm({
+             title: 'Confirmation',
+             template: 'Confirm Us by pressing yes button?'
+           });
+
+             confirmPopup.then(function(res) {
+             if(res) 
+             {
+
+              $pinroUiService.showLoading();
+              Maestro.$add_new_subscription($scope.subobject).then(function(res)
+              { 
+
+                alert('shivam : '+JSON.stringify(res));
+
+                $pinroUiService.hideLoading();
+
+               /*if(res.data.response.status==1)
+                {
+                Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
+                $scope.Addresses=res.data.response_data;
+                });
+
+                
+                }*/
+
+                }, function (err) 
+                { 
+                });
+
+
+             } 
+             else 
+             {
+
+                alert('mat kr confirm bhai jo krna h kr');
+             }
+           });
+         
+
+
+        }
+
 
 
 

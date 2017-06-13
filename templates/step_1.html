@@ -25,7 +25,7 @@
 	</div>
   
 <div style="width:100%; diplay:block; height:150px; overflow-y:auto">
-<ion-radio  style="margin:0px; text-align:left;" ng-repeat="add in Addresses" ng-model="subobject.delivery_add_id" ng-value="add.id" ng-change="select_address()"><span style="line-height:27px;margin-left:5px; font-size:12px">{{add.address}}{{", "+add.apartment}}<br>{{add.zip}}<br>{{add.mobno}}</span></ion-radio>
+<ion-radio  style="margin:0px; text-align:left;" ng-repeat="add in Addresses" ng-model="subobject.delivery_add_id" ng-value="add.id" ng-change="select_address(add.id)"><span style="line-height:27px;margin-left:5px; font-size:12px">{{add.address}}{{", "+add.apartment}}<br>{{add.zip}}<br>{{add.mobno}}</span></ion-radio>
 </div>
 </div>
 

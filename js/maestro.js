@@ -67,6 +67,18 @@ return {
 
 			});
             },
+
+            $add_new_subscription : function (data) { //get categories products by category id       
+            //alert('dffd');
+                    return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/post_cust_subs',
+                 method:'GET',
+                 params: data
+
+            });
+            },
+
+
             $postAddresses : function (data) { //get categories products by category id       
 			//alert('dffd');
              		return $http({ 
