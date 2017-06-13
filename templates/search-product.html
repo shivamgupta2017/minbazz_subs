@@ -1,0 +1,50 @@
+<ion-view  view-title="Search" class="signin">
+<div class="bar bar-header pinro-header header-shadow">
+ <button class="button button-icon icon ion-ios-arrow-back" ng-click="goback()"></button>
+  <div class="h1 title">Search</div>
+</div>
+	<form ng-submit="searchProducts()">
+	<div class="bar bar-subheader item-input-inset subheader-with-input" style="border-bottom:1px solid #ddd">
+  		<label class="item-input-wrapper"> 
+    			<input type="search" placeholder="Type here" ng-model="search1">
+  		</label>
+  		<button class="button button-icon" ng-click="searchProducts()">
+    			<!--<i class="icon ion-ios-search placeholder-icon"></i>-->
+    			<img src="img/icons/search_icon.svg">
+  		</button>
+	</div>
+	</form>
+
+<div ng-include="'templates/common/loading.html'" ng-show="loading"></div>
+
+	<ion-content class="has-subheader"  style="background-color:#f4f4f4">
+<div style="margin-top:50px" ng-if="isError">{{searchErorr}}</div>
+<div class="product-list">
+			<ul>
+				<!--<li class="list-item" ng-repeat="item in productList | orderBy:filterBy | filter:search" ng-click="goToProduct(123)">
+					<div class="product-image" style="background: url('{{item.imgUrl}}'); background-size:contain; background-repeat: no-repeat; height: 200px;">
+					</div>
+					<h5>{{item.name}}</h5>
+					<small class="category-name">{{item.category}}</small>
+					<small class="price">&#8377;{{item.price}}</small>
+				</li>-->
+        <li class="list-item" ng-repeat="item in productList | orderBy:filterBy | filter:search" ng-click="goToProduct(item.id)" style="border-right:1px solid #ddd; border-bottom:1px solid #ddd; height:60vw; background-color:white;">
+					<div style="height:50%; background: url('{{item.images[0].src}}'); background-size:contain; background-position:center; background-repeat:no-repeat">
+					</div>
+				<h6 ng-if="item.name.length>65" style="font-size:3vw; line-height:4vw; min-height:12vw">{{item.name | limitTo:65}} . . .</h6>
+				<h6 ng-if="item.name.length<=65" style="font-size:3vw; line-height:4vw; min-height:12vw;">{{item.name}}</h6>
+					<small class="category-name">{{item.categories[0].name}}</small>
+					<span ng-if="item.sale_price!=''">
+					<span class="price" style="text-decoration: line-through; font-size:3vw; font-weight:bold; color:red"> 
+						<span style="font-weight:normal; color:black;">&#8377;{{item.regular_price}}&nbsp;&nbsp;</span>
+					</span>
+					</span>
+					<span class="price">&#8377;{{item.price}}</span>
+				</li>
+			</ul>
+		</div>
+        <ion-infinite-scroll on-infinite="loadMoreProducts()" spinner="ios" distance="10%" ng-if="more"></ion-infinite-scroll>
+	<!--<button  ng-show="buttonShow" class="button button-dark col button-small" style="padding:0px; margin:0 auto;" ng-click="loadMoreProducts()"><span ng-show="textShow"> {{loadText}} </span><ion-spinner ng-show='isLoading' style="fill:#fff; stroke:#fff;" icon="dots" ></ion-spinner> </button>-->
+
+</ion-content>
+</ion-view>

@@ -1,0 +1,63 @@
+<ion-view view-title="Editorial" hide-back-button="false">
+
+	<ion-nav-title style="margin-left:0px;" >  
+		<img class="home-logo" src="img/l5.png"  style="width:30vw; vertical-align: middle; margin: 0 auto;">
+	</ion-nav-title>
+
+
+<!----------------------------------------------------------------------------------------------------------------->
+	<!--<div class="bar bar-subheader item-input-inset subheader-with-input" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px; height:40px" id="searchbar">
+  		<label class="item-input-wrapper" style="background-color:white; z-index:13"> 
+    			<input type="search" placeholder="Type here" ng-model="search1" style="margin-top:10px">
+  		</label>
+  		<img src="img/icons/search_icon.svg">
+	</div> -->
+<!------------------------------------------------------------------------------------------------------------------->
+	<ion-content  style="background-color:#f4f4f4"  id="contentsearch" style="background-image:url(img/back.jpg)"> <!--on-scroll="getScrollPosition()"-->
+
+        <!--<ion-refresher on-refresh="doRefresh()">
+        </ion-refresher>-->
+
+
+
+<!-------------------------------------------------------------- Package slider start ----------------------------------------------------------->
+	<ion-slides  options="{initialSlide: 0, loop: true, autoplay:3000}" slider="data.slider" pager="false" style="margin:0 auto; height:40vw; width:95vw; margin-top:10px;">
+	<ion-slide-page ng-repeat="package in packages" ng-click="openCategory(package.id)"> 
+		<div  style="height:100%; width:100%; background-image:url('https://www.minbazaar.com/subs/admin/uploads/{{package.image}}'); background-size:auto 100%; background-position:center; background-size:cover"><h1 style="position:relative; color:white;">{{package.package_name}}</h1></div>
+	 
+	</ion-slide-page>
+	</ion-slides>
+<!--------------------------------------------------------------- Package slider end ------------------------------------------------------------>
+
+
+
+<!---------------------------------------------------------Categories ------------------------------------------------------------>
+<div style="height:100%; width:100vw; background-image:url(img/back.jpg); margin-bottom:100px">
+     <div ng-repeat="category in categoriess" style="display:inline-block; width:49vw; height:60vw;" ng-click="openCategory(category.id)">
+		
+		<div style="height:80%; background-image:url(https://www.minbazaar.com/subs/admin/uploads/{{category.image}}); background-size:contain">
+		</div>
+		<div style="height:20%">
+			{{category.category_name}}
+		</div>
+     </div>
+
+</div>
+<!--------------------------------------------------------------categoriess end ---------------------------------------------------->
+
+
+
+
+
+
+            <div class="footer-button  animated fadeInUpBig" style="text-align:center; margin-top:10px; padding:0px; border-top:1px solid #ddd;">
+		<div> Enjoying the MINBazaar Experience ?</div>
+		<div class="row">
+             		<span style="border-right:1px solid #ddd;border-top:1px solid #ddd;" class="col"  ng-click="rateUs()">Yes</span>
+			<span style="border-left:1px solid #ddd;border-top:1px solid #ddd;" class="col"  ui-sref="feedback">No</span>
+		</div>
+	
+            </div>
+
+	</ion-content>
+</ion-view>
