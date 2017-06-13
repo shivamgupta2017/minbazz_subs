@@ -916,6 +916,7 @@ $scope.allImages = [];
   .controller('MainCtrl', function ($scope,$http,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, AuthService) {
 	$scope.Categories=[];
 
+
 	
 
  	$scope.$on('$stateChangeSuccess', function() {
@@ -935,6 +936,7 @@ $scope.allImages = [];
 
 /*********************************************************get Categoriess**********************************************************************/
 	Maestro.$getCategories().then(function(res){
+
 		$scope.categoriess=res.data.response_data;
 		//alert(JSON.stringify($scope.categoriess));
 	});
@@ -1087,8 +1089,9 @@ $scope.checkZipCode= function(data){
 /******************************************************************************************************************************************/
   .controller('packageCtrl', function ($scope,$http, $stateParams, $ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate) {
 	Maestro.$getPackageProducts($stateParams.id).then(function(res){
+	//	alert($stateParams.id);		
 		$scope.packages=res.data.response_data;
-		//alert(JSON.stringify($scope.packages));
+ 		//alert(JSON.stringify($scope.packages));
 	});
 	//alert('package id : '+$stateParams.id);
 	
@@ -1131,8 +1134,10 @@ Maestro.$getCategoryProducts($stateParams.id).then(function(res){
 });
 
 $scope.subscribeProducts=function(id,unit_id,unit,weight){
+
 	alert('subscribeProducts');
 	$state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true});
+
 }
 
 $scope.addToCart = function (selected,id,price,unit,weight) {
@@ -1174,7 +1179,8 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 .controller('step_1Controller', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 	//alert($stateParams.id+' '+$stateParams.unit+' '+$stateParams.weight);
 	$scope.is_subs=$stateParams.is_subs;
-	alert($scope.is_subs);
+//	alert($scope.is_subs);
+//	alert('is_subs');
 	$scope.selectSubscriptionType={};
 	$scope.subobject={
 		cust_id: AuthService.id(),
@@ -1182,6 +1188,7 @@ $scope.addToCart = function (selected,id,price,unit,weight) {
 		unit_id:$stateParams.unit_id
 	};
 	
+//	alert(JSON.stringify($scope.subobject));
 	var weekDaysList = ["Su","Mo", "Tu", "We", "Th", "Fr", "Sa"];
 	var monthList = ["Jan", "Feb", "Mar", "Аpr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	disabledDates = [];
@@ -1296,6 +1303,7 @@ var retSelectedDates = function (dates) {
 /********************popup for quantity**************/
 $scope.showPopup = function() {
   	$scope.data = {};
+  	alert('show popup');
   // An elaborate, custom popup
   	var myPopup = $ionicPopup.show({
     		template: '<div class="qtyleft"></div><input class="qtycenter" type="text" ng-model="data.pin"> <div class="qtyright"></div>',
@@ -1359,6 +1367,7 @@ $scope.showPopup = function() {
 /*******************************open time picker************************************/
 $scope.openTimePicker=function(){
 	
+
 	var ipObj1 = {
     		callback: function (val) {  
 			var time="";    //Mandatory
@@ -2194,7 +2203,7 @@ $scope.addToCart = function (selectedProduct) {
   	}
 	$scope.goToCheckout = function(choice){ 
   		if(AuthService.id()){
-    			$state.go('app.step_1',{is_subs:false},{reload:truef});
+    			$state.go('app.step_1',{is_subs:false},{reload:true});
   		}else{
 				localStorage.setItem('reloads',1);
 

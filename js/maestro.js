@@ -37,9 +37,9 @@ return {
             },
             $getPackageProducts : function (id) { //get packages products and sizes by package id
             	 	return $http({ 
-			     url:'https://www.minbazaar.com/subs/admin/service/get_categories',
+			     url:'https://www.minbazaar.com/subs/admin/service/get_package_product',
 			     method:'GET',
-			     params: {"package_id":id}
+			     params: {"pack_id":id}
 			});
             },
             $getCategoryProducts : function (id) { //get categories products by category id          
