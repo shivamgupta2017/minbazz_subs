@@ -74,23 +74,13 @@
 </div>
 -->
 <!-- coupon code end--------------------------------------------------------------------------------------------------------------------------->
-
 <h4>Select Payment Method</h4>
 <div ng-if="!codAvailability" class="assertive">Cash on delivery is not available in this location</div>
 </ion-item>
-
-
-
 <ion-radio ng-disabled="!codAvailability" style="margin:0px; text-align:left;" ng-change="change('cod')" ng-model="choice.answer" ng-value="'cod'" ><img src="img/cod.png" style="vertical-align:middle" height="27" width="27"><span style="line-height:27px;margin-left:5px;">Cash on Delivery</span></ion-radio>
 <ion-radio style="margin:0px; text-align:left;" ng-change="change('online')" ng-model="choice.answer" ng-value="'online'" ><img src="img/cc.png" style="vertical-align:middle" height="27" width="27"><span style="line-height:27px; margin-left:5px;">Net Banking/Credit Card/Debit Card</span></ion-radio>
-
-
-
 <div class="assertive" style="text-align:center">{{selectPaymentError}}</div>
   </div>
-
-
-
 <div class="footer-button"  ng-if="hidecontent">
      <button class="button button-dark button-block button-round button-outline " ng-disabled="disable" ng-click="validConfirm()">Next</button>
      <!--<button class="button button-dark button-block button-round button-outline " ui-sref="app.payment_step2({orderId: 123})">Next</button>-->

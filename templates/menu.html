@@ -119,6 +119,20 @@
 
 
       <ion-list>
+
+
+<!--ng-if="nextdaysselection.length"--->
+<ion-item class="item-accordio" style="padding-left:5px" ng-if="group.items.length!=0" class="item-dark"  ng-class="{active: isGroupShown(group)}" >
+              			
+            			 	Next Day Selection &nbsp; <span class="icon" style="font-size:10px; right:0px; position:absolute;"></span>
+          		</ion-item>
+          		<ion-item  class="item-accordion" ng-repeat="s in nextdaysselection"  menu-close ng-click="openNextDaySelection(s.package_id,s.package_size_id,s.subscription_id)" style="padding-bottom:;"> 
+            		     	{{s.package_name}} ({{s.size_name}})
+          		</ion-item>
+
+		</div>	
+
+
 <!--
   
         <ion-item  menu-close ng-repeat="category in categories track by $index" ng-click="goToProductCategories(category.name, category.menu_order, category.id)">
@@ -153,10 +167,7 @@
           <img src="img/icons/icon-lock-light.png">
           My Subscriptions
         </ion-item>
-        <ion-item style="padding-left:5px" " class="item-icon-right"  menu-close ng-click="openNextDaySelection()">
-          <img src="img/icons/icon-lock-light.png">
-          Next Day Selections
-        </ion-item>
+
        <ion-item style="padding-left:5px" " class="item-icon-right"  menu-close ng-click="opensingle()">
           <img src="img/icons/icon-lock-light.png">
            check

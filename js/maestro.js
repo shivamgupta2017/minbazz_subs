@@ -67,18 +67,6 @@ return {
 
 			});
             },
-
-            $add_new_subscription : function (data) { //get categories products by category id       
-            //alert('dffd');
-                    return $http({ 
-                 url:'https://www.minbazaar.com/subs/admin/service/post_cust_subs',
-                 method:'GET',
-                 params: data
-
-            });
-            },
-
-
             $postAddresses : function (data) { //get categories products by category id       
 			//alert('dffd');
              		return $http({ 
@@ -88,6 +76,15 @@ return {
 
 			});
             },
+            $add_new_subscription : function (data) { //get categories products by category id       
+            //alert('dffd');
+                    return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/post_cust_subs',
+                 method:'GET',
+                 params: data
+
+            });
+},
             $getNextMenu : function (data) { //get categories products by category id       
 			//alert('dffd');
              		return $http({ 
@@ -109,9 +106,19 @@ return {
             $getSingleSub : function (data) { //get categories products by category id       
 			//alert('dffd');
              		return $http({ 
-			     url:'https://www.minbazaar.com/subs/admin/service/get_single_sub_data',
+			     url:'https://www.minbazaar.com/subs/admin/service/get_single_subs_data',
 			     method:'GET',
 			     params: data
+
+			});
+            },
+
+            $getSubscribePackages : function (data) { //get categories products by category id       
+			
+             		return $http({ 
+			     url:'https://www.minbazaar.com/subs/admin/service/get_subscribed_packages',
+			     method:'GET',
+			     params: {cust_id:data}
 
 			});
             },

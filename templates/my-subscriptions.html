@@ -18,18 +18,18 @@
 
 
 <ion-list>
-	<ion-item ng-repeat="subscription in subscriptions" class="item item-text-wrap text-left" item="item"  can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
+	<ion-item ng-repeat="subscription in subscriptions" class="item item-text-wrap text-left" item="item" ng-click="openSingleSub(subscription.product_id,subscription.id,subscription.unit_mapping_id);" can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
 		<div style="height:25vw; item-dark">
-			<div style="height:100%; border:1px solid black; display:inline-block; width:30%; float:left;"></div>
+			<div style="height:100%; border:1px solid black; display:inline-block; width:30%; float:left; background-image:url(https://www.minbazaar.com/subs/admin/{{subscription.image}}); background-size:contain"></div>
 			<div style="width:70%; height:50px; display:inline-block; float:left; padding:3px;">
-				<div style="font-size:4vw; font-weight:bold">{{subscription.product_id}}</div>
+				<div style="font-size:4vw; font-weight:bold">{{subscription.product_name}}</div>
 				<div style="line-height:4vw; color:gray; font-size:3.5vw" ng-if="subscription.current_status=='1'">running</div>
 				<div style="line-height:4vw; color:gray; font-size:3.5vw" ng-if="subscription.current_status=='0'">paused</div>
 			</div>
 		</div>
-       		<ion-option-button class="button-light icon ion-pause"> Pause </ion-option-button>
-       		<ion-option-button class="button-light icon ion-email"> Unsubscribe </ion-option-button>
-       		<ion-option-button class="button-assertive icon ion-trash-a"> Edit</ion-option-button>  
+       		<ion-option-button class="button-light icon ion-pause">&nbsp;Pause </ion-option-button>
+       		<ion-option-button class="button-light icon ion-email">&nbsp;Unsubscribe </ion-option-button>
+       		<ion-option-button class="button-assertive icon ion-trash-a">&nbsp;Edit</ion-option-button>  
         </ion-item>
 </ion-list>
 <!---------------------------------------------------------Subscriptions list ------------------------------------------------------------>

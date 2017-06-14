@@ -13,19 +13,29 @@
   		<img src="img/icons/search_icon.svg">
 	</div> -->
 <!------------------------------------------------------------------------------------------------------------------->
-	<ion-content  style="background-color:#f4f4f4"  id="contentsearch"> <!--on-scroll="getScrollPosition()"-->
+	<ion-content  style="background-color:#fff"  id="contentsearch" scroll="false"> <!--on-scroll="getScrollPosition()"-->
 <!--<button ng-click="su()">buttton</button>-->
-
-
+	
+	<div style="height:15vh; width:100vw; margin-bottom:5px;">
+			<div style="background-image:url(https://www.minbazaar.com/subs/admin/{{singleSubscriptions.product[0].image}}); background-size:contain; background-repeat:no-repat; display:inline-block; height:15vh; width:15vh;">
+			</div>
+			<div style="display:inline-block; width:70%; height:15vh; float:right; border:1px solid black">			
+				<div>{{singleSubscriptions.product[0].product_name}}</div>
+				<div>total used quantity</div>
+			</div>
+	</div>
+	
+<ion-scroll direction="y" style="height:70vh; border-top:1px solid #ddd">
 <ion-list>
-	<ion-item  class="item item-text-wrap text-left" item="item"  can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
-		<div style="height:15vw; item-dark; text-left">
-			<div>27-May</div>
-			<div>Delivered</div>
+	<ion-item  ng-repeat="detail in singleSubscriptions.product_detail"class="item item-text-wrap text-left" item="item"  can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
+		<div style="height:15vw; font-size:12px; width:100%;">
+			<div style="border:1px solid black width:100%;">{{detail.date|date:'dd MMM, EEEE'}}<span style="float:right"> Delivered</span></div>
+			<span>3 Quantity</span> <span ng-if="detail.extra_qty!='0'">+ {{detail.extra_qty}} Extra</span>
 		</div>
-       		<ion-option-button class="button-light button-dark icon ion-plus" ng-click="addExtra(3);">&nbsp;Extra Qty</ion-option-button> 
+       		<ion-option-button class="button-light button-dark icon ion-plus" ng-click="addExtra(detail.id,5);">&nbsp;Extra Qty</ion-option-button> 
         </ion-item>
 </ion-list>
+</ion-scroll>
 <!---------------------------------------------------------Subscriptions list ------------------------------------------------------------>
 
 	</ion-content>

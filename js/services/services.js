@@ -213,7 +213,6 @@ angular.module('starter.services', [])
                     //header: {'Content-Type': 'application/x-www-form-urlencoded','Content-Type': "application/json"},
                     params: data
                 })
-
             },*/
             $getNonce: function () {
                 return $http.post(apiUrl + '/get_nonce/?controller=user&method=register', {}, {
@@ -228,7 +227,6 @@ angular.module('starter.services', [])
                     header: header,
                     params: data
                 })
-
             },*/
 
          /*   $login: function (data) {

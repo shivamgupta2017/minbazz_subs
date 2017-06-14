@@ -132,7 +132,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     })
     .state('app.singlesubscription', {
-      url: '/singlesubscription',
+      url: '/singlesubscription/:product_id/:subscription_id/:unit_mapping_id',
       views: {
         'menuContent': {
           templateUrl: 'templates/single-subscription.html',
@@ -141,7 +141,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     })
     .state('app.nextdayselection', {
-      url: '/nextdayselection',
+      url: '/nextdayselection/:package_id/:package_size_id/:subscription_id',
       views: {
         'menuContent': {
           templateUrl: 'templates/next-day-selection.html',
