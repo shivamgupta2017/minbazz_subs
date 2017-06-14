@@ -40,11 +40,12 @@
 			</a>
 	</h4> 
   	<ion-list>
-     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'1'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Daily</span></ion-radio>
-     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'2'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Custom</span></ion-radio>
+     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'1'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">custom</span></ion-radio>
+     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'2'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Daily</span></ion-radio>
       
   </ion-list>
   </div>
+
 <!--subscription type end-->
 
 <div ng-if="(express_charges!=-1)&&hidecontent" style="text-align:left; width:95vw; margin:0 auto">  <span style="vertical-align:middle" ><label for="expressShipping"> Express Shipping <input type="checkbox" id="expressShipping" ng-click="expressCharges()" style="vertical-align:middle"></label>  <div class="color-warm-grey text-left">Charges will be &#8377;{{express_charges}}  for Express shipping</div></span></div>

@@ -158,6 +158,19 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
         }
       }
     })
+
+    .state('app.confirmation', {
+      url: '/confirmation',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/confirmation.html',
+          controller: 'confirmationCtrl'
+        }
+      }
+    })
+    
+
+
     .state('app.step_1', {
       url: '/step_1/:id/:unit_id/:unit/:weight/:is_subs/:is_package',
       views: {

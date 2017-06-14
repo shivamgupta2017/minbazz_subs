@@ -113,6 +113,9 @@ angular.module('starter.services', [])
 })    
     .factory('CartService', function ($localStorage) {
 
+//        alert('localstorage.cart'+JSON.stringify($localStorage.cart));
+
+
         $localStorage.cart = $localStorage.cart || [];
 
         var _getAll = function () {
