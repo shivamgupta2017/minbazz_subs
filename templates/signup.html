@@ -27,7 +27,7 @@
 				</ion-item>
 				<ion-item class="item-input ">
 					<i><img src="img/icons/icon_lock.svg"></i>
-					<input  class="col-50"type="password" name="password" ng-change="analyze(user.user_pass)" placeholder="********" ng-model="user.user_pass" required autocomplete="off"> <span class="col-30" style="font-size:12px">{{pStrengthText}}</span>
+					<input  class="col-50"type="password" name="password" ng-change="analyze(user.password)" placeholder="********" ng-model="user.password" required autocomplete="off"> <span class="col-30" style="font-size:12px">{{pStrengthText}}</span>
 
 				</ion-item>
 				
@@ -36,7 +36,7 @@
 				
 				<ion-item class="item-input " ng-class="{'has-errors': signForm.confirm_pass2.$error.match}">
 					<i><img src="img/icons/icon_lock.svg" ></i>
-					<input type="password" name="confirm_pass2"  placeholder="********" ng-model="confirm_pass" ng-match="user.user_pass" required autocomplete="off">
+					<input type="password" name="confirm_pass2"  placeholder="********" ng-model="confirm_pass" ng-match="user.password" required autocomplete="off">
 
 				</ion-item>
                 	<!--<ion-item class="item-input " ng-show="false">
@@ -47,7 +47,7 @@
 				
                 		<ion-item class="item-input m" >
 					<i><img src="img/icons/icon_mobile.svg" height="22" width="22"></i>
-					<input   class="col-40" style="padding-right:0; position:relative;" type="text" name="mobile" placeholder="Mobile No." ng-model="user.mobile_number" ng-pattern="phoneNumbr" required>
+					<input   class="col-40" style="padding-right:0; position:relative;" type="text" name="mobile" placeholder="Mobile No." ng-model="user.phone" ng-pattern="phoneNumbr" required>
 					<!--<button ng-show="status4" class="col-40 button button-small button-dark" style="border-radius:15px" ng-click="generateOTP()"  ng-disabled='sendotp'><div style="margin:0 auto"><div style="line-height:0; margin:0 auto;">{{otpBtn}}</div></div></button>-->
 				</ion-item>
 				<!--  <ion-item class="item-input" ng-show="showotpinput()">			

@@ -661,9 +661,9 @@ $scope.allImages = [];
 	
 		// show send/resend otp button			
 	$scope.user = {		// declare user object
-      		insecure: 'cool',
-      		notify: 'no',
-		mobile_num: null,
+  //    		insecure: 'cool',
+    //  		notify: 'no',
+	//	mobile_num: null,
     	};
 // Otp validation
 /*	$scope.otpObj={auth_key:'ck_bca5ee0c5f916c12896590606abab1c4cee4cc08',
@@ -742,7 +742,7 @@ $scope.allImages = [];
       	$scope.disableSubmit = true;
       	$dataService.$getNonce().then(function (res) {
         	console.log(res);
-       	 	$scope.user.nonce = res.data.nonce;
+       	 //	$scope.user.nonce = res.data.nonce;
         	$scope.disableSubmit = false;
 
       	}, function (err) {
@@ -752,30 +752,44 @@ $scope.allImages = [];
 
     $scope.disableSubmit = false;
     //signUp function--------------------------------------------------------------------------------------------------------------------
-
+//shivam
     $scope.signUp = function () {
-	$scope.user.otp=786;
-	$pinroUiService.showLoading();
-	$scope.user.username=$scope.user.email;
-	    
+    
+ //     alert(' : '+JSON.stringify($scope.user));
+      
+
+	//$scope.user.otp=786;
+	//$scope.user.username=$scope.user.email;
+	  
+
+   // alert('fuckers: '+JSON.stringify($scope.user));
+
 		if($scope.pStrength){
      		 	$scope.disableSubmit = true;
-      			$scope.loading = true; //show loading
-      	console.log($scope.user);
-      	$scope.user.display_name = $scope.user.username; // specify display_name
-      		$dataService.$signup($scope.user).then(function (res) {
-        		if (res.status === 200) 
-			{
-					$scope.user1 = {		// declare user object
-      						insecure: 'cool',
-      						password:res.config.params.user_pass,
-						username:res.config.params.username
-    					};
-				$dataService.$login($scope.user1).then(function (res1) {
-				$pinroUiService.hideLoading(); 
-        			if (res.data && !res.data.error) {
-					AuthService.storeUserCredentials(res1.data.user);
+    			$scope.loading = true; //show loading
+
+          $pinroUiService.showLoading();
+      	   
+           $scope.user.zip=0;
+
+        	$dataService.$signup($scope.user).then(function (res) 
+          { 
+           // alert('res ....'+JSON.stringify(res));
+        		if (res.data.response_data === 1) 
+			       {
+			 	  	  
+  //            alert('fi ka andar');
+	     
+
+        $dataService.$login($scope.user).then(function (res1) {
+        $pinroUiService.hideLoading(); 
+//        			alert('fuckers :'+JSON.stringify(res1));
+
+              if (res1.data && !res1.data.error) {
+					 alert('inside if condition');
+          AuthService.storeUserCredentials(res1.data.response_data);
 					//localStorage.setItem('reloads',1);
+          alert('jordon');
           				$state.go('app.editorial');		
 
         			}}); 
@@ -843,8 +857,9 @@ $scope.allImages = [];
     		$pinroUiService.showLoading();
       		$dataService.$login($scope.user).then(function (res) {
         		if (res.data.response_data) {				
+
 				AuthService.storeUserCredentials(res.data.response_data);
-          			$state.go('app.editorial');		
+              	$state.go('app.editorial');		
         		} 
 			else {
           			$scope.loginError = 'Invalid username or password';

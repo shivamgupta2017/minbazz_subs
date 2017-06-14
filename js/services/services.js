@@ -185,7 +185,8 @@ angular.module('starter.services', [])
             },
 
             $login: function (data) {
-			//alert(apiUrl);
+			 //alert(apiUrl);
+
                 return $http({ 
 			     url:apiUrl+'customer_login',
 			     method:'GET',
@@ -193,8 +194,17 @@ angular.module('starter.services', [])
 
 		});
             },
+//new shivam gupta
+            $signup: function (data) {
+//             alert(apiUrl);
+//
+                return $http({ 
+                 url:apiUrl+'customer_registration',
+                 method:'GET',
+                 params: data
 
-
+        });
+            },
 
 
      /*       $checkZip: function (data) {
@@ -212,14 +222,14 @@ angular.module('starter.services', [])
 
             },
 
-            $signup: function (data) {
+            /*$nsignup: function (data) {
 			
                 return $http.get(apiUrl + '/user/register/', {
                     header: header,
                     params: data
                 })
 
-            },
+            },*/
 
          /*   $login: function (data) {
                 return $http.get(apiUrl + '/user/generate_auth_cookie/', {
