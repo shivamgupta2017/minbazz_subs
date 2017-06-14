@@ -1418,12 +1418,6 @@ var addAddress=function(selected_zip)
             
     });
         
-    
-
-
-
-  
-        
           
 }
 
@@ -1455,6 +1449,7 @@ $scope.showPopup = function(selected_address_id) {
   	$scope.data = {};
   //	alert('show popup');
   // An elaborate, custom popup
+
   	var myPopup = $ionicPopup.show({
     		template: '<div class="qtyleft"></div><input class="qtycenter" type="text" ng-model="data.pin"> <div class="qtyright"></div>',
     		title: 'Select Quantity',
@@ -1483,8 +1478,9 @@ $scope.showPopup = function(selected_address_id) {
  		myPopup.then(function(res) {
 			if(isNaN(res)==false){
 				$scope.subobject.quantity=res;
-        $scope.subobject.add_id=selected_address_id;
+        $scope.subobject.delivery_add_id=selected_address_id;
 //fuckers
+      alert('fuckers');
 			}
 			
   		});
@@ -1556,7 +1552,7 @@ $scope.openTimePicker=function(dates){
                 $scope.subobject.current_status=1;
                 $scope.subobject.final_price='';
 
-
+                alert(JSON.stringify($scope.subobject));
 
 
 //            alert(JSON.stringify($scope.subobject));
