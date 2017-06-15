@@ -1592,19 +1592,64 @@ $scope.openTimePicker=function(dates){
 **********************************************************************************************************************************/
   .controller('subscriptionsCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 
+
 //$scope.subscriptions
-	$scope.openSingleSub=function(p_id, s_id, u_m_id)
+  Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res)
+  {
+      $scope.subscriptions=res.data.response_data;
+      alert('initially :'+JSON.stringify($scope.subscriptions[0].current_status));
+  });
+  $scope.openSingleSub=function(p_id, s_id, u_m_id)
 	{	
-
-		$state.go('app.singlesubscription',{product_id:p_id,subscription_id:s_id,unit_mapping_id:u_m_id});
-
+  		$state.go('app.singlesubscription',{product_id:p_id,subscription_id:s_id,unit_mapping_id:u_m_id});
 	}
+   $scope.change_subscription_status=function(cust_id, subscription_id, current_status)
+  {   
 
-	Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){
-		
-		$scope.subscriptions=res.data.response_data;
-	});
-	
+      if(!e) 
+      var e = window.event;
+      e.cancelBubble = true;
+      if(e.stopPropagation) 
+          e.stopPropagation();
+        
+
+    //alert('he');
+    if(current_status==='1')
+    {
+      var p='restart';
+
+    }
+    else if(current_status==='0')
+    {
+      var p='pause';
+    }
+
+      $scope.data=
+      {
+         cust_id : cust_id,
+         subs_id : subscription_id
+      }
+
+      $pinroUiService.showLoading();
+      Maestro.$pause_my_subscription($scope.data, p).then(function(res){
+
+          alert('shivam'+JSON.stringify(res));
+            if(res.data.response.status==1)
+            {
+                alert('repo :'+$scope.subscriptions[0].current_status);
+                Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res)
+                {
+                   $scope.subscriptions=res.data.response_data;
+                    alert('again repo :'+$scope.subscriptions[0].current_status);
+           //         $state.go($state.current, {}, {reload: true});
+
+                });
+
+                $pinroUiService.hideLoading();
+
+            }
+      });
+  }
 })
 
 /**********************************************************************************************************************************
@@ -1626,22 +1671,18 @@ $scope.openTimePicker=function(dates){
 		$pinroUiService.showLoading();
 		
 		Maestro.$getSingleSub(data1).then(function(res){
-	//		alert('shviam');
 		  	$scope.singleSubscriptions=res.data.response_data;
-	//		alert(JSON.stringify($scope.singleSubscriptions));
 			$pinroUiService.hideLoading();
 		});
-//$scope.subscriptions
 	
 
 	$scope.addExtra=function(id)
   {
 		
     //shivam gupta
-      $scope.data={
-    };
+      $scope.data={};
 
-    var myPopup = $ionicPopup.show({
+      var myPopup = $ionicPopup.show({
         template: '<input type="text" ng-model="data.extra_qty">',
         title: 'add Extra Quantity',
        // subTitle: 'Currently available in select cities',
@@ -1673,34 +1714,25 @@ $scope.openTimePicker=function(dates){
         $scope.data.id=id;
         $scope.data.cust_id=AuthService.id();
         $pinroUiService.showLoading();
-//        alert('request  :'+JSON.stringify($scope.data));
         Maestro.$addExtraQty($scope.data).then(function(res)
         {
-//          alert('add extra');
           if(res.data.response.status==1)
           {
-  //          alert('response 1');
             Maestro.$getSingleSub(data1).then(function(res)
             {
-    //          alert('getSingleSub');
-              if(res.data.response.status==1)
-              { 
-      //            alert('response 2');
-                  $scope.singleSubscriptions=res.data.response_data;
-                  $pinroUiService.hideLoading();
-                  $state.go($state.current, {}, {reload: true});
-              }
-              
+                if(res.data.response.status==1)
+                { 
+                    $scope.singleSubscriptions=res.data.response_data;
+                    $pinroUiService.hideLoading();
+                    $state.go($state.current, {}, {reload: true});
+                }
             });
-
-
           }
-          
         });
-
     });
-
 	}
+
+ 
 	
 })
 

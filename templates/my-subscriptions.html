@@ -23,11 +23,16 @@
 			<div style="height:100%; border:1px solid black; display:inline-block; width:30%; float:left; background-image:url(https://www.minbazaar.com/subs/admin/{{subscription.image}}); background-size:contain"></div>
 			<div style="width:70%; height:50px; display:inline-block; float:left; padding:3px;">
 				<div style="font-size:4vw; font-weight:bold">{{subscription.product_name}}</div>
-				<div style="line-height:4vw; color:gray; font-size:3.5vw" ng-if="subscription.current_status=='1'">running</div>
-				<div style="line-height:4vw; color:gray; font-size:3.5vw" ng-if="subscription.current_status=='0'">paused</div>
+				<div style="line-height:4vw; color:gray; font-size:3.5vw" ng-if="subscription.current_status=='1'">paused</div>
+				<div style="line-height:4vw; color:gray; font-size:3.5vw" ng-if="subscription.current_status=='0'">running</div>
 			</div>
 		</div>
-       		<ion-option-button class="button-light icon ion-pause">&nbsp;Pause </ion-option-button>
+       		<ion-option-button class="button-light icon ion-pause" ng-click="change_subscription_status(subscription.cust_id, subscription.id, subscription.current_status)" ng-if="subscription.current_status==1">{{'Pause'}}
+       		 </ion-option-button>
+
+       		 <ion-option-button class="button-light icon ion-pause" ng-click="change_subscription_status(subscription.cust_id, subscription.id, subscription.current_status)" ng-if="subscription.current_status=='0'">{{'Restart'}}
+       		 </ion-option-button>
+       		 
        		<ion-option-button class="button-light icon ion-email">&nbsp;Unsubscribe </ion-option-button>
        		<ion-option-button class="button-assertive icon ion-trash-a">&nbsp;Edit</ion-option-button>  
         </ion-item>
