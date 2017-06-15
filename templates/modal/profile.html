@@ -26,9 +26,7 @@
 
 
 
-
 <div class="order-list" ng-if="show == 'orders'">
-			
                 <!--<ion-list ng-if="orderList.length">
 
 <ion-item class="item-divider">
@@ -48,16 +46,13 @@ Order history
 	
 
 
-
-
-
-<!------------------------------------------- orders list ------------------------------------------------------------------------->
-
 <div ng-if="showmessage" class="padding"> No orders done yet </div>
-<div ng-if="orderList.length" class="padding">
+<div ng-if="items.length" class="padding">
 
-<div class="card" ng-repeat="order in orderList track by $index" ng-if="order.status=='processing' || order.status=='completed'"><!-- ng-if="order.status!='pending'" -->
-  	<div class="item item-divider">
+    <div class="card" ng-repeat="order in items track by $index" ng-if="order.status=='pending' || order.status=='completed'">
+    
+  	     <div class="item item-divider">
+
       		<div class="row">
           		<div class="col col-67">
               			<div>ORDER #{{order.number}}</div>
@@ -67,18 +62,23 @@ Order history
           		</div>
       		</div>
 
-  	</div>
+  	     </div>
  
- 	<div class="item item-text-wrap">
-          	<div class="line-item" ng-repeat="item in order.line_items">     
-              		<h4>{{item.name}} x {{item.quantity}}</h4>
-              		<div ng-repeat="variation in item.meta" style="line-height: 0px; text-transform: uppercase; ">
-                        	<small>&#8377;{{variation.label}}: {{variation.value}}</small>
-                	</div>
-               		<h5 class="price">&#8377;&nbsp;{{item.price*item.quantity+convertfloat(item.total_tax) | number:2}}</h5>
+ 	        <div class="item item-text-wrap">
+          	   <div class="line-item" ng-repeat="item in items">
+
+                <div ng-repeat="it in item.order_products">
+                  		<h4>{{it.product_name}} x {{it.quantity}}</h4>
+                  		<div ng-repeat="variation in item.meta" style="line-height: 0px; text-transform: uppercase; ">
+                          	<small>&#8377;{{variation.label}}: {{variation.value}}</small>
+                    	</div>
+                   		<h5 class="price">&#8377;&nbsp;{{item.price*item.quantity+convertfloat(item.total_tax) | number:2}}</h5>
+
+                </div>     
 			
-         	</div>
-	</div>
+         	    </div>
+	       </div>
+
 	<div class="item item-text-wrap" ng-if="(order.payment_method=='COD'||order.payment_method=='cod')&&(order.shipping_total!='0.00')" style="padding-bottom:5px">
 			<h4>Shipping and COD charges : &#8377;&nbsp;{{order.shipping_total}}</h4>
 	</div>
@@ -104,6 +104,9 @@ Order history
     		</div>
 
 	</div>
+
+
+  
 </div>
             </div>
 

@@ -22,14 +22,14 @@ angular.module('starter.controllers', [])
 	
 	Maestro.$getSubscribePackages(AuthService.id()).then(function(res){	
 		$scope.nextdaysselection=res.data.response_data;
-		alert(JSON.stringify($scope.nextdaysselection));
+//		alert(JSON.stringify($scope.nextdaysselection));
 		//$scope.selectedSize={};
 		//$scope.products=
 		//$pinroUiService.hideLoading();
 	})
 
 	$scope.openNextDaySelection= function(package_id,package_size_id,subscription_id){
-		alert(subscription_id);
+	//	alert(subscription_id);
 		$state.go('app.nextdayselection',{package_id:package_id,package_size_id:package_size_id,subscription_id:subscription_id});
 	}
 	$scope.opensingle= function(){
@@ -322,17 +322,20 @@ var checkCartItems = function(){
     id: 'profile',
     scope: $scope
   }).then(function (modal) {
+  
     $scope.profileModal = modal;
+  
   });
   $scope.closeProfileModal = function () {
     $scope.profileModal.hide();
   };
-
   $scope.openProfileModal = function () {
+    
+
     $scope.profileModal.show();
   };
 
-  // Create the settings modal
+//fuckers
   $ionicModal.fromTemplateUrl('templates/modal/settings.html', {
     id: 'settings',
     scope: $scope
@@ -347,7 +350,6 @@ var checkCartItems = function(){
     $scope.settingsModal.show();
   };
 
-  // Create the edit profile modal
   $ionicModal.fromTemplateUrl('templates/modal/edit-profile.html', {
     id: 'edit-profile',
     scope: $scope
@@ -465,7 +467,7 @@ $scope.allImages = [];
 
 
 
-
+///controller over here hehe
 
 
 
@@ -1533,8 +1535,8 @@ $scope.openTimePicker=function(dates){
                				if(res.data.response.status==1)
                 				{
                 					//subscription saved successfully
-									$state.go('app.confirmation');                					
-                
+	         								$state.go('app.confirmation');                					
+                  
             				    }
             				
 
@@ -2603,22 +2605,28 @@ $scope.removeSelectedItems = function(){
 /*-------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------profile controller--------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------*/
-.controller('ProfileCtrl', function ($scope,$rootScope, $stateParams, $ionicHistory, $state, StorageService, $dataService, Maestro, CartService, $pinroUiService, AuthService) {
-	$rootScope.count=1;
+.controller('ProfileCtrl', function ($scope,$rootScope, $stateParams, $ionicHistory, $state, StorageService, $dataService, Maestro, CartService, $pinroUiService, AuthService) 
+{
+	
+
+  $rootScope.count=1;
 	$scope.user = {}; // to assign and display user Data
-	$scope.show = 'orders'; //to show and hide orders and offer in profile
+	$scope.show = 'orders'; 
 	$scope.loadOrders = false;
 	$scope.showmessage=false;
 	$scope.orderList = [];
  	$scope.offerPosts = [];
+  
   	$scope.convertfloat=function(vaa){
 			return parseFloat(vaa);
 	}
 	//$scope.username = JSON.parse(localStorage.getItem('userObj'));
 	var getUserInfo = function(user_id){
 			$pinroUiService.showLoading();
-			Maestro.$getCustomerById(user_id).then(function(res){
-    				console.log(res);
+    //  alert('getUserinfo');
+			
+      Maestro.$getCustomerById(user_id).then(function(res){
+    				
     				$pinroUiService.hideLoading();
 				if(res.data.id){
     					$scope.user = res.data;
@@ -2637,31 +2645,57 @@ $scope.removeSelectedItems = function(){
 
 //get all orders by customer
 var getOrdersByCustomer = function(userId){
-  	$scope.loadOrders = true;
+  	
+    //alert('userId :'+userId);
+    $scope.loadOrders = true;
   	$scope.showmessage=false;
+  //  alert('getOrdersByCustomer'+userId);
   	$pinroUiService.showLoading();
-  	Maestro.$getOrderByCustomer(userId).then(function(res){
-    		console.log(res);
-    		if(res.data.length){
+  	Maestro.$get_orders(userId).then(function(res){
+    
+      if (res.data.response_data) 
+      {
+            if(res.data.response_data.order_details.length>0)
+            {
+
+              $scope.items=res.data.response_data.order_details;
+              $pinroUiService.hideLoading();
+                            
+            }
+            else 
+            {
+
+              $scope.showmessage=true;
+              $pinroUiService.hideLoading();
+
+            }
+      
+
+
+      }    
+      //$pinroUiService.hideLoading();
+
+
+        /*if(res.data.length){
       			$scope.orderList = res.data;	
 			$scope.loadOrders = false;
 	 		$pinroUiService.hideLoading();
 			console.log(JSON.stringify(res.data));
     		}
 		else{
-			$scope.showmessage=true;
 			$scope.orderList = [];
-			$pinroUiService.hideLoading();
 		}
-     		//$scope.loading = false; 
+     		*///$scope.loading = false; 
   	}, function(err){
 		$scope.loadOrders = false;
-    		console.log(err);
 		$scope.showmessage=false;
      		//$scope.loading = false;
-     		$pinroUiService.hideLoading();
+     $pinroUiService.hideLoading();
   	})
 }
+
+
+//controller over shivam
 // get offer post
  /*   var getOfferPosts = function () {
       $dataService.$getPosts({
@@ -2687,13 +2721,17 @@ $scope.$on("modal.shown", function(event, data){
 		//console.log("Valueeeeeeeeeeeeeeeeee" + str);
 		// to get userObj from localStorage Service
     		//var user_id = 61;    ///hard code
-    		getUserInfo(user_id);
+    	//	getUserInfo(user_id);
+
     		getOrdersByCustomer(user_id);
    		// getOfferPosts();
   	}
 })
 
 })
+
+
+
 //Settings controller
 .controller('SettingsCtrl', function ($scope, $stateParams, $ionicHistory, $ionicPopup, $state, StorageService, $dataService, Maestro, CartService, $pinroUiService, AuthService, Language, State) {
 	$scope.states= State;

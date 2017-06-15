@@ -22,6 +22,8 @@ angular.module('starter')
 return {
 
 /***********************************************************************************************************************************************/
+            
+
             $getPackages : function () 
             {	//get all packages
 	    		return $http({ 
@@ -37,6 +39,14 @@ return {
                  url:'https://www.minbazaar.com/subs/admin/service/pause_single_subscription/'+current_status,
                  method:'GET',
                  params: data
+                });
+            },
+
+            $get_orders : function (data) {   
+                return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/get_orders',
+                 method:'GET',
+                 params: {"cust_id" : data}
                 });
             },
 
@@ -376,7 +386,7 @@ return {
                 var orderParams = request.params;
                 orderParams.customer = customerId;
 
-                return $http.get( request.url + '/list-orders.php', {
+                return $http.get( request.url + '/get_orders.php', {
                     params: orderParams,
                     headers: {
                         "Content-Type": 'application/json'
