@@ -32,7 +32,7 @@
 			<div style="border:1px solid black width:100%;">{{detail.date|date:'dd MMM, EEEE'}}<span style="float:right"> Delivered</span></div>
 			<span>3 Quantity</span> <span ng-if="detail.extra_qty!='0'">+ {{detail.extra_qty}} Extra</span>
 		</div>
-       		<ion-option-button class="button-light button-dark icon ion-plus" ng-click="addExtra(detail.id,5);">&nbsp;Extra Qty</ion-option-button> 
+       		<ion-option-button class="button-light button-dark icon ion-plus" ng-click="addExtra(detail.id);">&nbsp;Extra Qty</ion-option-button> 
         </ion-item>
 </ion-list>
 </ion-scroll>

@@ -1610,8 +1610,12 @@ $scope.openTimePicker=function(dates){
 /**********************************************************************************************************************************
 ********************************************************* single subscription *************************************************
 **********************************************************************************************************************************/
-  .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
-		
+  .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
+  {
+	 
+
+
+
 
 		var data1={};
 		data1.cust_id=AuthService.id();;
@@ -1630,39 +1634,66 @@ $scope.openTimePicker=function(dates){
 //$scope.subscriptions
 	
 
-	$scope.addExtra=function(id,qty){
-		var data={
-		};
-		data.extra_qty=qty;
-		data.id=id;
-		data.cust_id=AuthService.id();
+	$scope.addExtra=function(id)
+  {
+		
+    //shivam gupta
+      $scope.data={
+    };
 
-//		alert('addExtra :'+JSON.stringify(data));
-		$pinroUiService.showLoading();
-		Maestro.$addExtraQty(data).then(function(res)
-		{
-			if(res.data.response.status==1)
-			{
-//				alert('if 1'+res.data.response.status);
-				Maestro.$getSingleSub(data1).then(function(res)
-				{
-					if(res.data.response.status==1)
-					{
-//						alert('if 2'+res.data.response.status);
-					  	$scope.singleSubscriptions=res.data.response_data;
-						$pinroUiService.hideLoading();
-						$state.go($state.current, {}, {reload: true});
-//						location.reload();
-			//			$state.reload();
-					}
-					
-				});
+    var myPopup = $ionicPopup.show({
+        template: '<input type="text" ng-model="data.extra_qty">',
+        title: 'Please! enter your zip/pin code',
+        subTitle: 'Currently available in select cities',
+        scope: $scope,
+        buttons: [
+              { text: 'Cancel' },
+              {
+                text: '<b>Submit</b>',
+                type: 'button-dark',
+                onTap: function(e) 
+                {
+  //                alert('data :'+$scope.data.extra_qty)
+                  if (!$scope.data.extra_qty) 
+                  {
+                          e.preventDefault();
+                  }
+                  else 
+                  { 
+//                        alert('else');
+                        return $scope.data.extra_qty;
+                  }
+                }
+              }           
+          ]
+    });
+
+    myPopup.then(function(res) 
+    {
+        $scope.data.id=id;
+        $scope.data.cust_id=AuthService.id();
+        $pinroUiService.showLoading();
+        Maestro.$addExtraQty(data).then(function(res)
+        {
+          if(res.data.response.status==1)
+          {
+            Maestro.$getSingleSub(data1).then(function(res)
+            {
+              if(res.data.response.status==1)
+              {
+                  $scope.singleSubscriptions=res.data.response_data;
+                  $pinroUiService.hideLoading();
+                  $state.go($state.current, {}, {reload: true});
+              }
+              
+            });
 
 
-			}
-			
-		});
+          }
+          
+        });
 
+    });
 
 	}
 	
