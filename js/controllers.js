@@ -1643,8 +1643,8 @@ $scope.openTimePicker=function(dates){
 
     var myPopup = $ionicPopup.show({
         template: '<input type="text" ng-model="data.extra_qty">',
-        title: 'Please! enter your zip/pin code',
-        subTitle: 'Currently available in select cities',
+        title: 'add Extra Quantity',
+       // subTitle: 'Currently available in select cities',
         scope: $scope,
         buttons: [
               { text: 'Cancel' },
@@ -1673,14 +1673,19 @@ $scope.openTimePicker=function(dates){
         $scope.data.id=id;
         $scope.data.cust_id=AuthService.id();
         $pinroUiService.showLoading();
-        Maestro.$addExtraQty(data).then(function(res)
+//        alert('request  :'+JSON.stringify($scope.data));
+        Maestro.$addExtraQty($scope.data).then(function(res)
         {
+//          alert('add extra');
           if(res.data.response.status==1)
           {
+  //          alert('response 1');
             Maestro.$getSingleSub(data1).then(function(res)
             {
+    //          alert('getSingleSub');
               if(res.data.response.status==1)
-              {
+              { 
+      //            alert('response 2');
                   $scope.singleSubscriptions=res.data.response_data;
                   $pinroUiService.hideLoading();
                   $state.go($state.current, {}, {reload: true});
@@ -1705,8 +1710,8 @@ $scope.openTimePicker=function(dates){
 *******************************************************Cart list controller *****************************************************************
 *********************************************************************************************************************************************/
 .controller('CartCtrl', function ($scope, $ionicScrollDelegate, $ionicPopup, $rootScope, $state, $stateParams, $timeout, Maestro, CartService, StorageService, $pinroUiService,AuthService) {
-  	//CartService.getAll();
-  	$scope.CartItemList = [];
+  
+  $scope.CartItemList = [];
 	$scope.COD=false;
  	$scope.charges=50;
 	$scope.cartLength=CartService.getAll().length;
