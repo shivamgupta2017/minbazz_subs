@@ -1072,32 +1072,44 @@ $scope.checkZipCode= function(data){
       angular.forEach($scope.selectedproducts, function(value, key) 
       {
 
+        if(value.quantity>0)
+        {
+
+            var extraData=
+            {
+              product_id: value.id,
+              quantity: value.quantity,
+              subscription_id: $scope.data.subscription_id,
+              unit_id: value.unit.unit_id,
+              basic_weight: value.unit.basic_weight,
+              total_weight: value.unit.weight
+            };
+
+
+            $scope.next_day_selection_data.product_data.push(extraData);
+
+
+        }
         
-        var extraData={
-          product_id: value.id,
-          quantity: value.quantity,
-          subscription_id: $scope.data.subscription_id,
-          unit_id: value.unit.unit_id,
-          basic_weight: value.unit.basic_weight,
-          total_weight: value.unit.weight
-        };
-        $scope.next_day_selection_data.product_data.push(extraData);
+
           
 
       });
 
-        alert('req :'+JSON.stringify($scope.next_day_selection_data));
-         $pinroUiService.showLoading();
-         $scope.next_day_selection_data.product_data=JSON.stringify($scope.next_day_selection_data.product_data);
-        Maestro.$post_next_day_selection($scope.next_day_selection_data).then(function(res)
-        {
-          alert('response :'+JSON.stringify(res));
-          if(res.data.response.status==1)
+          alert('req :'+JSON.stringify($scope.next_day_selection_data));
+          $pinroUiService.showLoading();
+          $scope.next_day_selection_data.product_data=JSON.stringify($scope.next_day_selection_data.product_data);
+          
+          Maestro.$post_next_day_selection($scope.next_day_selection_data).then(function(res)
           {
+            // alert('response :'+JSON.stringify(res));
+              if(res.data.response.status==1)
+              {
 
-            alert('mission successfull');
-          } 
-          $pinroUiService.hideLoading();
+                alert('mission successfull');
+              }
+
+            $pinroUiService.hideLoading();
         });
 
 	}
