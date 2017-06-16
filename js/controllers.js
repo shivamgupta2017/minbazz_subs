@@ -2620,11 +2620,8 @@ $scope.removeSelectedItems = function(){
   	$scope.convertfloat=function(vaa){
 			return parseFloat(vaa);
 	}
-	//$scope.username = JSON.parse(localStorage.getItem('userObj'));
 	var getUserInfo = function(user_id){
 			$pinroUiService.showLoading();
-    //  alert('getUserinfo');
-			
       Maestro.$getCustomerById(user_id).then(function(res){
     				
     				$pinroUiService.hideLoading();
@@ -2657,7 +2654,6 @@ var getOrdersByCustomer = function(userId){
       {
             if(res.data.response_data.order_details.length>0)
             {
-
               $scope.items=res.data.response_data.order_details;
               $pinroUiService.hideLoading();
                             
