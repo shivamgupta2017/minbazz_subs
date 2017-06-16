@@ -1082,7 +1082,7 @@ $scope.checkZipCode= function(data){
               subscription_id: $scope.data.subscription_id,
               unit_id: value.unit.unit_id,
               basic_weight: value.unit.basic_weight,
-              total_weight: value.unit.weight
+              total_weight: value.unit.basic_weight*value.quantity*value.unit.weight
             };
 
 
@@ -1096,7 +1096,7 @@ $scope.checkZipCode= function(data){
 
       });
 
-          alert('req :'+JSON.stringify($scope.next_day_selection_data));
+//          alert('req :'+JSON.stringify($scope.next_day_selection_data));
           $pinroUiService.showLoading();
           $scope.next_day_selection_data.product_data=JSON.stringify($scope.next_day_selection_data.product_data);
           
