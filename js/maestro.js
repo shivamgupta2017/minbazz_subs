@@ -71,6 +71,14 @@ return {
 
 			});
             },
+             $post_next_day_selection : function (data) {          
+                    return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/post_next_day_needs',
+                 method:'GET',
+                 params: data
+
+            });
+            },
             $getCustomerSubscriptions : function (id) { //get categories products by category id       
              		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_cust_subs',

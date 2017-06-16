@@ -32,6 +32,7 @@ angular.module('starter.controllers', [])
 	//	alert(subscription_id);
 		$state.go('app.nextdayselection',{package_id:package_id,package_size_id:package_size_id,subscription_id:subscription_id});
 	}
+
 	$scope.opensingle= function(){
 		$state.go('app.singlesubscription');
 	}
@@ -1028,42 +1029,84 @@ $scope.checkZipCode= function(data){
 
   .controller('nextDaySelectionCtrl', function ($scope,$http, $stateParams, $ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, AuthService) {
 	//alert('hl');	
-	var data1={
+	var data1=
+  {
 		"cust_id":AuthService.id(),
 		"package_id":$stateParams.package_id,
 		"size_id":$stateParams.package_size_id
 	}
-	$scope.data={
+	$scope.data=
+  {
 		"cust_id":AuthService.id(),
 		"subscription_id":$stateParams.subscription_id
 	}
+
 	//$scope.selectedproducts=[];
 	$pinroUiService.showLoading();
-
 	Maestro.$getNextMenu(data1).then(function(res){
 		$scope.nextMenu=res.data.response_data;
-  		$scope.selectedproducts=[];
-		for(var i=0;i<$scope.nextMenu.product_data.length;i++){
+		$scope.selectedproducts=[];
+ //   alert('response :'+JSON.stringify(res));
+	 //alert('nextmenu :'+JSON.stringify($scope.nextMenu));
+  	for(var i=0;i<$scope.nextMenu.product_data.length;i++)
+    {
 		       var s={};
 			//s.quantity=0;
 			s.unit=$scope.nextMenu.product_data[i].unit_data[0];
 			s.id=$scope.nextMenu.product_data[i].id;
 			s.quantity=0;
-			//alert(JSON.stringify(s));
 			$scope.selectedproducts.push(s);
-			
 		}
-		$pinroUiService.hideLoading();
-		alert(JSON.stringify($scope.nextMenu));
+		  $pinroUiService.hideLoading();
 	});
+
+
 	$scope.check=function(){
-		alert(JSON.stringify($scope.data.selectedproducts));
+    $scope.next_day_selection_data=
+    {
+        cust_id: $scope.data.cust_id
+    };
+
+    $scope.next_day_selection_data.product_data=[];
+
+      angular.forEach($scope.selectedproducts, function(value, key) 
+      {
+
+        
+        var extraData={
+          product_id: value.id,
+          quantity: value.quantity,
+          subscription_id: $scope.data.subscription_id,
+          unit_id: value.unit.unit_id,
+          basic_weight: value.unit.basic_weight,
+          total_weight: value.unit.weight
+        };
+        $scope.next_day_selection_data.product_data.push(extraData);
+          
+
+      });
+
+        alert('req :'+JSON.stringify($scope.next_day_selection_data));
+         $pinroUiService.showLoading();
+         $scope.next_day_selection_data.product_data=JSON.stringify($scope.next_day_selection_data.product_data);
+        Maestro.$post_next_day_selection($scope.next_day_selection_data).then(function(res)
+        {
+          alert('response :'+JSON.stringify(res));
+          if(res.data.response.status==1)
+          {
+
+            alert('mission successfull');
+          } 
+          $pinroUiService.hideLoading();
+        });
+
 	}
 
 	$scope.aQuantity = function(item){
-		item.quantity++;
+  	item.quantity++;
 	}
 	$scope.dQuantity = function(item){
+    if(item.quantity>0)
 		item.quantity--;
 	}
 	

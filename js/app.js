@@ -31,7 +31,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-
+    
    
 
     
