@@ -34,6 +34,7 @@ angular.module('starter.controllers', [])
 	}
 
 	$scope.opensingle= function(){
+
 		$state.go('app.singlesubscription');
 	}
 	$scope.getnotification=function(){
@@ -1160,13 +1161,12 @@ $scope.checkZipCode= function(data){
 ********************************************************* Products by category id *************************************************
 **********************************************************************************************************************************/
   .controller('categoryCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService) {
-	
-$pinroUiService.showLoading();
-Maestro.$getCategoryProducts($stateParams.id).then(function(res){
+  $pinroUiService.showLoading();
+  Maestro.$getCategoryProducts($stateParams.id).then(function(res){
 	$scope.selectedSize={};
 	$scope.products=res.data.response_data;
-	alert(JSON.stringify($scope.products));
 	$pinroUiService.hideLoading();
+
 });
 
 $scope.subscribeProducts=function(id,unit_id,unit,weight){
@@ -1174,7 +1174,8 @@ $scope.subscribeProducts=function(id,unit_id,unit,weight){
 	$state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
 }
 
-$scope.addToCart = function (selected,id,price,unit,weight) {
+$scope.addToCart = function (selected,id,price,unit,weight) 
+{
 	alert(id);
 	var selectedProduct={};
 	selectedProduct.unit_mapping_id=id;
@@ -2624,7 +2625,7 @@ $scope.removeSelectedItems = function(){
 /* -------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------Search Product controller------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------*/
-.controller('SearchCtrl', function ($scope, $timeout,$stateParams, $state, $ionicScrollDelegate, $ionicHistory, $ionicLoading, Maestro, $pinroUiService) {
+.controller('SearchCtrl', function (CartService, $scope, $localStorage ,$rootScope, $timeout, $stateParams, $state, $ionicScrollDelegate, $ionicHistory, $ionicLoading, Maestro, $pinroUiService) {
 	$scope.page=1;
 	$scope.searchErorr="";
 	$scope.isError=false;
@@ -2634,46 +2635,110 @@ $scope.removeSelectedItems = function(){
   		if(data.id === 'search'){
   		}
 	});*/
-	
-	$scope.goback=function(){
-		$ionicHistory.goBack(-1);
+	//shivam
+
+  $scope.subscribeProducts=function(id,unit_id,unit,weight)
+  {
+  $state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
+  }
+
+
+	$scope.goback=function()
+  {
+	$ionicHistory.goBack(-1);
 	}
 	$scope.goToProduct = function (id) { //close open modal and go to product page
       		//$scope.searchModal.isShown() ? $scope.searchModal.hide() : null;
 
       		$state.go('app.single', {id: id});
     	};
+  var cart = angular.element(document.getElementsByClassName("shopping-cart"));
+  var addToCartAnimation = function () {
+        cart.css({
+            'opacity': '1',
+            'animation': 'bounceIn 0.5s linear'
+        });
+        $timeout(function () {
+            cart.css({
+            'animation': ''
+            });
+        }, 500)
+    }
+
+    $scope.addToCart = function (selected, id, price, unit, weight) 
+    {
+          
+
+          var selectedProduct={};
+          selectedProduct.unit_mapping_id=id;
+          selectedProduct.price=price;
+          selectedProduct.unit=unit;
+          selectedProduct.weight=weight;
+          selectedProduct.productId=selected.id;
+          selectedProduct.productName=selected.product_name;
+          selectedProduct.productImage=selected.image;
+          selectedProduct.quantity=1;
+          var isAvailable=false;
+          
+          for(var i=0; i<$localStorage.cart.length; i++){
+          if(($localStorage.cart[i].productId==selectedProduct.productId)&&($localStorage.cart[i].unit_mapping_id==selectedProduct.unit_mapping_id))
+            { isAvailable=true;
+              $localStorage.cart[i].quantity= parseInt($localStorage.cart[i].quantity) + 1; 
+            }
+              
+          }     
+           if(isAvailable==false){
+            CartService.push(selectedProduct);
+
+            $rootScope.cartlength++;
+          }
+          else{
+            
+          }
+            addToCartAnimation();
+    }
+
 	$scope.searchProducts= function(){
-		$scope.page=1;
-		if($scope.search1==null || $scope.search1==""|| $scope.search1==undefined){
+    
+  	$scope.page=1;
+		if($scope.search1==null || $scope.search1==""|| $scope.search1==undefined)
+    {
 			$scope.productList="";
 			$scope.searchErorr="Please enter some keywords to search";
 			$scope.isError=true;
 			$scope.more = false;
 		}
-		else{
+		else
+    {
 			$scope.searchErorr="";
 			$scope.isError=false;
 			$pinroUiService.showLoading();
-   			Maestro.$getAllProducts($scope.search1,$scope.page).then(function(res){
-				if(res.data.length>=10)
-					$scope.more = true;
-    				if(res.data.length){
-      					$scope.productList = res.data;
-					
-    				}else{
-						$scope.searchErorr="No Results for :  \""+$scope.search1+"\"";
-						$scope.isError=true;
-						$scope.productList="";
-						$scope.more = false;
-				}
+   			Maestro.$getAllProducts($scope.search1).then(function(res){
+      	if(res.data.response.status===1)
+					{
+              if(res.data.response_data.length)
+              {
+                  $scope.productList = res.data.response_data;
+                  //alert('response :'+JSON.stringify($scope.productList));
+              }
+              else
+              {
+                $scope.searchErorr="No Results for :  \""+$scope.search1+"\"";
+                $scope.isError=true;
+                $scope.productList="";
+                $scope.more = false;
+            }
+
+          }
+    				
 				$pinroUiService.hideLoading();		
   			}, function(err){
 				$pinroUiService.hideLoading();
   			})
 		};
 	}
-	$scope.loadMoreProducts= function (){
+	/*$scope.loadMoreProducts= function ()
+  {
 		$scope.page++;
 		Maestro.$getAllProducts($scope.search1,$scope.page).then(function(res){
 			if(res.data.length>0)
@@ -2683,7 +2748,7 @@ $scope.removeSelectedItems = function(){
 			$scope.$broadcast('scroll.infiniteScrollComplete');	
 		}, function(err){		
 		})
-   	}
+   	}*/
 })
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------

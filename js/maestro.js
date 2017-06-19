@@ -88,7 +88,6 @@ return {
 			});
             },
             $getCustomerAddresses : function (id) { //get categories products by category id       
-			alert('dffd');
              		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_customer_address',
 			     method:'GET',
@@ -337,18 +336,13 @@ return {
                 
             },
             //Service Function to get products by category
-            $getAllProducts : function (searchString,page) {
-		   request.params.search_product=searchString;
-		   request.params.page=page;
-		   	
-              return $http.get( request.url + '/list-products.php', {
-                    params: request.params,
-                    headers: {
+            $getAllProducts : function (data) {
+              return $http.get('https://www.minbazaar.com/subs/admin/service/search', {
+                params: {search: data},
+                headers: {
                         "Content-Type": 'application/json'
                     }
-                    
                 })
-                
             },
             
             //Service Function to get products by id

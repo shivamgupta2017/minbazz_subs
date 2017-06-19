@@ -5,14 +5,13 @@
 	</ion-nav-title>
 
 
-<!----------------------------------------------------------------------------------------------------------------->
+
 	<!--<div class="bar bar-subheader item-input-inset subheader-with-input" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px; height:40px" id="searchbar">
   		<label class="item-input-wrapper" style="background-color:white; z-index:13"> 
     			<input type="search" placeholder="Type here" ng-model="search1" style="margin-top:10px">
   		</label>
   		<img src="img/icons/search_icon.svg">
 	</div> -->
-<!------------------------------------------------------------------------------------------------------------------->
 	<ion-content  style="background-color:#ffffff"  id="contentsearch" style="background-image:url(img/back.jpg)"> <!--on-scroll="getScrollPosition()"-->
 
         <!--<ion-refresher on-refresh="doRefresh()">
@@ -30,6 +29,7 @@
 
 <!---------------------------------------------------------Categories ------------------------------------------------------------>
 <div style="height:100%; width:100vw; background-color:white; margin-bottom:100px">
+     
      <div ng-repeat="product in products" style="display:inline-block; width:49vw; height:60vw; margin-top:10px; border:1px solid #ddd;" ng-click="openCategory(category.id)">
 		
 		<div style="height:45%; background-image:url(https://www.minbazaar.com/subs/admin/{{product.image}}); background-position:center; background-repeat:no-repeat; background-size:contain">
@@ -59,6 +59,7 @@
 			<button class="button button-small" style="width:50%" ng-click="subscribeProducts(product.id,s.unit_id,s.unit,s.weight);">Subscribe</button>
 		</div>
      </div>
+
 
 </div>
 <!--------------------------------------------------------------categoriess end ---------------------------------------------------->

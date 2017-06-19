@@ -3,7 +3,7 @@
  <button class="button button-icon icon ion-ios-arrow-back" ng-click="goback()"></button>
   <div class="h1 title">Search</div>
 </div>
-	<form ng-submit="searchProducts()">
+	<form ng-submit="">
 	<div class="bar bar-subheader item-input-inset subheader-with-input" style="border-bottom:1px solid #ddd">
   		<label class="item-input-wrapper"> 
     			<input type="search" placeholder="Type here" ng-model="search1">
@@ -17,34 +17,67 @@
 
 <div ng-include="'templates/common/loading.html'" ng-show="loading"></div>
 
-	<ion-content class="has-subheader"  style="background-color:#f4f4f4">
-<div style="margin-top:50px" ng-if="isError">{{searchErorr}}</div>
-<div class="product-list">
-			<ul>
-				<!--<li class="list-item" ng-repeat="item in productList | orderBy:filterBy | filter:search" ng-click="goToProduct(123)">
-					<div class="product-image" style="background: url('{{item.imgUrl}}'); background-size:contain; background-repeat: no-repeat; height: 200px;">
-					</div>
-					<h5>{{item.name}}</h5>
-					<small class="category-name">{{item.category}}</small>
-					<small class="price">&#8377;{{item.price}}</small>
-				</li>-->
-        <li class="list-item" ng-repeat="item in productList | orderBy:filterBy | filter:search" ng-click="goToProduct(item.id)" style="border-right:1px solid #ddd; border-bottom:1px solid #ddd; height:60vw; background-color:white;">
-					<div style="height:50%; background: url('{{item.images[0].src}}'); background-size:contain; background-position:center; background-repeat:no-repeat">
-					</div>
-				<h6 ng-if="item.name.length>65" style="font-size:3vw; line-height:4vw; min-height:12vw">{{item.name | limitTo:65}} . . .</h6>
-				<h6 ng-if="item.name.length<=65" style="font-size:3vw; line-height:4vw; min-height:12vw;">{{item.name}}</h6>
-					<small class="category-name">{{item.categories[0].name}}</small>
-					<span ng-if="item.sale_price!=''">
-					<span class="price" style="text-decoration: line-through; font-size:3vw; font-weight:bold; color:red"> 
-						<span style="font-weight:normal; color:black;">&#8377;{{item.regular_price}}&nbsp;&nbsp;</span>
-					</span>
-					</span>
-					<span class="price">&#8377;{{item.price}}</span>
-				</li>
-			</ul>
-		</div>
-        <ion-infinite-scroll on-infinite="loadMoreProducts()" spinner="ios" distance="10%" ng-if="more"></ion-infinite-scroll>
-	<!--<button  ng-show="buttonShow" class="button button-dark col button-small" style="padding:0px; margin:0 auto;" ng-click="loadMoreProducts()"><span ng-show="textShow"> {{loadText}} </span><ion-spinner ng-show='isLoading' style="fill:#fff; stroke:#fff;" icon="dots" ></ion-spinner> </button>-->
+	<ion-content class="has-subheader"  style="background-color:#ffffff"  id="contentsearch" style="background-image:url(img/back.jpg)">
+		<style>
+			.abc{
+					background-color:white;
+					text-align:center;
+					color:black;
+				}
+		</style>
 
-</ion-content>
+
+		<div style="height:100%; width:100vw; background-color:white; margin-bottom:100px">
+						<div style="margin-top:50px" ng-if="isError">{{searchErorr}}</div>
+							<div class="product-list">
+								
+								<div ng-repeat="product in productList" style="display:inline-block; width:49vw; height:60vw; margin-top:10px; border:1px solid #ddd;" ng-click="openCategory(category.id)">
+		
+										<div style="height:45%; background-image:url(https://www.minbazaar.com/subs/admin/{{product.image}}); background-position:center; background-repeat:no-repeat; background-size:contain">
+										</div>
+								<div style="height:10%;">
+										{{product.product_name}}
+								</div>
+								
+								<div style="height:10%;" ng-if="product.unit_data.length>1">
+									&#8377; {{s.price}}
+								</div>
+							
+								<div style="height:10%;" ng-if="product.unit_data.length==1">
+									&#8377; {{product.unit_data[0].price}}
+								</div>
+							
+								<div style="height:20%;  padding:10px 20px;" ng-show="product.unit_data.length>1">
+								
+								<select  class="abc" style="display:inline-block; width:100%; border:1px solid #ddd;" ng-init="s = product.unit_data[0]" ng-model="s" ng-options="v.weight+' '+v.unit for v in product.unit_data">
+								</select>
+									<!--<div ng-if="product.unit_data.lengt==1">{{product.unit_data[0].unit}}</div>-->
+			
+								</div>
+								
+								<div style="height:20%;  padding:10px 20px;" ng-show="product.unit_data.length==1">
+									{{product.unit_data[0].weight+' '+product.unit_data[0].unit}}
+										<!--<div ng-if="product.unit_data.lengt==1">{{product.unit_data[0].unit}}</div>-->			
+								</div>
+								
+								<div style="height:15%">
+			
+								<button ng-click="addToCart(product,s.unit_id,s.price,s.unit,s.weight)" class="button button-small button-danger" style="width:40%">
+								Add</button>&nbsp;
+								
+								<button class="button button-small" style="width:50%" ng-click="subscribeProducts(product.id,s.unit_id,s.unit,s.weight);">Subscribe</button>
+		</div>
+     </div>
+
+
+
+
+
+
+							</div>
+		
+							<!-- <ion-infinite-scroll on-infinite="loadMoreProducts()" spinner="ios" distance="10%" ng-if="more"></ion-infinite-scroll> -->
+		
+						</div>
+	</ion-content>
 </ion-view>
