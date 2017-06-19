@@ -785,7 +785,7 @@ $scope.allImages = [];
 
 
 //------------------------------------------------------------- LOGIN FUNCTION START -------------------------------------------------------------
-
+      
     	$scope.user = {};    		// declare user object  
     	$scope.disableSubmit = false; 	// to disable and enable button on submit
     	$scope.login = function () {    	
@@ -818,29 +818,34 @@ $scope.allImages = [];
   	});
 //reset password request function (fortgot password)----------------------------------------------------------------------------------------------
     $scope.resetPassword = function (user) {
-      	$scope.disableSubmit = true;
+        $scope.disableSubmit = true;
       	$pinroUiService.showLoading();
       	var params = {
-        	insecure: 'cool',
-        	user_login: user.user_login
+        	
+        	email: user.user_login
       	};
       	$dataService.$passwordReset(params).then(function (res) {
         	
-        	if (res.status === 200) {
+          alert('response :'+JSON.stringify(res));
+
+        	if (res.data.response.status === 1) 
+          {
           		$scope.resetError = '';
           		$scope.resetSuccess = res.data.msg;
-        	} else {
+        	} else 
+          {
           		$scope.resetSuccess = '';
           		$scope.resetError = res.data.error;
         	}
- 
+          
+             
        		$scope.disableSubmit = false;
        		$pinroUiService.hideLoading();
       }, function (err) {
         	console.log(err)
         	$scope.resetSuccess = '';
         	$scope.resetError = 'Email or username not found';
-		$pinroUiService.hideLoading();
+	       	$pinroUiService.hideLoading();
         	$scope.disableSubmit = false;
       })
     };
