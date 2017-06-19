@@ -160,7 +160,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
     })
 
     .state('app.confirmation', {
-      url: '/confirmation',
+      url: '/confirmation/:selected_address_id',
       views: {
         'menuContent': {
           templateUrl: 'templates/confirmation.html',

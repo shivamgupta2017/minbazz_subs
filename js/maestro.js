@@ -95,6 +95,14 @@ return {
 
 			});
             },
+            $getSelectedAddresses : function (address_id) { //get categories products by category id       
+                    return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/get_customer_address',
+                 method:'GET',
+                 params: {"address_id": address_id}
+
+            });
+            },
             $postAddresses : function (data) { //get categories products by category id       
 			//alert('dffd');
              		return $http({ 

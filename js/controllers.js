@@ -1257,7 +1257,7 @@ $scope.addToCart = function (selected,id,price,unit,weight)
 	//alert('mizan 007  : '+JSON.stringify());
 
 	$scope.selectSubscriptionType={};
-	$scope.subobject={
+  	$scope.subobject={
 		cust_id: AuthService.id(),
 		product_id:$stateParams.id,
 		unit_mapping_id:$stateParams.unit_id
@@ -1311,7 +1311,7 @@ $scope.addToCart = function (selected,id,price,unit,weight)
 			    
           $scope.openTimePicker($scope.new_dates);
 
-			   $scope.showNextButton=false;
+	  		   $scope.showNextButton=false;
 			}
       		}
     	};
@@ -1331,7 +1331,7 @@ $scope.addToCart = function (selected,id,price,unit,weight)
 
 /* select address  */
 	$scope.select_address=function(id){
-
+    //shivam gupta
 		$scope.showPopup(id);
 	}
 /*select address */
@@ -1465,7 +1465,7 @@ var addAddress=function(selected_zip)
         {
   //      
           Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
-          $scope.Addresses=res.data.response_data;
+            $scope.Addresses=res.data.response_data;
           });
           $pinroUiService.hideLoading();
 
@@ -1474,7 +1474,7 @@ var addAddress=function(selected_zip)
       }, function (err) 
       { 
         console.log(err);
-	$pinroUiService.hideLoading();
+      	$pinroUiService.hideLoading();
       });
 
 
@@ -1510,7 +1510,8 @@ var retSelectedDates = function (dates) {
 
 
 /********************popup for quantity**************/
-$scope.showPopup = function(selected_address_id) {
+$scope.showPopup = function(selected_address_id) 
+{
   	$scope.data = {};
   //	
   // An elaborate, custom popup
@@ -1548,7 +1549,7 @@ $scope.showPopup = function(selected_address_id) {
 			
   		});
 
- 	};
+};
 
 /************************************popup quantity end************************************************/
 
@@ -1615,13 +1616,11 @@ $scope.openTimePicker=function(dates){
              		 Maestro.$add_new_subscription($scope.subobject).then(function(res)
               		{ 
 		                $pinroUiService.hideLoading();
-        		        alert('response :'+JSON.stringify(res));
-               				
                				if(res.data.response.status==1)
                 				{
-                					//subscription saved successfully
-	         								$state.go('app.confirmation');                					
-                  
+                                     //shivam gupta abcd
+                            
+                            $state.go('app.confirmation',{selected_address_id: $scope.subobject.delivery_add_id});                					
             				    }
             				
 
@@ -1665,10 +1664,26 @@ $scope.openTimePicker=function(dates){
 
   .controller('confirmationCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
   {
-  
-  	alert('confirmationCtrl');
-  	
+      $scope.selected_address={};
+      $scope.selected_address_id=$stateParams.selected_address_id;
+      $ionicHistory.nextViewOptions({
+            disableBack: true
+      });
 
+        $scope.get_selected_address=function(){
+
+               $pinroUiService.showLoading();
+                Maestro.$getSelectedAddresses($scope.selected_address_id).then(function(res){
+                if (res.data.response.status===1) 
+                {   
+                    
+                    $scope.selected_address=res.data.response_data[0];
+                    $pinroUiService.hideLoading();
+                    
+                }
+          
+            });
+        }
   })
 
 

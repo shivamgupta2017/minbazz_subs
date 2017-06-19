@@ -1,24 +1,40 @@
-<ion-view view-title="Order Status" class="payment" hide-back-button="true>
-	
+<ion-view view-title="Order Status" class="payment" hide-back-button="true">
 
-	<ion-content">
+	<ion-content ng-init="get_selected_address()">
+  
+    <div class="content" style="margin-top:100px">
+		    <div style="font-size:25px ; display: inline-block; border-style: solid;">
+              <span>
+              <h3>Thank You, Your Order has been placed Successfully.</h3>
+              </span>
+            </div>
+        </div>
 
-       
-     
 
-        
-  	<div class="content" style="margin-top:100px">
-    	<!-- 	<i class="icon ion-android-wifi" style="font-size:150px"></i> -->
+        <div style="border:1px inset black; margin-top: 20px;">
+            {{'We have sent you a Order Confirmatioin'}}
+        </div>
+          
 
-		<div style="font-size:25px">thank you for the subscription have a blastful day</div>
-  	</div>
 
-  	<div>
-  		
-  	<button type="button" class="button button-positive button-large" ui-sref="app.editorial" >HOME</button>
-
+        <div style="border:1px inset #ddd; margin-top: 20px;">
+          <h3>
+            {{selected_address.address}}
+            <br>
+            {{selected_address.apartment}}
+            <br>
+            {{selected_address.zip}}
+            <br>
+            {{selected_address.mobno}}
+          </h3>
+          </div>
+  	<div style="padding-top: 25px;">
+  	<button style="background-color: transparent; overflow: hidden; border:1px solid black; outline:none;" type="button" class="button-large" ui-sref="app.editorial" >Continue Shopping</button>
   	</div>
       
 	
+
 	</ion-content>
+
+
 </ion-view>
