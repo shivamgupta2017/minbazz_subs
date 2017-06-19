@@ -179,7 +179,7 @@ angular.module('starter.services', [])
         return {
 
             $checkZip: function (data) {
-                             return $http({ 
+                return $http({ 
 			     url:apiUrl+'check_zip',
 			     method:'GET',
 			     params: data
