@@ -29,19 +29,17 @@
 </div>
 </div>
 
-<!---->    
-<!---->
-<!---->
+
 
 <!--subscription type end-->
-<div class="inputholder" style="margin-top:15px; margin-bottom:15px" ng-if="is_subs=='true'">
+<div class="inputholder" style="margin-top:15px; margin-bottom:15px" ng-show="(subobject.delivery_add_id!=undefined)&&(subobject.quantity!=undefined)" ng-if="is_subs=='true'">
 	<h4> Select Subscription type 
 	<a style="float:right; margin-right:10px" ng-if="hidecontent" ng-click="editshipping()"><img src='img/edit.png' height="15">
 			</a>
 	</h4> 
   	<ion-list>
-     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'2'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Daily</span></ion-radio>
-     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'1'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Custom</span></ion-radio>
+     <ion-radio style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'2'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Daily</span></ion-radio>
+     <ion-radio style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'1'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Custom</span></ion-radio>
       
   </ion-list>
   </div>

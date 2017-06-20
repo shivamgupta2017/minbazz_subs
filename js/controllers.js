@@ -1303,9 +1303,12 @@ var retSelectedDates = function (dates) {
 
 /* select address  */
 	$scope.select_address=function(id){
+
+
 		$scope.subobject.delivery_add_id=id;
 		if($stateParams.is_subs=='true' || $stateParams.is_subs	==true){
-			if($stateParams.is_package=="false" || $stateParams.is_package==false){
+			
+      if($stateParams.is_package=="false" || $stateParams.is_package==false){
 					$scope.subobject.product_id=$stateParams.id,
 					$scope.subobject.package_id=0;
 					$scope.subobject.package_size_id=0;
@@ -1350,7 +1353,7 @@ var retSelectedDates = function (dates) {
 				product.unit=$localStorage.cart[i].unit;
 				product.weight=$localStorage.cart[i].weight;
 				product.basic_weight=$localStorage.cart[i].basic_weight;
-			$scope.subobject.paid_amount=$scope.subobject.paid_amount+$localStorage.cart[i].price*$localStorage.cart[i].quantity;
+		  	$scope.subobject.paid_amount=$scope.subobject.paid_amount+$localStorage.cart[i].price*$localStorage.cart[i].quantity;
 				$scope.sendingObj.order_products.push(product);
 			}
 		}
@@ -1441,7 +1444,7 @@ var addAddress=function(selected_zip){
         	$scope.new_address.mobno = res.mobno;
 		*/
       		$pinroUiService.showLoading();
-		Maestro.$postAddresses($scope.new_address).then(function(res){
+	       	Maestro.$postAddresses($scope.new_address).then(function(res){
         		if(res.data.response.status==1){
           			Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
           				$scope.Addresses=res.data.response_data;
@@ -1507,21 +1510,28 @@ $scope.showPopup = function() {
 
 /************************************popup quantity end************************************************/
 	$scope.changeSubscriptionType= function(){
-		
- 		if($scope.selectSubscriptionType.answer=="2"){
-			$scope.datepickerObject.header="Select Starting Date";
-			$scope.datepickerObject.selectType='SINGLE';
-			$scope.datepickerObject.closeOnSelect=true;
-			$scope.showNextButton=true;
-			$scope.subobject.custom_date=0;
-		}
-		else if($scope.selectSubscriptionType.answer=="1"){
-			$scope.datepickerObject.header="Please Select Your Dates";
-			$scope.datepickerObject.selectType='MULTI';
-			$scope.datepickerObject.closeOnSelect=false;
-			$scope.showNextButton=true;
-			$scope.subobject.custom_date=1;
-		}
+      
+            /*if(($scope.subobject.delivery_add_id!=undefined)&&($scope.subobject.quantity!=undefined))
+              $scope.showNextButton=true;
+            else 
+              alert('select address first');*/
+
+       
+             if($scope.selectSubscriptionType.answer=="2"){
+            $scope.datepickerObject.header="Select Starting Date";
+            $scope.datepickerObject.selectType='SINGLE';
+            $scope.datepickerObject.closeOnSelect=true;
+            
+            $scope.subobject.custom_date=0;
+          }
+          else if($scope.selectSubscriptionType.answer=="1"){
+            $scope.datepickerObject.header="Please Select Your Dates";
+            $scope.datepickerObject.selectType='MULTI';
+            $scope.datepickerObject.closeOnSelect=false;
+            $scope.subobject.custom_date=1;
+          }
+       
+
 	}
 
 
@@ -1909,6 +1919,7 @@ $scope.openTimePicker=function(dates){
 		//check billing and shipping details valid or not
 		//get city, state by pincode and also get cod is available or not
  	$scope.next=function(){
+
 			$scope.disable=false;
 			$scope.express_charges = -1;
 			pMethod="";
