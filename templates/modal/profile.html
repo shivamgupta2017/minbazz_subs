@@ -14,9 +14,7 @@
 <ion-content  class="profile" style="background-color:#f4f4f4">
 
 <!--
-
  <div class="cover-photo-holder">
-
      <img ng-src="{{user.gravatar}}">
      <h3 class="regular-font">{{username.first_name +' '+username.last_name}}</h3>
    
@@ -28,11 +26,9 @@
 
 <div class="order-list" ng-if="show == 'orders'">
                 <!--<ion-list ng-if="orderList.length">
-
           <ion-item class="item-divider">
           Order history
           </ion-item>
-
             <ion-item ng-repeat="order in orderList track by $index" class="item-icon-right">
                       
                        <h5>Order ref #{{order.number}}</h5>
@@ -47,7 +43,7 @@
 
 
       <div ng-if="showmessage" class="padding"> No orders done yet </div>
-      <div ng-if="items.length" class="padding">
+      <div ng-if="items.length" >
 <!-- 1 loop -->
       <div class="card" ng-repeat="order in items track by $index" ng-if="order.order_products.length>0">
     
@@ -55,7 +51,7 @@
 
           		<div class="row">
               		<div class="col col-67">
-                  			<!-- <div>ORDER #{{order.number}}</div> -->
+                  			<div>Delivery Date: {{order.delivery_date | date:'dd MMM'}}</div>
               		</div>
               		<div class="col text-right status-holder" ng-if="order.order_products.length">
                   			<span class="status-badge">{{order.status}}</span>
@@ -68,7 +64,8 @@
 <!-- 1loop -->      <div class="line-item" ng-repeat="it in order.order_products">
 
                 <!--     <div ng-repeat="it in item.order_products"> -->
-                      		<h4>{{it.product_name}} x {{it.quantity}}</h4>
+                      		<h4>{{it.product_name}} {{it.weight+it.unit}} x {{it.quantity}}</h4>
+				<h5>&#8377; {{it.price}}</h5>
                       		<!-- <div ng-repeat="variation in item.meta" style="line-height: 0px; text-transform: uppercase; ">
                               	<small>&#8377;{{variation.label}}: {{variation.value}}</small>
                         	</div> -->
@@ -76,7 +73,7 @@
                    <!--  </div>      -->
     			
              	    </div>
-                          <h5 class="price">&#8377;&nbsp;{{order.paid_amount | number:2}}</h5>
+                         
 
     	       </div>
 
@@ -102,7 +99,7 @@
 			Paid online
 			</div>
         		<div class="col price-holder">
-            		Total &#8377;&nbsp;{{order.total}}
+            		Total &#8377;&nbsp;{{order.paid_amount}}
         		</div>
     		</div>
 

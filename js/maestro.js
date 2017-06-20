@@ -22,35 +22,14 @@ angular.module('starter')
 return {
 
 /***********************************************************************************************************************************************/
-            
-
-            $getPackages : function () 
-            {	//get all packages
+            $getPackages : function () {	//get all packages
 	    		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_packages',
 			     method:'GET',
 			});
                 
             },
-
-            $pause_my_subscription : function (data, current_status) {   
-                alert('current_status :'+current_status);
-                return $http({ 
-                 url:'https://www.minbazaar.com/subs/admin/service/pause_single_subscription/'+current_status,
-                 method:'GET',
-                 params: data
-                });
-            },
-
-            $get_orders : function (data) {   
-                return $http({ 
-                 url:'https://www.minbazaar.com/subs/admin/service/get_orders',
-                 method:'GET',
-                 params: {"cust_id" : data}
-                });
-            },
-
-	       $getCategories : function () {	 //get all categories
+	    $getCategories : function () {	 //get all categories
 	    		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_categories',
 			     method:'GET',
@@ -71,14 +50,6 @@ return {
 
 			});
             },
-             $post_next_day_selection : function (data) {          
-                    return $http({ 
-                 url:'https://www.minbazaar.com/subs/admin/service/post_next_day_needs',
-                 method:'GET',
-                 params: data
-
-            });
-            },
             $getCustomerSubscriptions : function (id) { //get categories products by category id       
              		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_cust_subs',
@@ -88,20 +59,13 @@ return {
 			});
             },
             $getCustomerAddresses : function (id) { //get categories products by category id       
+			//alert('dffd');
              		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_customer_address',
 			     method:'GET',
 			     params: {"customer_id":id}
 
 			});
-            },
-            $getSelectedAddresses : function (address_id) { //get categories products by category id       
-                    return $http({ 
-                 url:'https://www.minbazaar.com/subs/admin/service/get_customer_address',
-                 method:'GET',
-                 params: {"address_id": address_id}
-
-            });
             },
             $postAddresses : function (data) { //get categories products by category id       
 			//alert('dffd');
@@ -112,15 +76,21 @@ return {
 
 			});
             },
-            $add_new_subscription : function (data) { //get categories products by category id       
+            $add_new_subscription : function (data,action) { //get categories products by category id       
             //alert('dffd');
-                    return $http({ 
-                 url:'https://www.minbazaar.com/subs/admin/service/post_cust_subs',
-                 method:'GET',
-                 params: data
-
-            });
-},
+			return $http({ 
+				url:'https://www.minbazaar.com/subs/admin/service/post_cust_subs'+action,
+                 		method:'GET',
+                 		params: data
+            		});
+	    },
+            $create_order : function (data) { //create order     
+			return $http({ 
+				url:'https://www.minbazaar.com/subs/admin/service/create_order',
+                 		method:'GET',
+                 		params: data
+            		});
+	    },
             $getNextMenu : function (data) { //get categories products by category id       
 			//alert('dffd');
              		return $http({ 
@@ -158,10 +128,24 @@ return {
 
 			});
             },
+            $get_orders : function (data) {   
+                return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/get_orders',
+                 method:'GET',
+                 params: {"cust_id" : data}
+                });
+	  },
+	   $get_price_cart : function (data) {   
+                return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/get_cart_price',
+                 method:'GET',
+                 params: data
+                });
+	},
 
 /***********************************************************************************************************************************************/
             $getProducts : function () {
-		alert("service");
+		//alert("service");
               return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/application',
 			     method:'GET',
@@ -344,13 +328,21 @@ return {
                 
             },
             //Service Function to get products by category
-            $getAllProducts : function (data) {
+ $getAllProducts : function (data) {
               return $http.get('https://www.minbazaar.com/subs/admin/service/search', {
                 params: {search: data},
                 headers: {
                         "Content-Type": 'application/json'
                     }
                 })
+},
+            $getSelectedAddresses : function (address_id) { //get categories products by category id       
+                    return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/get_customer_address',
+                 method:'GET',
+                 params: {"address_id": address_id}
+
+            });
             },
             
             //Service Function to get products by id
@@ -396,7 +388,7 @@ return {
                 var orderParams = request.params;
                 orderParams.customer = customerId;
 
-                return $http.get( request.url + '/get_orders.php', {
+                return $http.get( request.url + '/list-orders.php', {
                     params: orderParams,
                     headers: {
                         "Content-Type": 'application/json'

@@ -31,7 +31,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    
+
    
 
     
@@ -158,21 +158,8 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
         }
       }
     })
-
-    .state('app.confirmation', {
-      url: '/confirmation/:selected_address_id',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/confirmation.html',
-          controller: 'confirmationCtrl'
-        }
-      }
-    })
-    
-
-
     .state('app.step_1', {
-      url: '/step_1/:id/:unit_id/:unit/:weight/:is_subs/:is_package',
+      url: '/step_1/:id/:unit_id/:unit/:weight/:is_subs/:is_package/:size_id/:package_id',
       views: {
         'menuContent': {
           templateUrl: 'templates/step_1.html',
@@ -186,6 +173,15 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
         'menuContent': {
           templateUrl: 'templates/search-product.html',
           controller: 'SearchCtrl'
+        }
+      }
+    })
+    .state('app.confirmation', {
+      url: '/confirmation/:selected_address_id',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/confirmation.html',
+          controller: 'confirmationCtrl'
         }
       }
     })

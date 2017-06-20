@@ -4,13 +4,13 @@ angular.module('starter.controllers', [])
 
 	var cart = angular.element(document.getElementsByClassName("shopping-cart"));
 	var carts= CartService.getAll();
-	var cartqty= 0;
+	var cartqty= carts.length;
 	var errNotification="";
 	$scope.readCount=0;
  	$scope.Notifications= [];
- 	for(i=0;i<carts.length;i++){
+ 	/*for(i=0;i<carts.length;i++){
     		cartqty=cartqty+carts[i].quantity;
- 	}
+ 	}*/
 
 	/*$scope.openSearchModal1 = function(){
 		$state.go('app.search');
@@ -22,19 +22,17 @@ angular.module('starter.controllers', [])
 	
 	Maestro.$getSubscribePackages(AuthService.id()).then(function(res){	
 		$scope.nextdaysselection=res.data.response_data;
-//		alert(JSON.stringify($scope.nextdaysselection));
+		//alert(JSON.stringify($scope.nextdaysselection));
 		//$scope.selectedSize={};
 		//$scope.products=
 		//$pinroUiService.hideLoading();
 	})
 
 	$scope.openNextDaySelection= function(package_id,package_size_id,subscription_id){
-	//	alert(subscription_id);
+		alert(subscription_id);
 		$state.go('app.nextdayselection',{package_id:package_id,package_size_id:package_size_id,subscription_id:subscription_id});
 	}
-
 	$scope.opensingle= function(){
-
 		$state.go('app.singlesubscription');
 	}
 	$scope.getnotification=function(){
@@ -267,7 +265,6 @@ $scope.reloadView = function(){
     scope: $scope
   }).then(function (modal) {
     $scope.cartModal = modal;
-  	
   });
   $scope.closeCartModal = function () {
     $scope.cartModal.hide();
@@ -285,11 +282,9 @@ var checkCartItems = function(){
 
 //open cart modal
   $scope.openCartModal = function () {
-    
     if(checkCartItems()){
        $scope.cartModal.show();
-    }
-    else{
+    }else{
        // An alert dialog
  $ionicPopup.alert({
      title: 'Your cart is empty',
@@ -321,70 +316,66 @@ var checkCartItems = function(){
 
 
   // Create the profile modal that we will use later
-                            $ionicModal.fromTemplateUrl('templates/modal/profile.html', {
-                              id: 'profile',
-                              scope: $scope
-                            }).then(function (modal) {
-                            
-                              $scope.profileModal = modal;
-                            
-                            });
-                            $scope.closeProfileModal = function () {
-                              $scope.profileModal.hide();
-                            };
-                            $scope.openProfileModal = function () {
-                              
+  $ionicModal.fromTemplateUrl('templates/modal/profile.html', {
+    id: 'profile',
+    scope: $scope
+  }).then(function (modal) {
+    $scope.profileModal = modal;
+  });
+  $scope.closeProfileModal = function () {
+    $scope.profileModal.hide();
+  };
 
-                              $scope.profileModal.show();
-                            };
+  $scope.openProfileModal = function () {
+    $scope.profileModal.show();
+  };
 
-                $ionicModal.fromTemplateUrl('templates/modal/settings.html', {
-                  id: 'settings',
-                  scope: $scope
-                }).then(function (modal) {
-                  $scope.settingsModal = modal;
+  // Create the settings modal
+  $ionicModal.fromTemplateUrl('templates/modal/settings.html', {
+    id: 'settings',
+    scope: $scope
+  }).then(function (modal) {
+    $scope.settingsModal = modal;
+  });
+  $scope.closeSettingsModal = function () {
+    $scope.settingsModal.hide();
+  };
 
-                });
-                $scope.closeSettingsModal = function () {
-                  $scope.settingsModal.hide();
-                };
+  $scope.openSettingsModal = function () {
+    $scope.settingsModal.show();
+  };
 
-                $scope.openSettingsModal = function () 
-                {
+  // Create the edit profile modal
+  $ionicModal.fromTemplateUrl('templates/modal/edit-profile.html', {
+    id: 'edit-profile',
+    scope: $scope
+  }).then(function (modal) {
+    $scope.editProfileModal = modal;
+  });
+  $scope.closeEditProfileModal = function () {
+    $scope.editProfileModal.hide();
+  };
 
-                  $scope.settingsModal.show();
-                };
+  $scope.openEditProfileModal = function () {
+    $scope.editProfileModal.show();
+  };
 
-                                        $ionicModal.fromTemplateUrl('templates/modal/edit-profile.html', {
-                                          id: 'edit-profile',
-                                          scope: $scope
-                                        }).then(function (modal) {
-                                          $scope.editProfileModal = modal;
-                                        });
-                                        $scope.closeEditProfileModal = function () {
-                                          $scope.editProfileModal.hide();
-                                        };
-
-                                        $scope.openEditProfileModal = function () {
-                                          $scope.editProfileModal.show();
-                                        };
-
+//
   $ionicModal.fromTemplateUrl('templates/modal/add_new_address.html', {
     id: 'add_new_address',
     scope: $scope
   }).then(function (modal) {
     $scope.add_new_addressModal = modal;
   });
-  $scope.close_add_new_address_Modal = function () {
-
+  $scope.close_add_new_addressModal = function () {
     $scope.add_new_addressModal.hide();
   };
 
-  $scope.open_add_new_address_Modal = function () {
-    
+  $scope.open_add_new_addressModal = function () {
     $scope.add_new_addressModal.show();
-  
   };
+
+
 
 
 
@@ -491,7 +482,7 @@ $scope.allImages = [];
 
 
 
-///controller over here hehe
+
 
 
 
@@ -786,7 +777,7 @@ $scope.allImages = [];
 
 
 //------------------------------------------------------------- LOGIN FUNCTION START -------------------------------------------------------------
-      
+
     	$scope.user = {};    		// declare user object  
     	$scope.disableSubmit = false; 	// to disable and enable button on submit
     	$scope.login = function () {    	
@@ -804,7 +795,8 @@ $scope.allImages = [];
        			$pinroUiService.hideLoading();
      		}, function (err) {
         		$scope.loginError = 'Invalid username or password';
-        		$scope.disableSubmit = false;       
+        		$scope.disableSubmit = false;   
+			alert(JSON.stringify(err));    
         		$pinroUiService.hideLoading();
       		})
     	};
@@ -819,34 +811,29 @@ $scope.allImages = [];
   	});
 //reset password request function (fortgot password)----------------------------------------------------------------------------------------------
     $scope.resetPassword = function (user) {
-        $scope.disableSubmit = true;
+      	$scope.disableSubmit = true;
       	$pinroUiService.showLoading();
       	var params = {
-        	
-        	email: user.user_login
+        	insecure: 'cool',
+        	user_login: user.user_login
       	};
       	$dataService.$passwordReset(params).then(function (res) {
-        	
-          alert('response :'+JSON.stringify(res));
-
-        	if (res.data.response.status === 1) 
-          {
+        	console.log(res)
+        	if (res.status === 200) {
           		$scope.resetError = '';
           		$scope.resetSuccess = res.data.msg;
-        	} else 
-          {
+        	} else {
           		$scope.resetSuccess = '';
           		$scope.resetError = res.data.error;
         	}
-          
-             
+ 
        		$scope.disableSubmit = false;
        		$pinroUiService.hideLoading();
       }, function (err) {
         	console.log(err)
         	$scope.resetSuccess = '';
         	$scope.resetError = 'Email or username not found';
-	       	$pinroUiService.hideLoading();
+		$pinroUiService.hideLoading();
         	$scope.disableSubmit = false;
       })
     };
@@ -884,9 +871,11 @@ $scope.allImages = [];
 
 /*********************************************************get Packages**********************************************************************/
 	Maestro.$getPackages().then(function(res){
-
+	//alert(JSON.stringify(res));
 		$scope.packages=res.data.response_data;
-        		//alert(JSON.stringify($scope.packages));
+		//alert(JSON.stringify($scope.packages));
+	}, function(err){
+		alert(JSON.stringify(err));
 	});
 /**********************************************************************************************************************************************/
 
@@ -894,7 +883,9 @@ $scope.allImages = [];
 	Maestro.$getCategories().then(function(res){
 		$scope.categoriess=res.data.response_data;
 		//alert(JSON.stringify($scope.categoriess));
-	});
+	}, function(err){
+		alert(JSON.stringify(err));
+	} );
 /**********************************************************************************************************************************************/
       $scope.openPackage= function(id){
 		//alert(id);
@@ -965,7 +956,6 @@ $scope.checkZipCode= function(data){
 		}	
 		else{
 				$scope.zipa.zip=$scope.zipcheck;
-
 				$dataService.$checkZip($scope.zipa).then(function (res) {
 					if(res.data.response.status==1){
 						$localStorage.zipcode=$scope.zipcheck;
@@ -1044,11 +1034,16 @@ $scope.checkZipCode= function(data){
 
 /******************************************************************************************************************************************/
   .controller('packageCtrl', function ($scope,$http, $stateParams, $ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate) {
+	$pinroUiService.showLoading();
 	Maestro.$getPackageProducts($stateParams.id).then(function(res){
 		$scope.packages=res.data.response_data;
 		//alert(JSON.stringify($scope.packages));
+		$pinroUiService.hideLoading();
 	});
-	//alert('package id : '+$stateParams.id);
+
+	$scope.subscribepackage = function(size_id,package_id){
+		$state.go('app.step_1',{size_id:size_id,package_id:package_id,is_subs:true,is_package:true});		
+	}
 	
 
 
@@ -1057,6 +1052,7 @@ $scope.checkZipCode= function(data){
 
 
 
+  
   .controller('nextDaySelectionCtrl', function ($scope,$http, $stateParams, $ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, AuthService) {
 	//alert('hl');	
 	var data1=
@@ -1076,8 +1072,7 @@ $scope.checkZipCode= function(data){
 	Maestro.$getNextMenu(data1).then(function(res){
 		$scope.nextMenu=res.data.response_data;
 		$scope.selectedproducts=[];
- //   alert('response :'+JSON.stringify(res));
-	 //alert('nextmenu :'+JSON.stringify($scope.nextMenu));
+
   	for(var i=0;i<$scope.nextMenu.product_data.length;i++)
     {
 		       var s={};
@@ -1126,13 +1121,11 @@ $scope.checkZipCode= function(data){
 
       });
 
-//          alert('req :'+JSON.stringify($scope.next_day_selection_data));
           $pinroUiService.showLoading();
           $scope.next_day_selection_data.product_data=JSON.stringify($scope.next_day_selection_data.product_data);
           
           Maestro.$post_next_day_selection($scope.next_day_selection_data).then(function(res)
           {
-            // alert('response :'+JSON.stringify(res));
               if(res.data.response.status==1)
               {
 
@@ -1160,28 +1153,38 @@ $scope.checkZipCode= function(data){
 /**********************************************************************************************************************************
 ********************************************************* Products by category id *************************************************
 **********************************************************************************************************************************/
-  .controller('categoryCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService) {
-  $pinroUiService.showLoading();
-  Maestro.$getCategoryProducts($stateParams.id).then(function(res){
+  .controller('categoryCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,$timeout, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService) {
+	
+$pinroUiService.showLoading();
+Maestro.$getCategoryProducts($stateParams.id).then(function(res){
 	$scope.selectedSize={};
 	$scope.products=res.data.response_data;
 	$pinroUiService.hideLoading();
-
 });
 
 $scope.subscribeProducts=function(id,unit_id,unit,weight){
-	alert(unit_id);
 	$state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
 }
+  var cart = angular.element(document.getElementsByClassName("shopping-cart"));
+  var addToCartAnimation = function () {
+        cart.css({
+            'opacity': '1',
+            'animation': 'bounceIn 0.5s linear'
+        });
+        $timeout(function () {
+            cart.css({
+            'animation': ''
+            });
+        }, 500)
+    }
 
-$scope.addToCart = function (selected,id,price,unit,weight) 
-{
-	alert(id);
+$scope.addToCart = function (selected,id,price,unit,weight,basic_weight) {
 	var selectedProduct={};
 	selectedProduct.unit_mapping_id=id;
 	selectedProduct.price=price;
 	selectedProduct.unit=unit;
 	selectedProduct.weight=weight;
+	selectedProduct.basic_weight=basic_weight;
 	selectedProduct.productId=selected.id;
 	selectedProduct.productName=selected.product_name;
 	selectedProduct.productImage=selected.image;
@@ -1211,57 +1214,16 @@ $scope.addToCart = function (selected,id,price,unit,weight)
 /**********************************************************************************************************************************
 ************************************************
 ************************************************************************************************************************************/
-.controller('step_1Controller', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
-{
-  $scope.is_subs=$stateParams.is_subs;
-  $scope.is_package=$stateParams.is_package;
-
-
-	$scope.changeSubscriptionType= function()
-	{
-			
-
-				
- 		if($scope.selectSubscriptionType.answer=="2"){
-			$scope.datepickerObject.header="Select Starting Date";
-			$scope.datepickerObject.selectType='SINGLE';
-			$scope.datepickerObject.closeOnSelect=true;
-			$scope.showNextButton=true;
-			$scope.subobject.custom_date=0;
-		}
-		else if($scope.selectSubscriptionType.answer=="1"){
-			$scope.datepickerObject.header="Please Select Your Dates";
-			$scope.datepickerObject.selectType='MULTI';
-			$scope.datepickerObject.closeOnSelect=false;
-			$scope.showNextButton=true;
-			$scope.subobject.custom_date=1;
-		}
-		else if($scope.is_subs=='false')
-		{
-			$scope.datepickerObject.header="Please Starting Date";
-			$scope.datepickerObject.selectType='SINGLE';
-			$scope.datepickerObject.closeOnSelect=false;
-			$scope.showNextButton=true;
-			$scope.subobject.custom_date=1;
-
-
-		}
-	}
-
-
-	if($scope.is_subs==='false')
-	{	
-		$scope.changeSubscriptionType();
-	}
-
-	//alert('mizan 007  : '+JSON.stringify());
-
+.controller('step_1Controller', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
+	$scope.is_subs=$stateParams.is_subs;
+	$scope.is_package=$stateParams.is_package;
+		
 	$scope.selectSubscriptionType={};
-  	$scope.subobject={
+	$scope.subobject={
 		cust_id: AuthService.id(),
-		product_id:$stateParams.id,
-		unit_mapping_id:$stateParams.unit_id
+		//product_id:$stateParams.id,
 	};
+	$scope.sendingObj={};
 	
 	var weekDaysList = ["Su","Mo", "Tu", "We", "Th", "Fr", "Sa"];
 	var monthList = ["Jan", "Feb", "Mar", "Аpr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -1306,212 +1268,204 @@ $scope.addToCart = function (selected,id,price,unit,weight)
 		monthList: monthList,
       		callback: function (dates) {  //Mandatory
 			if(dates!=''){
-          
-          $scope.new_dates=retSelectedDates(dates);
-			    
-          $scope.openTimePicker($scope.new_dates);
-
-	  		   $scope.showNextButton=false;
+          			$scope.new_dates=retSelectedDates(dates);			    
+          			$scope.openTimePicker($scope.new_dates);
+				$scope.showNextButton=false;
 			}
       		}
     	};
 	
+/****************************************/
+var retSelectedDates = function (dates) {
+	for (var i = 0; i < dates.length; i++) {
+	     	var ddd=angular.copy(dates[i]);
+			$scope.selectedDates.push(ddd.getFullYear()+'-'+(parseInt(ddd.getMonth())+1)+'-'+ddd.getDate());
+      	}
+        return $scope.selectedDates;
+};
+/***************************************/
+
+
+
 
 
 /***************************************************************************************************** ADDRESS ******************************/
 /*get customer address*/
 	$pinroUiService.showLoading();
 	Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
-
-    $scope.Addresses=res.data.response_data;
-    $pinroUiService.hideLoading();
+    		$scope.Addresses=res.data.response_data;
+    		$pinroUiService.hideLoading();
 		//angular.element('#multidateopen').triggerHandler('click');
 	});
 /*get add end */
 
+
+
 /* select address  */
 	$scope.select_address=function(id){
-    //shivam gupta
-		$scope.showPopup(id);
+		$scope.subobject.delivery_add_id=id;
+		if($stateParams.is_subs=='true' || $stateParams.is_subs	==true){
+			if($stateParams.is_package=="false" || $stateParams.is_package==false){
+					$scope.subobject.product_id=$stateParams.id,
+					$scope.subobject.package_id=0;
+					$scope.subobject.package_size_id=0;
+					$scope.subobject.unit_mapping_id=$stateParams.unit_id;
+					$scope.showPopup();
+			}
+			else{
+					$scope.subobject.unit_mapping_id=0;
+					$scope.subobject.product_id=0,
+					$scope.subobject.package_id=$stateParams.package_id;
+					$scope.subobject.package_size_id=$stateParams.size_id;
+					$scope.showPopup();
+			}
+			
+		}
+		else 
+		{
+			//$scope.subobject.product_id=$stateParams.id;
+			//$scope.subobject.unit_mapping_id=$stateParams.unit_id;
+			$scope.subobject.cust_name=AuthService.name();
+			$scope.subobject.phone= AuthService.phone();
+			$scope.subobject.payment_type="online";
+			$scope.subobject.payment_gateway="instamojo";
+			$scope.subobject.status="Success";
+			$scope.subobject.paid_amount=0;
+			$scope.datepickerObject.header="Select Delivery Date";
+			$scope.datepickerObject.selectType='SINGLE';
+			$scope.datepickerObject.closeOnSelect=true;
+			$scope.showNextButton=true;
+			$scope.sendingObj={};
+			$scope.sendingObj.order_details=$scope.subobject;
+			$scope.sendingObj.order_products=[];
+
+			var product=[];
+			
+			for(var i=0; i<$localStorage.cart.length; i++){
+				var product={};
+				
+				product.product_id=$localStorage.cart[i].productId;
+				product.quantity=$localStorage.cart[i].quantity;
+				product.price=$localStorage.cart[i].price;
+				product.unit=$localStorage.cart[i].unit;
+				product.weight=$localStorage.cart[i].weight;
+				product.basic_weight=$localStorage.cart[i].basic_weight;
+			$scope.subobject.paid_amount=$scope.subobject.paid_amount+$localStorage.cart[i].price*$localStorage.cart[i].quantity;
+				$scope.sendingObj.order_products.push(product);
+			}
+		}
 	}
 /*select address */
 
 
 
-/*post address */
-  $scope.check_zip_avail = function(){
-			 
+/*check zip availability for post address */
+  $scope.check_zip_avail = function(){		 
         $scope.new_address={};
-        var myPopup = $ionicPopup.show(
-        {
+        var myPopup = $ionicPopup.show({
         	template: '<label>zip:<input type="text" ng-model="new_address.zip" required></label>',
         	title: 'Enter zip code',
         	subTitle: '',
         	scope: $scope,
         	buttons: [
-            		  { text: 'Cancel' },
-              		  {
-               			 text: '<b>Submit</b>',
-                		 type: 'button-dark',
-              		   onTap: function(e) {
+              	{ 
+			text: 'Cancel' 
+		},
+              	{
+                	text: '<b>Submit</b>',
+                	type: 'button-dark',
+                	onTap: function(e) {
+                  		if (!$scope.new_address.zip){
+                        	  	e.preventDefault();
+                  		} 
+				else {
+                        		return $scope.new_address;
+                    		}
+             		}
+        	}           
+          	]
+      	});
+	myPopup.then(function(res){
+      		$scope.zipa={};
+      		$scope.zipa.zip=res.zip;
+      		$pinroUiService.showLoading();
+      		$dataService.$checkZip($scope.zipa).then(function (res){
+        		if(res.data.response.status==1){
+				addAddress(res.data.response_data[0].postal_code);
+				$pinroUiService.hideLoading();
+        		}
+       			else {
+          			alert('sorry! our service is not available');
+				$pinroUiService.hideLoading();
+        		}
+      		}, function (err){ 
+			$pinroUiService.hideLoading();
+			console.log(err);      
+      		});
+	});
+   }
+/*check zip end*/
 
-                  
-                  		if (!$scope.new_address.zip)
-                  			{
-                          		e.preventDefault();
+
+
+/*add address popup*/
+var addAddress=function(selected_zip){
+	$scope.new_address={
+    		'zip':selected_zip
+  	}
+  	var myPopup = $ionicPopup.show({
+        	template: '<label>Address:<input type="text" ng-model="new_address.address" required></label><label>Street:<input type="text" ng-model="new_address.apartment" required></label><label>Contact no:<input type="text" ng-model="new_address.mobno" required></label>',
+        	title: 'Enter Address',
+        	subTitle: '',
+        	scope: $scope,
+        	buttons: [
+              		{ text: 'Cancel' },
+              		{
+                		text: '<b>Submit</b>',
+                		type: 'button-dark',
+                		onTap: function(e) {
+                  			if ((!$scope.new_address.address)||(!$scope.new_address.apartment)||(!$scope.new_address.mobno)){
+                          			e.preventDefault();
                   			} 
-                  		else 
-                  			{
-                        return $scope.new_address;
-                		    }
-                }
-        }           
-          ]
-      });
-    myPopup.then(function(res) 
-    {
-      $scope.zipa={};
-      $scope.zipa.zip=res.zip;
-
-
-      $pinroUiService.showLoading();
-      $dataService.$checkZip($scope.zipa).then(function (res) 
-      {
-
-        if(res.data.response.status==1)
-        {
-        addAddress(res.data.response_data[0].postal_code);
-	      $pinroUiService.hideLoading();
-
-        }
-        else 
-        {
-          alert('sorry! our service is not available ');
-      		$pinroUiService.hideLoading();
-        }
-
-      }, function (err) 
-      { 
-        $pinroUiService.hideLoading();
-        console.log(err);
-      
-      });
-
-
-      
-
-            
-    });
-
-      
-			
+                    			else { 
+                        			return $scope.new_address;
+                  			}
+                		}
+        		}           
+          	]
+      	});
+    	myPopup.then(function(res){ 
+        	$scope.new_address.user_id = AuthService.id();
+       		/* $scope.new_address.address = res.address;
+        	$scope.new_address.apartment = res.street;
+        	$scope.new_address.mobno = res.mobno;
+		*/
+      		$pinroUiService.showLoading();
+		Maestro.$postAddresses($scope.new_address).then(function(res){
+        		if(res.data.response.status==1){
+          			Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
+          				$scope.Addresses=res.data.response_data;
+					$pinroUiService.hideLoading();
+          			});
+          			
+        		}
+      			}, function (err){ 
+        			console.log(err);
+				$pinroUiService.hideLoading();
+      			});
+    		});
 	}
-/*post address end*/
+/*add address popup end*/
+
 /***************************************************************************************************** ADDRESS END *********************/
 
-var addAddress=function(selected_zip)
-{
 
-  $scope.new_address={
-    'zip':selected_zip
-  }
-
-  var myPopup = $ionicPopup.show({
-        template: '<label>Address:<input type="text" ng-model="new_address.address" required></label><label>Street:<input type="text" ng-model="new_address.apartment" required></label><label>Contact no:<input type="text" ng-model="new_address.mobno" required></label>',
-        title: 'Enter Address',
-        subTitle: '',
-        scope: $scope,
-        buttons: [
-              { text: 'Cancel' },
-              {
-                text: '<b>Submit</b>',
-                type: 'button-dark',
-                onTap: function(e) {
-
-                  
-                  if ((!$scope.new_address.address)||(!$scope.new_address.apartment)||(!$scope.new_address.mobno))
-                  {
-                          e.preventDefault();
-                  } 
-                    else 
-                  { 
-                        return $scope.new_address;
-                  }
-                }
-        }           
-          ]
-      });
-
-    myPopup.then(function(res) 
-    { 
-       
-
-       
-        $scope.new_address.user_id = AuthService.id();
-       /* $scope.new_address.address = res.address;
-        $scope.new_address.apartment = res.street;
-        $scope.new_address.mobno = res.mobno;
-*/
-      
-
-
-      $pinroUiService.showLoading();
-
-
-        Maestro.$postAddresses($scope.new_address).then(function(res){
-        
-//        
-        if(res.data.response.status==1)
-        {
-  //      
-          Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
-            $scope.Addresses=res.data.response_data;
-          });
-          $pinroUiService.hideLoading();
-
-
-        }
-      }, function (err) 
-      { 
-        console.log(err);
-      	$pinroUiService.hideLoading();
-      });
-
-
-      
-
-            
-    });
-        
-          
-}
-
-
-
-
-/****************************************/
-var retSelectedDates = function (dates) {
-      		//$scope.selectedDates.length = 0;
-         
-
-      		for (var i = 0; i < dates.length; i++) {
-		     	var ddd=angular.copy(dates[i]);
-
-        		$scope.selectedDates.push(ddd.getFullYear()+'-'+ddd.getMonth()+'-'+ddd.getDate());
-      		}
-
-          return $scope.selectedDates;
-         
-
-    	};
-/***************************************/
 
 
 
 
 /********************popup for quantity**************/
-$scope.showPopup = function(selected_address_id) 
-{
+$scope.showPopup = function() {
   	$scope.data = {};
   //	
   // An elaborate, custom popup
@@ -1543,16 +1497,32 @@ $scope.showPopup = function(selected_address_id)
 
  		myPopup.then(function(res) {
 			if(isNaN(res)==false){
-				$scope.subobject.quantity=res;
-        $scope.subobject.delivery_add_id=selected_address_id;
-	}
+				$scope.subobject.quantity=res;        			
+				//alert('state pa'+JSON.stringify($stateParams));		
+			}
 			
   		});
 
-};
+ 	};
 
 /************************************popup quantity end************************************************/
-
+	$scope.changeSubscriptionType= function(){
+		
+ 		if($scope.selectSubscriptionType.answer=="2"){
+			$scope.datepickerObject.header="Select Starting Date";
+			$scope.datepickerObject.selectType='SINGLE';
+			$scope.datepickerObject.closeOnSelect=true;
+			$scope.showNextButton=true;
+			$scope.subobject.custom_date=0;
+		}
+		else if($scope.selectSubscriptionType.answer=="1"){
+			$scope.datepickerObject.header="Please Select Your Dates";
+			$scope.datepickerObject.selectType='MULTI';
+			$scope.datepickerObject.closeOnSelect=false;
+			$scope.showNextButton=true;
+			$scope.subobject.custom_date=1;
+		}
+	}
 
 
 
@@ -1563,278 +1533,220 @@ $scope.showPopup = function(selected_address_id)
 
 /*******************************open time picker************************************/
 $scope.openTimePicker=function(dates){
-	
-
-//shivam gupta 12345
 	var ipObj1 = {
-    		callback: function (val) 
-        {  
-
-
-			      var time="";    //Mandatory
+    		callback: function (val){  
+			var time="";    //Mandatory
       			if (typeof (val) === 'undefined') {
         			console.log('Time not selected');
-              event.preventDefault();
-
+              			event.preventDefault();
       			} 
-            else 
-            {
-
-            var selectedTime = new Date(val * 1000);
+            		else {
+            			var selectedTime = new Date(val * 1000);
         			if(selectedTime.getUTCHours()<10)
 					    time=time+'0';
-				      time=time+selectedTime.getUTCHours()+':';
-				   if(selectedTime.getUTCMinutes()<10)
-				     	time=time+'0';
-				       time=time+selectedTime.getUTCMinutes();
-				       $scope.subobject.time_slot=time;
+				time=time+selectedTime.getUTCHours()+':';
+				if(selectedTime.getUTCMinutes()<10)
+				     time=time+'0';
+				time=time+selectedTime.getUTCMinutes();
+
+				
+				if($stateParams.is_subs!=true && $stateParams.is_subs!="true"){
+					$scope.sendingObj.order_details.delivery_date=dates[0];
+					$scope.sendingObj.order_details.delivery_time=time;
+					$scope.sendingObj.order_details=JSON.stringify($scope.sendingObj.order_details);
+					$scope.sendingObj.order_products=JSON.stringify($scope.sendingObj.order_products);
+					$pinroUiService.showLoading();
+					//alert($scope.sendingOobj);
+					Maestro.$create_order($scope.sendingObj).then(function(res){ 
+								//alert(res.data);
+								$pinroUiService.hideLoading();
+
+							$state.go('app.confirmation',{selected_address_id: $scope.subobject.delivery_add_id});
+								$localStorage.cart=[];
+								//$state.go('app.editorial');
+								
+							     
+                					}, function (err) { 
+								$pinroUiService.hideLoading();
+                					});	
+				}
+				else{
 					if($scope.subobject.custom_date==0)
-				       		$scope.subobject.start_date=dates[0];
+						$scope.subobject.start_date=dates[0];
 					else
 						$scope.subobject.start_date=JSON.stringify(dates);
-                $scope.subobject.payment_type='postpaid';
-                $scope.subobject.payment_status='Successfull';
-                $scope.subobject.payment_mode='online';
-                $scope.subobject.current_status=1;
-                $scope.subobject.final_price='';
-
-
-
-
-        if($scope.subobject)
-        {
-           var confirmPopup = $ionicPopup.confirm(
-           {
-             title: 'Confirmation',
-             template: 'Confirm Us by pressing yes button?'
-           });
-             confirmPopup.then(function(res) 
-             {
-             	if(res) 
-            	 {
-              		$pinroUiService.showLoading();
-             		 Maestro.$add_new_subscription($scope.subobject).then(function(res)
-              		{ 
-		                $pinroUiService.hideLoading();
-               				if(res.data.response.status==1)
-                				{
-                                     //shivam gupta abcd
-                            
-                            $state.go('app.confirmation',{selected_address_id: $scope.subobject.delivery_add_id});                					
-            				    }
-            				
-
-	                }, function (err) 
-                {
-
-                });
-
-
-             } 
-             else 
-             {
-
-                
-             }
-           });
-         
-
-
-        }
-
-
-
-
-    	}
+					$scope.subobject.time_slot=time;
+              				$scope.subobject.payment_type='postpaid';
+                			$scope.subobject.payment_status='Successfull';
+                			$scope.subobject.payment_mode='online';
+                			$scope.subobject.current_status=1;
+                			$scope.subobject.final_price='';
+				}
+        			if(($scope.subobject)&&($stateParams.is_subs==true || $stateParams.is_subs=="true")){
+/*confirm popup start*/
+           				var confirmPopup = $ionicPopup.confirm({
+             					title: 'Confirmation',
+             					template: 'Confirm Us by pressing yes button?'
+           				});
+					confirmPopup.then(function(res) {
+             					if(res){
+							   var action="";
+							if($stateParams.is_package==true  || $stateParams.is_package=="true")
+								action="/package"
+              						$pinroUiService.showLoading();
+              						Maestro.$add_new_subscription($scope.subobject,action).then(function(res){ 
+								$pinroUiService.hideLoading();
+						$state.go('app.confirmation',{selected_address_id: $scope.subobject.delivery_add_id});
+							     
+                					}, function (err) { 
+                					});
+						} 
+             					else{
+             					}
+           				});
+        			}
+    			}
     		},
     		inputTime: 68400,   //Optional
     		format: 12,         //Optional
     		step: 5,           //Optional
     		setLabel: 'Set'    //Optional
   	};
-	
-	
  	ionicTimePicker.openTimePicker(ipObj1);
-
 }
 
 /******************************* open time picker end **********************************/
 
+
+
 })
-
-  .controller('confirmationCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
-  {
-      $scope.selected_address={};
-      $scope.selected_address_id=$stateParams.selected_address_id;
-      $ionicHistory.nextViewOptions({
-            disableBack: true
-      });
-
-        $scope.get_selected_address=function(){
-
-               $pinroUiService.showLoading();
-                Maestro.$getSelectedAddresses($scope.selected_address_id).then(function(res){
-                if (res.data.response.status===1) 
-                {   
-                    
-                    $scope.selected_address=res.data.response_data[0];
-                    $pinroUiService.hideLoading();
-                    
-                }
-          
-            });
-        }
-  })
-
-
-
-
 /**********************************************************************************************************************************
 ********************************************************* Products by category id *************************************************
 **********************************************************************************************************************************/
-  .controller('subscriptionsCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
-
-
-//$scope.subscriptions
-  Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res)
-  {
-      $scope.subscriptions=res.data.response_data;
-      alert('initially :'+JSON.stringify($scope.subscriptions[0].current_status));
-  });
-  $scope.openSingleSub=function(p_id, s_id, u_m_id)
-	{	
+.controller('subscriptionsCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
+	//$scope.subscriptions
+  	$pinroUiService.showLoading();
+  	Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){      
+      		$scope.subscriptions=res.data.response_data;
+		$pinroUiService.hideLoading();
+  	});
+  	$scope.openSingleSub=function(p_id, s_id, u_m_id){	
   		$state.go('app.singlesubscription',{product_id:p_id,subscription_id:s_id,unit_mapping_id:u_m_id});
 	}
-   $scope.change_subscription_status=function(cust_id, subscription_id, current_status)
-  {   
-
-      if(!e) 
-      var e = window.event;
-      e.cancelBubble = true;
-      if(e.stopPropagation) 
-          e.stopPropagation();
-        
-
-    //alert('he');
-    if(current_status==='1')
-    {
-      var p='restart';
-
-    }
-    else if(current_status==='0')
-    {
-      var p='pause';
-    }
-
-      $scope.data=
-      {
-         cust_id : cust_id,
-         subs_id : subscription_id
-      }
-
-      $pinroUiService.showLoading();
-      Maestro.$pause_my_subscription($scope.data, p).then(function(res){
-
-          alert('shivam'+JSON.stringify(res));
-            if(res.data.response.status==1)
-            {
-                alert('repo :'+$scope.subscriptions[0].current_status);
-                Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res)
-                {
-                   $scope.subscriptions=res.data.response_data;
-                    alert('again repo :'+$scope.subscriptions[0].current_status);
-           //         $state.go($state.current, {}, {reload: true});
-
-                });
-
-                $pinroUiService.hideLoading();
-
-            }
-      });
-  }
+  	$scope.change_subscription_status=function(cust_id, subscription_id, current_status){   
+      		if(!e) 
+      			var e = window.event;
+      		e.cancelBubble = true;
+      		if(e.stopPropagation) 
+          	e.stopPropagation();
+    		if(current_status==='1'){
+      			var p='restart';
+    		}
+    		else if(current_status==='0'){
+      			var p='pause';
+    		}
+		$scope.data={
+         		cust_id : cust_id,
+         		subs_id : subscription_id
+      		}
+      		$pinroUiService.showLoading();
+      		Maestro.$pause_my_subscription($scope.data, p).then(function(res){
+			if(res.data.response.status==1){
+                		Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){
+                	   		$scope.subscriptions=res.data.response_data;
+                		});
+                		$pinroUiService.hideLoading();
+            		}
+      		});
+  	}
 })
-
 /**********************************************************************************************************************************
 ********************************************************* single subscription *************************************************
 **********************************************************************************************************************************/
-  .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
-  {
-	 
-
-
-
-
-		var data1={};
-		data1.cust_id=AuthService.id();;
-		data1.product_id=$stateParams.product_id;
-		data1.sub_id=$stateParams.subscription_id;
-		data1.unit_mapping_id=$stateParams.unit_mapping_id;		
-		//alert('data1 : '+JSON.stringify(data1));
-		$pinroUiService.showLoading();
-		
-		Maestro.$getSingleSub(data1).then(function(res){
-		  	$scope.singleSubscriptions=res.data.response_data;
-			$pinroUiService.hideLoading();
-		});
+  .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
+	 var data1={};
+	data1.cust_id=AuthService.id();;
+	data1.product_id=$stateParams.product_id;
+	data1.sub_id=$stateParams.subscription_id;
+	data1.unit_mapping_id=$stateParams.unit_mapping_id;		
+	$pinroUiService.showLoading();
+	
+	Maestro.$getSingleSub(data1).then(function(res){
+		$scope.singleSubscriptions=res.data.response_data;
+		$pinroUiService.hideLoading();
+	});
 	
 
-	$scope.addExtra=function(id)
-  {
-		
-    //shivam gupta
-      $scope.data={};
+	$scope.addExtra=function(id){
+      		$scope.data={
+    		};
+	
+    		var myPopup = $ionicPopup.show({
+        		template: '<input type="text" ng-model="data.extra_qty">',
+        		title: 'add Extra Quantity',
+       			// subTitle: 'Currently available in select cities',
+        		scope: $scope,
+        		buttons: [
+              			{ 
+					text: 'Cancel' ,
+		 			type: 'button-assertive'		
+	       			},
+              			{
+                			text: '<b>Submit</b>',
+                			type: 'button-positive',
+                			onTap: function(e) {
+                  				if (!$scope.data.extra_qty){
+                          				e.preventDefault();
+                  				}
+                  				else{ 
+                        				return $scope.data.extra_qty;
+                  				}
+                			}	
+              			}           
+          		]
+    		});
 
-      var myPopup = $ionicPopup.show({
-        template: '<input type="text" ng-model="data.extra_qty">',
-        title: 'add Extra Quantity',
-       // subTitle: 'Currently available in select cities',
-        scope: $scope,
-        buttons: [
-              { text: 'Cancel' },
-              {
-                text: '<b>Submit</b>',
-                type: 'button-dark',
-                onTap: function(e) 
-                {
-  //                alert('data :'+$scope.data.extra_qty)
-                  if (!$scope.data.extra_qty) 
-                  {
-                          e.preventDefault();
-                  }
-                  else 
-                  { 
-//                        alert('else');
-                        return $scope.data.extra_qty;
-                  }
-                }
-              }           
-          ]
-    });
-
-    myPopup.then(function(res) 
-    {
-        $scope.data.id=id;
-        $scope.data.cust_id=AuthService.id();
-        $pinroUiService.showLoading();
+		myPopup.then(function(res){
+        	$scope.data.id=id;
+        	$scope.data.cust_id=AuthService.id();
+		if(res!="undefined" && res!=undefined)
+        	$pinroUiService.showLoading();
+	
         Maestro.$addExtraQty($scope.data).then(function(res)
         {
           if(res.data.response.status==1)
           {
             Maestro.$getSingleSub(data1).then(function(res)
             {
-                if(res.data.response.status==1)
-                { 
-                    $scope.singleSubscriptions=res.data.response_data;
-                    $pinroUiService.hideLoading();
-                    $state.go($state.current, {}, {reload: true});
-                }
+              if(res.data.response.status==1)
+              { 
+                  $scope.singleSubscriptions=res.data.response_data;
+                  $pinroUiService.hideLoading();
+                  $state.go($state.current, {}, {reload: true});
+              }
+	    
+              
             });
-          }
-        });
-    });
-	}
 
- 
+
+          }
+	 else if(res.data.response.status==0){
+			 $ionicPopup.alert({
+     					title: 'Alert',
+     					template: '<p style="width:80%; margin:0 auto;">'+res.data.response.message+'</p>',
+    					 buttons: [
+       						{ text: '<b>CLOSE</<b>',
+      							type: 'button-small button-positive' }
+     						]
+   					});
+			$pinroUiService.hideLoading();
+		}
+          
+        });
+
+    });
+
+	}
 	
 })
 
@@ -1843,9 +1755,9 @@ $scope.openTimePicker=function(dates){
 /********************************************************************************************************************************************
 *******************************************************Cart list controller *****************************************************************
 *********************************************************************************************************************************************/
-.controller('CartCtrl', function ($scope, $ionicScrollDelegate, $ionicPopup, $rootScope, $state, $stateParams, $timeout, Maestro, CartService, StorageService, $pinroUiService,AuthService) {
-  
-  $scope.CartItemList = [];
+.controller('CartCtrl', function ($scope, $ionicScrollDelegate, $ionicPopup, $rootScope, $localStorage, $state, $stateParams, $timeout, Maestro, CartService, StorageService, $pinroUiService,AuthService) {
+  	//CartService.getAll();
+  	$scope.CartItemList = [];
 	$scope.COD=false;
  	$scope.charges=50;
 	$scope.cartLength=CartService.getAll().length;
@@ -1857,20 +1769,43 @@ $scope.openTimePicker=function(dates){
         		addToCartAnimation();
       		}
   	}
+
   	$scope.$on('modal.shown', function(event, data) {
-  		console.log('Modal is shown!'+ data.id);
+		getCartItems();
+		$pinroUiService.showLoading();
+  		//console.log('Modal is shown!'+ data.id);
+		var data={};
+		data.pro_ids=[];
+		for(i=0;i<$localStorage.cart.length;i++){
+			data.pro_ids.push($localStorage.cart[i].unit_mapping_id);
+		}
+		Maestro.$get_price_cart(JSON.stringify(data)).then(function(res){
+			$pinroUiService.hideLoading();
+			for(i=0;i<$localStorage.cart.length;i++){
+				$localStorage.cart[i].price=res.data.response_data[$localStorage.cart[i].unit_mapping_id].price;
+			}
+			getCartItems(); 
+		},function(err){
+			$pinroUiService.hideLoading();
+			getCartItems();
+		});
+		//alert(JSON.stringify($localStorage.cart));
   		if(data.id === 'cart'){
 			$ionicScrollDelegate.scrollTop();		
     			getCartItems(); //populate CartItemList from CartService
   		}
 	});
+
 	$scope.aQuantity = function(item){
 		item.quantity++;
-		$rootScope.cartlength++;
+		//$rootScope.cartlength++;
 	}
+
+
 	$scope.dQuantity = function(item){
-		item.quantity--;
-		$rootScope.cartlength--;
+		if(item.quantity>1)
+			item.quantity--;
+		//$rootScope.cartlength--;
 	}
 
 	//Animation function for Add to Cart
@@ -1887,9 +1822,7 @@ $scope.openTimePicker=function(dates){
     		}, 500)
   	}
 	$scope.goToCheckout = function(choice){ 
-		
-  		if(AuthService.id())
-  		{
+  		if(AuthService.id()){
     			$state.go('app.step_1',{is_subs:false},{reload:true});
   		}else{
 				localStorage.setItem('reloads',1);
@@ -1902,7 +1835,7 @@ $scope.openTimePicker=function(dates){
 	$scope.removeItem = function(item){   //remove item from cart function
   		var carrt=CartService.getAll();
   		CartService.remove(item);
-		$rootScope.cartlength=$rootScope.cartlength-item.quantity;
+		$rootScope.cartlength--;
 	}
 
 	$scope.getSubtotal = function () {  // get subtotal 
@@ -2009,7 +1942,6 @@ $scope.openTimePicker=function(dates){
 					pin_code:$scope.order.shipping.postcode
 				}
 				Maestro.$getPincode(pinObj).then(function(res){
-					//alert(JSON.stringify(res));
 					if(res.data.ErrorMessage){
 						$scope.ShippingError=res.data.ErrorMessage;
 						$pinroUiService.hideLoading();
@@ -2640,7 +2572,7 @@ $scope.removeSelectedItems = function(){
 /* -------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------Search Product controller------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------*/
-.controller('SearchCtrl', function (CartService, $scope, $localStorage ,$rootScope, $timeout, $stateParams, $state, $ionicScrollDelegate, $ionicHistory, $ionicLoading, Maestro, $pinroUiService) {
+.controller('SearchCtrl', function (CartService, $scope, $localStorage ,$ionicPopup, $rootScope, $timeout, $stateParams, $state, $ionicScrollDelegate, $ionicHistory, $ionicLoading, Maestro, $pinroUiService) {
 	$scope.page=1;
 	$scope.searchErorr="";
 	$scope.isError=false;
@@ -2658,9 +2590,8 @@ $scope.removeSelectedItems = function(){
   }
 
 
-	$scope.goback=function()
-  {
-	$ionicHistory.goBack(-1);
+	$scope.goback=function(){
+		$ionicHistory.goBack(-1);
 	}
 	$scope.goToProduct = function (id) { //close open modal and go to product page
       		//$scope.searchModal.isShown() ? $scope.searchModal.hide() : null;
@@ -2714,56 +2645,40 @@ $scope.removeSelectedItems = function(){
     }
 
 	$scope.searchProducts= function(){
-    
-  	$scope.page=1;
-		if($scope.search1==null || $scope.search1==""|| $scope.search1==undefined)
-    {
+		if($scope.search1==null || $scope.search1==""|| $scope.search1==undefined){
 			$scope.productList="";
 			$scope.searchErorr="Please enter some keywords to search";
-			$scope.isError=true;
-			$scope.more = false;
+			$ionicPopup.alert({
+     				title: 'Error',
+     				template: "Please enter some keywords to search and try again.",
+     				buttons: [{
+					 	text: '<b>OK</<b>',
+      						type: 'button-small button-assertive' 
+					}]
+   			});
 		}
-		else
-    {
-			$scope.searchErorr="";
-			$scope.isError=false;
+		else{
 			$pinroUiService.showLoading();
    			Maestro.$getAllProducts($scope.search1).then(function(res){
-      	if(res.data.response.status===1)
-					{
-              if(res.data.response_data.length)
-              {
-                  $scope.productList = res.data.response_data;
-                  //alert('response :'+JSON.stringify($scope.productList));
-              }
-              else
-              {
-                $scope.searchErorr="No Results for :  \""+$scope.search1+"\"";
-                $scope.isError=true;
-                $scope.productList="";
-                $scope.more = false;
-            }
-
-          }
-    				
+      				if(res.data.response.status===1){
+                  			$scope.productList = res.data.response_data;
+          			}
+				else{
+					$ionicPopup.alert({
+     						title: 'No Products Found',
+     						template: "No Search Result found for \""+$scope.search1+"\"",
+     						buttons: [{
+					 		text: '<b>OK</<b>',
+      							type: 'button-small button-assertive' 
+						}]
+   					});
+				}
 				$pinroUiService.hideLoading();		
   			}, function(err){
 				$pinroUiService.hideLoading();
   			})
 		};
 	}
-	/*$scope.loadMoreProducts= function ()
-  {
-		$scope.page++;
-		Maestro.$getAllProducts($scope.search1,$scope.page).then(function(res){
-			if(res.data.length>0)
-				$scope.productList = $scope.productList.concat(res.data);
-			if(res.data.length<10)
-				$scope.more=false;
-			$scope.$broadcast('scroll.infiniteScrollComplete');	
-		}, function(err){		
-		})
-   	}*/
 })
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------
@@ -2819,6 +2734,7 @@ var getOrdersByCustomer = function(userId){
             if(res.data.response_data.order_details.length>0)
             {
               $scope.items=res.data.response_data.order_details;
+		alert(JSON.stringify($scope.items));
               $pinroUiService.hideLoading();
                             
             }
@@ -2865,11 +2781,9 @@ var getOrdersByCustomer = function(userId){
         if(res.data && res.data.posts.length){
           $scope.offerPosts = res.data.posts; //.thumbnail
         }
-
       }, function (err) {
         console.log(err);
       })
-
     }*/
 
 
@@ -2888,10 +2802,7 @@ $scope.$on("modal.shown", function(event, data){
   	}
 })
 
-})
-
-
-
+})//Settings controller
 //Settings controller
 .controller('SettingsCtrl', function ($scope, $stateParams, $ionicHistory, $ionicPopup, $state, StorageService, $dataService, Maestro, CartService, $pinroUiService, AuthService, Language, State) {
 	$scope.states= State;
@@ -3046,6 +2957,29 @@ $scope.$on("modal.shown", function(event, data){
 
 })
 
+ .controller('confirmationCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
+  {
+      $scope.selected_address={};
+      $scope.selected_address_id=$stateParams.selected_address_id;
+      $ionicHistory.nextViewOptions({
+            disableBack: true
+      });
+
+        $scope.get_selected_address=function(){
+
+               $pinroUiService.showLoading();
+                Maestro.$getSelectedAddresses($scope.selected_address_id).then(function(res){
+                if (res.data.response.status===1) 
+                {   
+                    
+                    $scope.selected_address=res.data.response_data[0];
+                    $pinroUiService.hideLoading();
+                    
+                }
+          
+            });
+        }
+})
 .controller('zipCtrl', function ($scope, $ionicHistory,  $ionicPopup, $stateParams, $timeout, $dataService, StorageService, Maestro, $state, $ionicModal, $interval, AuthService) {
 	$scope.checkZipCode= function(){
 		$scope.zipa={};
@@ -3073,8 +3007,7 @@ $scope.$on("modal.shown", function(event, data){
 		}	
 		else{
 		 alert($scope.zipcheck);
-				$scope.zipa.zip=$scope.zipcheck;
-
+				$scope.zipa.zip=$scope.zipcheck
 				$dataService.$checkZip($scope.zipa).then(function (res) {
 					if(res.data.response.status==1){
         					alert("success"+res.data.response_data[0].postal_code);

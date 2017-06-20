@@ -113,9 +113,6 @@ angular.module('starter.services', [])
 })    
     .factory('CartService', function ($localStorage) {
 
-//        alert('localstorage.cart'+JSON.stringify($localStorage.cart));
-
-
         $localStorage.cart = $localStorage.cart || [];
 
         var _getAll = function () {
@@ -179,7 +176,7 @@ angular.module('starter.services', [])
         return {
 
             $checkZip: function (data) {
-                return $http({ 
+                             return $http({ 
 			     url:apiUrl+'check_zip',
 			     method:'GET',
 			     params: data
@@ -240,7 +237,8 @@ angular.module('starter.services', [])
             },*/
 
             $passwordReset: function (params) {
-                    return $http.get(apiUrl+'forgotpassword', {
+                console.log(params);
+                return $http.get(apiUrl + '/user/retrieve_password/', {
                     header: header,
                     params: params
                 })

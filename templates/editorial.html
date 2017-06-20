@@ -2,32 +2,40 @@
 
 	<ion-nav-title style="margin-left:0px;" >  
 		<img class="home-logo" src="img/l5.png"  style="width:30vw; vertical-align: middle; margin: 0 auto;">
+		
 	</ion-nav-title>
 
 
+<!----------------------------------------------------------------------------------------------------------------->
 	<!--<div class="bar bar-subheader item-input-inset subheader-with-input" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px; height:40px" id="searchbar">
   		<label class="item-input-wrapper" style="background-color:white; z-index:13"> 
     			<input type="search" placeholder="Type here" ng-model="search1" style="margin-top:10px">
   		</label>
   		<img src="img/icons/search_icon.svg">
 	</div> -->
-	<ion-content  style="background-color:#f4f4f4"  id="contentsearch" style="background-image:url(img/back.jpg)"> <!--on-scroll="getScrollPosition()"-->
+<!------------------------------------------------------------------------------------------------------------------->
+	<ion-content  style="background-color:#f4f4f4"  id="contentsearch" style="background-image:url(img/back.jpg); background-size:cover"> <!--on-scroll="getScrollPosition()"-->
 
         <!--<ion-refresher on-refresh="doRefresh()">
         </ion-refresher>-->
 
 
-
-	<ion-slides  options="{initialSlide: 0, loop: true, autoplay:3000}" slider="data.slider" pager="false" style="margin:0 auto; height:40vw; width:95vw; margin-top:10px;">
+<div style="background-color:white; margin-top:10px; width:95vw; margin:0 auto;"><i class="icon ion-android-arrow-down"></i> Click here to subscribes our packages</div>
+<!-------------------------------------------------------------- Package slider start ----------------------------------------------------------->
+	<ion-slides  options="{initialSlide: 0, loop: true, autoplay:3000}" slider="data.slider" pager="false" style="margin:0 auto; height:40vw; width:95vw; ">
 	<ion-slide-page ng-repeat="package in packages" ng-click="openPackage(package.id)"> 
-		<div  style="height:100%; width:100%; background-image:url('https://www.minbazaar.com/subs/admin/uploads/{{package.image}}'); background-size:auto 100%; background-position:center; background-size:cover"><h1 style="position:relative; color:white;">{{package.package_name}}</h1></div>
+		<div  style="height:100%; width:100%; background-image:url('https://www.minbazaar.com/subs/admin/uploads/{{package.image}}'); background-size:auto 100%; background-position:center; background-size:cover; display:flex; align-items:flex-end;">
+			<h1 style="position:relative; margin:0 auto; color:white; margin-bottom:20px;  text-shadow: 2px 2px #000000; ">{{package.package_name}}</h1>
+		</div>
 	 
 	</ion-slide-page>
 	</ion-slides>
+<!--------------------------------------------------------------- Package slider end ------------------------------------------------------------>
 
 
 
-<div style="height:100%; width:100vw; background-image:url(img/back.jpg); margin-bottom:100px">
+<!---------------------------------------------------------Categories ------------------------------------------------------------>
+<div style="height:100%; width:100vw; background-image:url(img/back.jpg);">
      <div ng-repeat="category in categoriess" style="display:inline-block; width:49vw; height:60vw;" ng-click="openCategory(category.id)">
 		
 		<div style="height:80%; background-image:url(https://www.minbazaar.com/subs/admin/uploads/{{category.image}}); background-size:contain">
@@ -38,13 +46,11 @@
      </div>
 
 </div>
+<!--------------------------------------------------------------categoriess end ---------------------------------------------------->
 
+<!--
 
-
-
-
-
-            <div class="footer-button  animated fadeInUpBig" style="text-align:center; margin-top:10px; padding:0px; border-top:1px solid #ddd;">
+            <div class="" style="text-align:center; margin-top:10px; padding:0px; border-top:1px solid #ddd;">
 		<div> Enjoying the MINBazaar Experience ?</div>
 		<div class="row">
              		<span style="border-right:1px solid #ddd;border-top:1px solid #ddd;" class="col"  ng-click="rateUs()">Yes</span>
@@ -52,6 +58,6 @@
 		</div>
 	
             </div>
-
+-->
 	</ion-content>
 </ion-view>

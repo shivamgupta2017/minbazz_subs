@@ -11,7 +11,7 @@
 	<ion-content >
 
 <div style="width:95vw; margin:0 auto;">
-	<div style="width:100%; height:25vw; border-bottom:1px solid black" ng-repeat="item in CartItemList track by $index"  >
+	<div style="width:100%; height:25vw; border-bottom:1px solid #ddd" ng-repeat="item in CartItemList track by $index"  >
 		<div style="width:25%; float:left; display:inline-block; height:100%;  border-radius:50%; background-image:url(https://www.minbazaar.com/subs/admin/{{item.productImage}}); background-size:contain;">			
 		</div>
 		<div style="width:75%; display:inline-block; height:25vw;">
@@ -19,18 +19,18 @@
 				<div style="height:25%; width:90%; display:inline-block; text-align:left; padding-left:3px;  float:left; "><strong>{{item.productName}}</strong>
 				</div>
 			<i style="font-size:12px; width:10%; float:right;" class="icon ion-android-close color-dark" ng-click="removeItem(item)"></i></div>
-			<div style="height:25%; width:100%; text-align:left; float:left">
+			<div style="height:25%; width:100%; text-align:left; float:left; margin-left:10px">
 				{{item.weight}} {{item.unit}}
 			</div>
 			<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">
-				<div ng-click="dQuantity(item)" style="padding:2px; margin-left:10px; float:left; display:inline-block; height:100%; width:40px; border:1px solid black;">
-					<i style="width:100%" class="ion-android-remove"></i>
+				<div ng-click="dQuantity(item)" class="button button-small button-positive" style="margin-left:10px; float:left; display:inline-block; height:100%; width:40px; font-size:18px; font-weight:bold;" >
+					<i style="" class="ion-android-remove"></i>
 				</div>
-                  		<div style="float:left; display:inline-block;height:100%; margin:0 auto; padding:2px; width:70px; border:1px solid blue;">
-					<span class="checkout-product-price ng-binding">{{item.quantity}}</span>
+                  		<div class="item item-input text-center" style="float:left; margin-left:3px; text-align:center; padding:0px; display:inline-block; height:100%; width:70px;">
+					{{item.quantity}}
 				</div>
-                  		<div  ng-click="aQuantity(item)" style="float:left; padding:2px;  display:inline-block; height:100%; width:40px; border:1px solid black;">
-					<i style="margin:0 auto;" class="ion-android-add"></i>
+                  		<div  ng-click="aQuantity(item)" class="button button-small button-positive" style="float:left;  margin-left:3px; display:inline-block; height:100%; width:40px; font-size:18px; font-weight:bold">
+					<i style="" class="ion-android-add"></i>
 				</div>
 				<div style="float:right; margin-right:10px;">&#8377; {{item.price * item.quantity}}
 				</div>

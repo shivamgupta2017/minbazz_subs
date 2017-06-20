@@ -28,25 +28,36 @@
 	</ion-slides>
  -->
 
+click sizes to subscribe this package
+<br>
 
+     <div ng-repeat="sizes in packages.package_size" style="border:1px solid black; height:23vw; color:white; margin-top:10px; background-image:url('https://www.minbazaar.com/subs/admin/uploads/{{sizes.image}}'); text-align:right; padding-right:10px;  background-size:cover;  text-shadow: 2px 2px #000000; font-weight:bold; font-size:15px" ng-click="subscribepackage(sizes.id,sizes.package_id)">
+     		{{sizes.size_name}} <br> {{sizes.weight_in_kg+" kg"}} <br> &#8377;{{sizes.price}}
+     </div>
+
+
+
+<br>
+<br>
+<div>
+		Product related to this category
+</div>
 <!---------------------------------------------------------Categories ------------------------------------------------------------>
-<div style="height:100%; width:100vw; background-image:url(img/back.jpg); margin-bottom:100px">
-     <div ng-repeat="category in packages.products" style="display:inline-block; width:32vw; height:40vw;" ng-click="openCategory(category.id)">
+<div style="width:100vw; background-image:url(img/back.jpg);padding:0.5vw;">
+     <div ng-repeat="category in packages.products" style="display:inline-block; float:left; width:33vw; height:40vw; margin:0 auto;">
 		
-		<div style="height:80%; background-image:url(https://www.minbazaar.com/subs/admin/{{category.image}}); background-size:contain">
+		<div style="height:70%; width:90%; background-image:url(https://www.minbazaar.com/subs/admin/{{category.image}}); background-size:cover; background-repeat:no-repeat; background-position:center; border-radius:50%; background-color:white">
 		</div>
 
-		<div style="height:20%">
+		<div style="height:30%;">
 			{{category.product_name}}
 		</div>
      </div>
 
-     <div ng-repeat="sizes in packages.package_size">
-     <div style="height: 20%">
-     {{sizes.size_name}}
-     </div>
-
 </div>
+
+
+
 
 <!--------------------------------------------------------------categoriess end ---------------------------------------------------->
 
