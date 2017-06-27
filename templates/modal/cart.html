@@ -23,13 +23,13 @@
 				{{item.weight}} {{item.unit}}
 			</div>
 			<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">
-				<div ng-click="dQuantity(item)" class="button button-small button-positive" style="margin-left:10px; float:left; display:inline-block; height:100%; width:40px; font-size:18px; font-weight:bold;" >
+				<div ng-click="dQuantity(item)" class="button button-small button-assertive" style="margin-left:10px; float:left; display:inline-block; height:100%; width:40px; font-size:18px; font-weight:bold;" >
 					<i style="" class="ion-android-remove"></i>
 				</div>
                   		<div class="item item-input text-center" style="float:left; margin-left:3px; text-align:center; padding:0px; display:inline-block; height:100%; width:70px;">
 					{{item.quantity}}
 				</div>
-                  		<div  ng-click="aQuantity(item)" class="button button-small button-positive" style="float:left;  margin-left:3px; display:inline-block; height:100%; width:40px; font-size:18px; font-weight:bold">
+                  		<div  ng-click="aQuantity(item)" class="button button-small button-assertive" style="float:left;  margin-left:3px; display:inline-block; height:100%; width:40px; font-size:18px; font-weight:bold">
 					<i style="" class="ion-android-add"></i>
 				</div>
 				<div style="float:right; margin-right:10px;">&#8377; {{item.price * item.quantity}}

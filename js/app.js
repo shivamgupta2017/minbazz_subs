@@ -57,6 +57,9 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
               	  return false;
 		
       }
+	else if($state.is('app.confirmation')){
+		$state.go('app.editorial');
+	}
 	else if($state.is('app.payment_step2')||$state.is('app.payment_step3')){
 		return false;
 	}
@@ -140,6 +143,15 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
         }
       }
     })
+    .state('app.singlepackage', {
+      url: '/singlepackage/:package_id/:subscription_id/:package_size_id',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/single-package.html',
+          controller: 'singlePackageCtrl'
+        }
+      }
+    })
     .state('app.nextdayselection', {
       url: '/nextdayselection/:package_id/:package_size_id/:subscription_id',
       views: {
@@ -177,7 +189,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     })
     .state('app.confirmation', {
-      url: '/confirmation/:selected_address_id',
+      url: '/confirmation/:selected_address_id/:isSub',
       views: {
         'menuContent': {
           templateUrl: 'templates/confirmation.html',

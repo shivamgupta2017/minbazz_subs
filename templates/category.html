@@ -33,6 +33,7 @@
      <div ng-repeat="product in products" style="display:inline-block; width:49vw; height:60vw; margin-top:10px; border:1px solid #ddd;" ng-click="openCategory(category.id)">
 		
 		<div style="height:45%; background-image:url(https://www.minbazaar.com/subs/admin/{{product.image}}); background-position:center; background-repeat:no-repeat; background-size:contain">
+			<span style="height:25px; width:25px; border-radius:50%; float:left; margin-left:5px; margin-top:5px; display:inline-block; background-color:#ef473a; color:white; padding:1px;" ng-if="getQty(product.id,s.unit_id)">{{getQty(product.id,s.unit_id)}}</span>
 		</div>
 		<div style="height:10%;">
 			{{product.product_name}}
@@ -55,8 +56,8 @@
 		</div>
 		<div style="height:15%">
 			
-			<button ng-click="addToCart(product,s.unit_id,s.price,s.unit,s.weight,s.basic_weight)"class="button button-small button-dark icon ion-ios-cart icon-left" style="width:40%; background-color:#444444">Add</button>&nbsp;
-			<button class="button button-positive button-small" style="width:50%" ng-click="subscribeProducts(product.id,s.unit_id,s.unit,s.weight);">Subscribe</button>
+			<button ng-click="addToCart(product,s.unit_id,s.price,s.unit,s.weight,s.basic_weight,s.max_limit)"class="button button-small button-dark icon ion-ios-cart icon-left" style="width:40%; background-color:#444444">Add</button>&nbsp;
+			<button class="button button-positive button-small icon ion-android-calendar icon-left" style="width:50%" ng-click="subscribeProducts(product.id,s.unit_id,s.unit,s.weight);">Subscribe</button>
 		</div>
      </div>
 

@@ -1,5 +1,37 @@
+.mizan .item-content{
+	padding-right:5px;
+}
 
 
+.mleft{
+	margin-left:10px; 
+	float:left; 
+	display:inline-block; 
+	height:100%; 
+	width:40px; 
+	font-size:18px; 
+	font-weight:bold;
+}
+.mcenter{
+float:left; 
+margin-left:3px; 
+text-align:center; 
+padding:0px; 
+display:inline-block; 
+height:100%; 
+width:70px;
+}
+.mright{
+
+
+float:left;  
+margin-left:3px; 
+display:inline-block; 
+height:100%; 
+width:40px; 
+font-size:18px; 
+font-weight:bold
+}
 
 
 

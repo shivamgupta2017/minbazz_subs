@@ -21,25 +21,30 @@
 
  <div class="inputholder" style="margin-top:15px; margin-bottom:15px;">
 	<div style="height:40px">
-          <div style="height:auto; display:inline-block; width:70%; float:left">Select Address</div><div style="width:30%; display:inline-block; float:right"><button class="button button-small button-dark"  style="float:right;" ng-click="check_zip_avail()">New</button></div>
+          <div style="height:auto; display:inline-block; width:70%; float:left">Select Address</div><div style="width:30%; display:inline-block; float:right"><button class="button button-small button-dark"  style="float:right;" ng-click="check_zip_avail()" ng-show="Addresses.length!=0">New</button></div>
 	</div>
   
 <div style="width:100%; display:block; height:150px; overflow-y:auto">
+<button ng-show="Addresses.length==0" class="button button-large button-positive" ng-click="check_zip_avail()"> Add address</button>
 <ion-radio  style="margin:0px; text-align:left;" ng-repeat="add in Addresses" ng-model="subobject.delivery_add_id" ng-value="add.id" ng-change="select_address(add.id)"><span style="line-height:27px;margin-left:5px; font-size:12px">{{add.address}}{{", "+add.apartment}}<br>{{add.zip}}<br>{{add.mobno}}</span></ion-radio>
 </div>
 </div>
 
-
+<!---->    
+<!---->
+<!---->
 
 <!--subscription type end-->
-<div class="inputholder" style="margin-top:15px; margin-bottom:15px" ng-show="(subobject.delivery_add_id!=undefined)&&(subobject.quantity!=undefined)" ng-if="is_subs=='true'">
+<div class="inputholder" style="margin-top:15px; margin-bottom:15px" ng-if="is_subs=='true'" ng-show="subobject.delivery_add_id">
 	<h4> Select Subscription type 
 	<a style="float:right; margin-right:10px" ng-if="hidecontent" ng-click="editshipping()"><img src='img/edit.png' height="15">
 			</a>
 	</h4> 
   	<ion-list>
-     <ion-radio style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'2'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Daily</span></ion-radio>
-     <ion-radio style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'1'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Custom</span></ion-radio>
+     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'2'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Daily</span></ion-radio>
+     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'3'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Weekly</span></ion-radio>
+     <ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'4'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Alternate</span></ion-radio>
+<!--<ion-radio  style="margin:0px; text-align:left;"  ng-model="selectSubscriptionType.answer" ng-value="'1'" ng-change="changeSubscriptionType()"><span style="line-height:27px;margin-left:5px;">Custom</span></ion-radio>-->
       
   </ion-list>
   </div>

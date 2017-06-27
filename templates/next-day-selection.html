@@ -43,16 +43,18 @@
 			</select>
 			</div>
 			<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">
-				<div ng-click="dQuantity(selectedproducts[$index])" style="padding:2px; margin-left:10px; float:left; display:inline-block; height:100%; width:40px; border:1px solid black;">
-					<i style="width:100%" class="ion-android-remove"></i>
+
+				<div ng-click="dQuantity(selectedproducts[$index])" class="button button-small button-positive"  style="padding:2px; margin-left:10px; float:left; display:inline-block; height:100%; width:40px; font-size:25px">
+					-
 				</div>
-                  		<div style="float:left; display:inline-block;height:100%; margin:0 auto; padding:2px; width:70px; border:1px solid blue;">
+                  		<div class="item item-input text-center" style="float:left;  display:inline-block;height:100%; margin:0 auto; padding:2px; width:70px; margin-left:3px;">
 					<span class="checkout-product-price ng-binding">{{selectedproducts[$index].quantity}}</span>
 				</div>
-                  		<div  ng-click="aQuantity(selectedproducts[$index])" style="float:left; padding:2px;  display:inline-block; height:100%; width:40px; border:1px solid black;">
-					<i style="margin:0 auto;" class="ion-android-add"></i>
+                  		<div  ng-click="aQuantity(selectedproducts[$index])" class="button button-small button-positive"  style="float:left; padding:2px;  display:inline-block; height:100%; width:40px; margin-left:3px; font-size:25px">
+					+
 				</div>
-				<div style="float:right; margin-right:10px;">{{selectedproducts[$index].quantity*selectedproducts[$index].unit.weight+' '+selectedproducts[$index].unit.unit}}-->
+
+				<div style="float:right; margin-right:10px;" ng-show="selectedproducts[$index].quantity">{{selectedproducts[$index].quantity*selectedproducts[$index].unit.weight+' '+selectedproducts[$index].unit.unit}}
 				</div>
 			</div>
 		

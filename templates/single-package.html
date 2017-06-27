@@ -1,4 +1,4 @@
-<ion-view view-title="Editorial" hide-back-button="false" cache="false">
+<ion-view view-title="Editorial" hide-back-button="false">
 
 	<ion-nav-title style="margin-left:0px;" >  
 		<img class="home-logo" src="img/l5.png"  style="width:30vw; vertical-align: middle; margin: 0 auto;">
@@ -16,30 +16,27 @@
 	<ion-content  style="background-color:#fff"  id="contentsearch" scroll="false"> <!--on-scroll="getScrollPosition()"-->
 <!--<button ng-click="su()">buttton</button>-->
 	
-	<div style="height:15vh; width:100vw; margin-bottom:5px;">
-			<div style="background-image:url(https://www.minbazaar.com/subs/admin/{{singleSubscriptions.product[0].image}}); background-size:contain; background-repeat:no-repat; display:inline-block; height:15vh; width:15vh;">
+	<div style="height:15vh; width:100vw; margin-bottom:5px; background-image:url(https://www.minbazaar.com/subs/admin/uploads/{{singlePackages.package[0].image}}); background-size:cover; background-repeat:no-repeat;">
+			<div style=" display:inline-block; height:15vh; width:15vh;">
+				<button ng-click="openNextDaySelection(singlePackages.package[0].package_id,singlePackages.package[0].package_size_id,singlePackages.package[0].subscription_id)" class="button button-dark">Next day selection</button>
 			</div>
 			<div style="display:inline-block; width:70%; height:15vh; float:right;">			
-				<div class="text-left">{{singleSubscriptions.product[0].product_name}}</div>
+				<div class="text-left">{{singlePackages.package[0].package_name}}({{singlePackages.package[0].size_name}})</div>
 				<div class="text-left">{{singleSubscriptions.product[0].quantity}} X {{singleSubscriptions.product[0].weight}} {{singleSubscriptions.product[0].unit}} = {{singleSubscriptions.product[0].quantity*singleSubscriptions.product[0].weight}} {{singleSubscriptions.product[0].unit}}</div>
-				<div class="text-left" ng-if="singleSubscriptions.product[0].total_used_data[0].total_used_data">Total used quantity: {{singleSubscriptions.product[0].total_used_data[0].total_used_data}}</div>
-<div class="text-left" ng-if="singleSubscriptions.product[0].total_used_data[0].total_price">Total Price(till now): {{singleSubscriptions.product[0].total_used_data[0].total_price}}</div>
+				<div class="text-left">total used quantity {{singleSubscriptions.product[0].total_used_data[0].total_used_data}} 					</div>
 			</div>
 	</div>
 	
 <ion-scroll direction="y" style="height:70vh; border-top:1px solid #ddd">
 <ion-list>
-	<ion-item  ng-repeat="detail in singleSubscriptions.product_detail"class="item item-text-wrap text-left item-icon-right"   can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
-		<i class="icon ion-ios-arrow-thin-left dark" ng-if="detail.status==0"></i>
+	<ion-item  ng-repeat="detail in singlePackages.package_product"class="item item-text-wrap text-left" item="item" style="padding-top:0px; margin:0px; font-family:regular">
 		<div style="height:15vw; font-size:12px; width:100%;">
 			<div style="border:1px solid black width:100%;">{{detail.date|date:'dd MMM, EEEE'}}<span style="float:right" ng-if="detail.status==1" class="balanced"> Delivered At {{detail.Time | limitTo:5}}</span><span style="float:right" ng-if="detail.status==0" class="positive"> Pending</span>
 <span style="float:right" ng-if="detail.status==2" class="assertive"> Paused</span>
-<span style="float:right" ng-if="detail.status==3" class="assertive"> On The Way</span>
 </div>
-			<span>{{detail.qty}} Quantity</span> <span ng-if="detail.extra_qty!='0'">+ {{detail.extra_qty}} Extra</span>
+			
 		</div>
-
-       		<ion-option-button ng-if="detail.status==0" class="button-light button-dark" ng-click="addExtra(detail.id,5);">&nbsp;Extra Qty</ion-option-button> 
+       		
         </ion-item>
 </ion-list>
 </ion-scroll>
