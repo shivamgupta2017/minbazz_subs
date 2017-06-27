@@ -20,13 +20,13 @@ angular.module('starter.controllers', [])
 	$scope.ipQuantity=function()
   {
     $scope.readCount++;
-    alert('shivam :'+$scope.readCount);
+   // alert('shivam :'+$scope.readCount);
 	}
   $scope.dpQuantity=function()
   {
 
     $scope.readCount--;
-    alert('shivam :'+$scope.readCount);
+   // alert('shivam :'+$scope.readCount);
   }
 
 	$scope.checking=function(){
@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
 		temp=temp+'<i style="" class="ion-android-add"></i>';
 		temp=temp+'</div></div>';
 
-    alert('template page :'+temp);
+  //  alert('template page :'+temp);
 
 		  	var myPopup = $ionicPopup.show({
         	template: temp,
@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
 	
 	Maestro.$getSubscribePackages(AuthService.id()).then(function(res){	
 		$scope.nextdaysselection=res.data.response_data;
-		alert(JSON.stringify(res));
+	//	alert(JSON.stringify(res));
 		//$scope.selectedSize={};
 		//$scope.products=
 		//$pinroUiService.hideLoading();
@@ -853,20 +853,16 @@ $scope.signUp = function () {
   	});
 //reset password request function (fortgot password)----------------------------------------------------------------------------------------------
     $scope.resetPassword = function (user) {
-      	$scope.disableSubmit = true;
+        $scope.disableSubmit = true;
       	$pinroUiService.showLoading();
-      	var params = {
-        	insecure: 'cool',
-        	user_login: user.user_login
-      	};
-      	$dataService.$passwordReset(params).then(function (res) {
-        	console.log(res)
-        	if (res.status === 200) {
+      	
+      	$dataService.$passwordReset(user).then(function (res) {
+          if (res.data.response.status === 1) {
           		$scope.resetError = '';
-          		$scope.resetSuccess = res.data.msg;
+          		$scope.resetSuccess = 'verification code has been sent to your email';
         	} else {
           		$scope.resetSuccess = '';
-          		$scope.resetError = res.data.error;
+          		$scope.resetError = 'email not found';
         	}
  
        		$scope.disableSubmit = false;
@@ -1165,7 +1161,7 @@ $scope.checkZipCode= function(data){
 
           $pinroUiService.showLoading();
           $scope.next_day_selection_data.product_data=JSON.stringify($scope.next_day_selection_data.product_data);
-          alert(JSON.stringify($scope.next_day_selection_data));
+  //        alert(JSON.stringify($scope.next_day_selection_data));
           Maestro.$post_next_day_selection($scope.next_day_selection_data).then(function(res)
           {
               if(res.data.response.status==1)
@@ -1601,6 +1597,7 @@ var addAddress=function(selected_zip){
 
 				 $scope.subobject.quantity=res;        			
 			   $scope.readCount=null;
+
          alert('$scope.subobject.quantity :'+$scope.subobject.quantity);
       }
 			
@@ -2011,21 +2008,18 @@ $scope.$on('$ionicView.enter', function() {
     
     alert('shivam :'+JSON.stringify(data1));
 
+    $pinroUiService.hideLoading();
     Maestro.$billing(data1).then(function(res)
     {
-      alert('response : '+JSON.stringify(res));
-      /*if(res.data.response.status==1)
+      if(res.data.response.status==1)
       { 
-        $scope.singleSubscriptions=res.data.response_data;
+     
         $pinroUiService.hideLoading();
-        $state.go($state.current, {}, {reload: true});
-      }*/
+        $state.go('app.payment_step2', {amount:data1.amount}, {reload: true});
+     
+      }
 
     });
-
-
-
-
   }
 
 
@@ -2598,18 +2592,20 @@ $scope.$on('$ionicView.enter', function() {
 .controller('PaymentCtrl', function ($scope, $http, $stateParams, $ionicPopup, $ionicHistory, $state, StorageService, Maestro, CartService,$cordovaNgCardIO, $pinroUiService, $interval) {
 	$scope.disable=false;
 	$scope.newvariable = "";
-	$scope.codCharges=parseInt($stateParams.codCharges);
-	$scope.shippingCharges=parseInt($stateParams.shippingCharges);
-	if($stateParams.method=="cod")
-		$scope.extraCharges=$scope.shippingCharges+$scope.codCharges;
-	else
-		$scope.extraCharges=$scope.shippingCharges;
 
-	$scope.selected_method=$stateParams.method;
+    /*	$scope.codCharges=parseInt($stateParams.codCharges);
+	       $scope.shippingCharges=parseInt($stateParams.shippingCharges);
+	       if($stateParams.method=="cod")
+		        $scope.extraCharges=$scope.shippingCharges+$scope.codCharges;
+	       else
+		        $scope.extraCharges=$scope.shippingCharges;*/
+
+	//$scope.selected_method=$stateParams.method;
 	$scope.amount = parseInt($stateParams.amount);
-	$scope.cart_total= $scope.amount- $scope.extraCharges;	
+  alert('$scope.amount :'+$scope.amount);
+	//$scope.cart_total= $scope.amount- $scope.extraCharges;	
 
-	$scope.methodText="";
+	/*$scope.methodText="";
 	if($scope.methodChosen=='cod')
 	   $scope.methodText='Cash On Delivery';
 	else
@@ -2617,17 +2613,18 @@ $scope.$on('$ionicView.enter', function() {
 	var orderId;
  	$scope.cardType = {};
     	$scope.card = {};
-    	var dataForStripe = {};
+    	var dataForStripe = {};*/
+
  	$scope.$on("$ionicView.enter", function(event, data){
 	   	$scope.disable=false;
-   		orderId = data.stateParams.orderId;
+   		//orderId = data.stateParams.orderId;
 
   // pass order and amount details for stripe
-  dataForStripe.amount = parseInt(data.stateParams.amount); // amount is in cents/pence for stripe so * 100
-      dataForStripe.currency = data.stateParams.currency;
-      dataForStripe.name = data.stateParams.name;
-      dataForStripe.phone = data.stateParams.phone;
-      dataForStripe.description =  "Payment for Maestro Order #"+ orderId;
+  //dataForStripe.amount = parseInt(data.stateParams.amount); // amount is in cents/pence for stripe so * 100
+    //  dataForStripe.currency = data.stateParams.currency;
+      //dataForStripe.name = data.stateParams.name;
+      //dataForStripe.phone = data.stateParams.phone;
+      //dataForStripe.description =  "Payment for Maestro Order #"+ orderId;
 
  });
 
@@ -3073,7 +3070,7 @@ var getOrdersByCustomer = function(userId){
             if(res.data.response_data.order_details.length>0)
             {
               $scope.items=res.data.response_data.order_details;
-		alert(JSON.stringify($scope.items));
+		          //alert(JSON.stringify($scope.items));
               $pinroUiService.hideLoading();
                             
             }

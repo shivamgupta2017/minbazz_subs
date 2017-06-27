@@ -270,9 +270,9 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     }
   })
-
+//:orderId/:amount/:method/:codCharges/:shippingCharges/:currency/:email/:name/:phone
   .state('app.payment_step2', {
-    url: '/payment_step2/:orderId/:amount/:method/:codCharges/:shippingCharges/:currency/:email/:name/:phone',
+    url: '/payment_step2/:amount',
     views: {
       'menuContent': {
         templateUrl: 'templates/payment_step2.html',

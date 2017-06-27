@@ -237,8 +237,8 @@ angular.module('starter.services', [])
             },*/
 
             $passwordReset: function (params) {
-                console.log(params);
-                return $http.get(apiUrl + '/user/retrieve_password/', {
+                
+                return $http.get(apiUrl + '/forgotpassword', {
                     header: header,
                     params: params
                 })
