@@ -15,7 +15,8 @@
 .mcenter{
 float:left; 
 margin-left:3px; 
-text-align:center; 
+text-align:center;
+margin-left:20%; 
 padding:0px; 
 display:inline-block; 
 height:100%; 

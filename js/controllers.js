@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
 	var carts= CartService.getAll();
 	var cartqty= carts.length;
 	var errNotification="";
-	$scope.readCount=0;
+	$scope.readCount=1;
  	$scope.Notifications= [];
  	/*for(i=0;i<carts.length;i++){
     		cartqty=cartqty+carts[i].quantity;
@@ -17,19 +17,28 @@ angular.module('starter.controllers', [])
 	}*/
 
   //$getNotification
-	$scope.aQuantity=function(){
-		alert("ldjff");
+	$scope.ipQuantity=function()
+  {
+    $scope.readCount++;
+    alert('shivam :'+$scope.readCount);
 	}
+  $scope.dpQuantity=function()
+  {
+
+    $scope.readCount--;
+    alert('shivam :'+$scope.readCount);
+  }
+
 	$scope.checking=function(){
-    //shivam
+    //bhosdiwala
 		var temp='<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">';
-		temp=temp+'<div ng-click="dQuantity(item)" class="button button-small button-assertive mleft" style="" >';
+		temp=temp+'<div ng-click="dQuantity()" class="button button-small button-assertive mleft" style="" >';
 		temp=temp+'<i style="" class="ion-android-remove"></i>';
 		temp=temp+'</div>';
 		temp=temp+'<div class="text-center mcenter" style="">';
-		temp=temp+'<input type="text" ng-model="5" ng-value="2">';
+		temp=temp+'<input type="text" ng-model="readCount" ng-value="2">';
 		temp=temp+'</div>';
-    temp=temp+'<div  ng-click="aQuantity()" class="button button-small button-assertive mright" style="">';
+    temp=temp+'<div  ng-click="iQuantity()" class="button button-small button-assertive mright" style="">';
 		temp=temp+'<i style="" class="ion-android-add"></i>';
 		temp=temp+'</div></div>';
 
@@ -1273,7 +1282,7 @@ $scope.addToCart = function (selected,id,price,unit,weight,basic_weight,max_limi
 	$scope.frequency=1;
 	$scope.is_subs=$stateParams.is_subs;
 	$scope.is_package=$stateParams.is_package;
-		
+	$scope.readCount=1;
 	$scope.selectSubscriptionType={};
 	$scope.subobject={
 		cust_id: AuthService.id(),
@@ -1529,29 +1538,54 @@ var addAddress=function(selected_zip){
 
 
 /********************popup for quantity**************/
-$scope.showPopup = function() {
+  
+  $scope.add_quantity=function()
+  {
+    $scope.readCount++;
+  //  alert('qunatity has been added :'+$scope.readCount);
+  }
+  $scope.decrease_quantity=function()
+  {
+    if($scope.readCount>0)
+    $scope.readCount--;
+//    alert('qunatity has been decreased :'+$scope.readCount);
+  }
+
+  $scope.showPopup = function() {
   	$scope.data = {};
-  //	
-  // An elaborate, custom popup
+  //bhosdiwala
+  var temp='<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">';
+    temp=temp+'<div ng-click="decrease_quantity()" class="button button-small button-assertive mleft" style="" >';
+    temp=temp+'<i style="" class="ion-android-remove"></i>';
+    temp=temp+'</div>';
+    temp=temp+'<div class="text-center mcenter" style="">';
+    temp=temp+'<input type="text" ng-model="readCount" ng-value="2">';
+    temp=temp+'</div>';
+    temp=temp+'<div  ng-click="add_quantity()" class="button button-small button-assertive mright" style="">';
+    temp=temp+'<i style="" class="ion-android-add"></i>';
+    temp=temp+'</div></div>';
+
+
+
 
   	var myPopup = $ionicPopup.show({
-    		template: '<div class="qtyleft"></div><input class="qtycenter" type="text" ng-model="data.pin"> <div class="qtyright"></div>',
+    		template: temp,
     		title: 'Select Quantity',
-    		subTitle: '',
+    		
     		scope: $scope,
     		buttons: [
       				{ text: 'Cancel' },
       				{
         				text: '<b>Submit</b>',
-        				type: 'button-dark',
+        				type: 'button-assertive',
         				onTap: function(e) {
-         					if (!$scope.data.pin) 
+         					if (!$scope.readCount) 
                   {
             							e.preventDefault();
           				} 
                   else 
-                  {
-            						return $scope.data.pin;
+                  {     
+            					return $scope.readCount;
           				}
         				}
 				}      			
@@ -1559,13 +1593,20 @@ $scope.showPopup = function() {
   		});
 
 
- 		myPopup.then(function(res) {
-			if(isNaN(res)==false){
-				$scope.subobject.quantity=res;        			
-				//alert('state pa'+JSON.stringify($stateParams));		
-			}
+ 		myPopup.then(function(res) 
+    {
+      
+			if(isNaN(res)==false)
+      {
+
+				 $scope.subobject.quantity=res;        			
+			   $scope.readCount=null;
+         alert('$scope.subobject.quantity :'+$scope.subobject.quantity);
+      }
 			
-  		});
+  	});
+
+
 
  	};
 
