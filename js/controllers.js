@@ -1801,10 +1801,14 @@ $scope.openTimePicker=function(dates){
 
 $scope.$on('$ionicView.enter', function() {
   	$pinroUiService.showLoading();
-    Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){      
+    Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res)
+    {      
       		$scope.subscriptions=res.data.response_data;
-		//alert(JSON.stringify($scope.subscriptions));
-		if(res.data.response_data.products.length==0 && res.data.response_data.package.length==0){
+		    //alert(JSON.stringify($scope.subscriptions));
+    	 //console.log('my subscription :'+JSON.stringify($scope.subscriptions));
+
+      	if(res.data.response_data.products.length==0 && res.data.response_data.package.length==0)
+        {
 
 					    		$ionicHistory.nextViewOptions({
       								disableBack: true
@@ -1815,20 +1819,19 @@ $scope.$on('$ionicView.enter', function() {
     					 buttons: [
        						{ text: '<b>OK</<b>',
       							type: 'button-small button-assertive' }
-     						]
+     		
+        				]
    					});
 					$state.go('app.editorial',{},{reload:true});
-
-
-
-		}
-		$pinroUiService.hideLoading();
+    		}
+		  $pinroUiService.hideLoading();
   	});
 });
 
 
   	
   	$scope.openSingleSub=function(p_id, s_id, u_m_id){	
+
   		$state.go('app.singlesubscription',{product_id:p_id,subscription_id:s_id,unit_mapping_id:u_m_id});
 	}
   	$scope.openSinglePackage=function(p_id, s_id, u_m_id){	
@@ -1860,13 +1863,18 @@ $scope.$on('$ionicView.enter', function() {
             		}
       		});
   	}
+
+  
+
 })
 /**********************************************************************************************************************************
 ********************************************************* single subscription *************************************************
 **********************************************************************************************************************************/
   .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 	 var data1={};
-	data1.cust_id=AuthService.id();;
+   //open single subscription
+
+	data1.cust_id=AuthService.id();
 	data1.product_id=$stateParams.product_id;
 	data1.sub_id=$stateParams.subscription_id;
 	data1.unit_mapping_id=$stateParams.unit_mapping_id;		
@@ -1878,6 +1886,7 @@ $scope.$on('$ionicView.enter', function() {
 		$pinroUiService.hideLoading();
 	});
 	
+  alert('data1 :'+JSON.stringify(data1));
 
 	$scope.addExtra=function(id){
       		$scope.data={
@@ -1950,12 +1959,37 @@ $scope.$on('$ionicView.enter', function() {
 
 	}
 	
+  $scope.unsubscribe=function(total_price)
+  {
+  //shivam
+    data1.amount=total_price;
+    
+    alert('shivam :'+JSON.stringify(data1));
+
+    Maestro.$billing(data1).then(function(res)
+    {
+      alert('response : '+JSON.stringify(res));
+      /*if(res.data.response.status==1)
+      { 
+        $scope.singleSubscriptions=res.data.response_data;
+        $pinroUiService.hideLoading();
+        $state.go($state.current, {}, {reload: true});
+      }*/
+
+    });
+
+
+
+
+  }
+
+
 })
 
 
   .controller('singlePackageCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 	 var data1={};
-	data1.cust_id=AuthService.id();;
+	data1.cust_id=AuthService.id();
 	data1.package_id=$stateParams.package_id;
 	data1.subscription_id=$stateParams.subscription_id;
 	data1.package_size_id=$stateParams.package_size_id;		

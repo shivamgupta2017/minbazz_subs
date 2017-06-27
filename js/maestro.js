@@ -126,6 +126,17 @@ return {
 			     params: data
 
 			});
+
+            },
+             $billing : function (data) { //get categories products by category id       
+                alert('dffd');
+                return $http({ 
+           url:'https://www.minbazaar.com/subs/admin/service/billing/customer',
+           method:'GET',
+           params: data
+
+      });
+                
             },
             $getSinglePackage : function (data) { //get categories products by category id       
              		return $http({ 

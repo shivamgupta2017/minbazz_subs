@@ -5,17 +5,18 @@
 	</ion-nav-title>
 
 
-<!----------------------------------------------------------------------------------------------------------------->
-	<!--<div class="bar bar-subheader item-input-inset subheader-with-input" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px; height:40px" id="searchbar">
-  		<label class="item-input-wrapper" style="background-color:white; z-index:13"> 
+	<div class="bar bar-subheader item-input-inset subheader-with-input" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px; height:40px;">
+
+	<button class="button button-assertive" ng-click="unsubscribe(singleSubscriptions.product[0].total_used_data[0].total_price)">Unsubscribe</button>
+  		<!-- <label class="item-input-wrapper" style="background-color:white; z-index:13"> 
     			<input type="search" placeholder="Type here" ng-model="search1" style="margin-top:10px">
   		</label>
-  		<img src="img/icons/search_icon.svg">
-	</div> -->
-<!------------------------------------------------------------------------------------------------------------------->
-	<ion-content  style="background-color:#fff"  id="contentsearch" scroll="false"> <!--on-scroll="getScrollPosition()"-->
-<!--<button ng-click="su()">buttton</button>-->
+  		<img src="img/icons/search_icon.svg"> -->
+	</div> 
+
+	<ion-content  style="background-color:#fff"  id="contentsearch" scroll="false" class="padding has-subheader"> <!--on-scroll="getScrollPosition()"-->
 	
+
 	<div style="height:15vh; width:100vw; margin-bottom:5px;">
 			<div style="background-image:url(https://www.minbazaar.com/subs/admin/{{singleSubscriptions.product[0].image}}); background-size:contain; background-repeat:no-repat; display:inline-block; height:15vh; width:15vh;">
 			</div>
