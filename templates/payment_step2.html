@@ -3,10 +3,9 @@
 
 
 
-	<ion-content class="step2">
+	<ion-content class="step2" scroll="true">
 
 <h4 style="margin-top:40px">Your Order Summery</h4>
-</ion-item>
 
 
 <!-- 
@@ -30,13 +29,35 @@
 -->
 
 <div class="padding">
-	<img src='img/icons/cc.png' height="100">
+	<!-- <img src='img/icons/cc.png' height="100">
   <h2>Debit Card/ Credit Card/ Net Banking</h2>
-  <div class="row"> <div class="col">Total Cart Amount</div><div class="col">:&nbsp;{{cart_total}}</div></div>
-  <div class="row"> <div class="col">Shipping Charges</div>  <div class="col">:&nbsp;{{shippingCharges}}</div></div>
-<div class="row"> <div class="col">Total</div>  <div class="col">:&nbsp;{{amount}}</div></div>
-  <div class="footer-button">
-      <button class="button button-assertive button-block button-block button-outline " ng-disabled="disable" ng-click="payOnline()">Pay &nbsp; &#8377;{{amount}} {{'now'}} </button>
+ -->  
+  <div class="list list-inset">
+      
+        <div class="item">
+          <div class="col">shivam gupta</div>
+        </div>
+      
+        <div class="item">
+          <div class="col">52, sundersi road berchha, shajapur (452001)</div>
+        </div> 
+  </div>
+
+  <div class="list list-inset" style="border-style: solid; border-color: black; border-width: 1px;">
+    <ion-list>
+      <ion-radio ng-model="data.choice" value='cash'>Pay cash</ion-radio>
+      <ion-radio ng-model="data.choice" value='online'>Pay online</ion-radio>
+    </ion-list>
+  </div>
+  hgjgjkj:{{data.choice}}
+    <div class="row"> <div class="col">Total Cart Amount</div><div class="col">:&nbsp;{{cart_total}}</div></div>
+    <div class="row"> <div class="col">Shipping Charges</div>  <div class="col">:&nbsp;{{shippingCharges}}</div></div>
+    <div class="row"> <div class="col">Total</div>  <div class="col">:&nbsp;{{amount}}</div></div>
+    
+    <div class="footer-button" style="width: 100vw; text-align: center; float: left;">
+       
+        <button class="button button-calm button-block" ng-disabled="disable" ng-click="payCashOnDelivery()">submit</button>
+    
     </div>
 </div>
 <!--Payment via Instamojo ends-->

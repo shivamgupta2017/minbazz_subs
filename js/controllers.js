@@ -2605,31 +2605,14 @@ $scope.$on('$ionicView.enter', function() {
 ----------------------------------------------------------------------------------------------------------------------------------------------*/
 .controller('PaymentCtrl', function ($scope, $http, $stateParams, $ionicPopup, $ionicHistory, $state, StorageService, Maestro, CartService,$cordovaNgCardIO, $pinroUiService, $interval) {
 	$scope.disable=false;
+  $scope.data={};
+
 	$scope.newvariable = "";
 
-    /*	$scope.codCharges=parseInt($stateParams.codCharges);
-	       $scope.shippingCharges=parseInt($stateParams.shippingCharges);
-	       if($stateParams.method=="cod")
-		        $scope.extraCharges=$scope.shippingCharges+$scope.codCharges;
-	       else
-		        $scope.extraCharges=$scope.shippingCharges;*/
-
-	//$scope.selected_method=$stateParams.method;
+    
 	$scope.amount = parseInt($stateParams.amount);
   alert('$scope.amount :'+$scope.amount);
-	//$scope.cart_total= $scope.amount- $scope.extraCharges;	
-
-	/*$scope.methodText="";
-	if($scope.methodChosen=='cod')
-	   $scope.methodText='Cash On Delivery';
-	else
-	   $scope.methodText='Online';
-	var orderId;
- 	$scope.cardType = {};
-    	$scope.card = {};
-    	var dataForStripe = {};*/
-
- 	$scope.$on("$ionicView.enter", function(event, data){
+	 	$scope.$on("$ionicView.enter", function(event, data){
 	   	$scope.disable=false;
    		//orderId = data.stateParams.orderId;
 
@@ -2647,9 +2630,8 @@ $scope.$on('$ionicView.enter', function() {
 
 
 $scope.payCashOnDelivery = function(){
-  
-	
-  $state.go('app.payment_step3', {orderId: orderId, payByCash: true})
+  alert('hello :'+JSON.stringify($scope.payment_choice));
+  //$state.go('app.payment_step3', {orderId: orderId, payByCash: true})
 }
 $scope.payOnline = function(){
 			$scope.disable=true;
@@ -3181,7 +3163,7 @@ $scope.$on("modal.shown", function(event, data){
   Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
 
     $scope.Addresses=res.data.response_data;
-    //alert('repo :'+JSON.stringify($scope.Addresses));
+    //alert('response :'+JSON.stringify($scope.Addresses));
     $pinroUiService.hideLoading();
     //angular.element('#multidateopen').triggerHandler('click');
   });
@@ -3247,6 +3229,12 @@ $scope.$on("modal.shown", function(event, data){
 
 
 
+
+  }
+
+  $scope.remove_address=function(address_id)
+  {
+    alert('remove address'+address_id);
 
   }
 	$scope.lang = Language.getLang();

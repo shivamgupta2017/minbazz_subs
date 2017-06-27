@@ -1,56 +1,50 @@
 <ion-modal-view ng-controller="SettingsCtrl" class="settings">
 	<ion-header-bar class="pinro-header header-shadow">
-      		<button class="button button-clear text-button" ng-click="close_add_new_addressModal()">Close</button>
-  
-
-
-                
-
-
-
-
-
+      		<button class="button button-clear text-button" ng-click="close_add_new_addressModal()"><i class="ion-chevron-left"></i></button>
     		<h1 class="title">Add new Address</h1>
   	</ion-header-bar>
- 	<div ng-include="'templates/common/loading.html'" ng-show="loading"></div>       
+ 	
+    <div ng-include="'templates/common/loading.html'" ng-show="loading"></div>       
 	<ion-content>
-		<!-- <div class="profile-img">
-    			<img ng-src="{{user.gravatar}}">
-		</div> -->
 
 
-            <div style="width:100%; diplay:block; height:150px; overflow-y:auto">
-                    <div  style="margin:0px; text-align:left;" ng-repeat="add in Addresses" ng-model="subobject.delivery_add_id" ng-value="add.id" ng-change="select_address(add.id)"><span style="line-height:27px;margin-left:5px; font-size:12px">{{add.address}}{{", "+add.apartment}}<br>{{add.zip}}<br>{{add.mobno}}
-                    </span>
+            <div class="list" style="width:100%; diplay:block; height:250px; overflow-y:auto">
+                    <div class="item item-divider" style="margin:0px; text-align:left;" ng-repeat="add in Addresses" ng-model="subobject.delivery_add_id" ng-value="add.id" ng-change="select_address(add.id)">
+                    <div style="display: inline-block; float: right; height: 20%;" ng-click="remove_address(add.id)">x</div>
+                        <span style="line-height:27px;margin-left:5px; font-size:12px">
+                            {{add.address}}{{", "+add.apartment}}<br>{{add.zip}}<br>{{add.mobno}}
+                        </span>
                     </div>
-                    </div>
-                    </div>
+            </div>
+                    
 
 
-		<ion-list> 
+		<div claas="list"> 
     	       <ion-item class="item-divider">
-        	       	Shipping Address
+        	       Add new Shipping Address
     	       	</ion-item>
-	       	<ion-item class="item-input">
-        		<span class="input-label">New Address</span>
-        		<input type="text" ng-model="add_new.address" placeholder="New Address">
-    		</ion-item>
+	       	<label class="item item-input item-floating-label">
+            <span class="input-label">Address line</span>
+        		<input type="text" ng-model="add_new.address" placeholder="Address line">
+            </label>
     		<!-- <ion-item class="item-input">
         		<span class="input-label">Apartment</span>
         		<input type="text" ng-model="add_new.address_2" placeholder="Address 1">
     		</ion-item> -->
-            <ion-item class="item-input">
-                <span class="input-label">Mobile no</span>
-                <input type="text" ng-model="add_new.mobno" placeholder="Address 2">
-            </ion-item>
-    		<ion-item class="item-input">
-        		<span class="input-label">Postcode</span>
-        		<input type="text" ng-model="add_new.zip" placeholder="Postcode">
-    		</ion-item>
-    	</ion-list>
+            
+            <label class="item item-input item-floating-label">
+            <span class="input-label">Contact no.</span>
+                <input type="text" ng-model="add_new.mobno" placeholder="Contact no">
+            </label>
+
+            <label class="item item-input item-floating-label">
+            <span class="input-label">postal code</span>
+                <input type="text" ng-model="add_new.zip" placeholder="Postcode">
+            </label>
+    	</div>
 
 <div class="footer-button">
-    <button class="button button-dark button-block button-round button-outline" ng-click="add_address()">Save Changes</button>
+    <button class="button button-positive button-block" ng-click="add_address()">Save Changes</button>
   <!--  <button class="button button-assertive button-block button-round" ng-click="closeEditProfileModal()">Delete Account</button>-->
 </div>
 
