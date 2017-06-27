@@ -21,21 +21,24 @@ angular.module('starter.controllers', [])
 		alert("ldjff");
 	}
 	$scope.checking=function(){
-		var template='<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">';
-		template=template+'<div ng-click="dQuantity(item)" class="button button-small button-assertive mleft" style="" >';
-		template=template+'<i style="" class="ion-android-remove"></i>';
-		template=template+'</div>';
-		template=template+'<div class="text-center mcenter" style="">';
-		template=template+'<input type="text" ng-model="5" ng-value="2">';
-		template=template+'</div>';
-              	template=template+'<div  ng-click="aQuantity()" class="button button-small button-assertive mright" style="">';
-		template=template+'<i style="" class="ion-android-add"></i>';
-		template=template+'</div></div>';
+    //shivam
+		var temp='<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">';
+		temp=temp+'<div ng-click="dQuantity(item)" class="button button-small button-assertive mleft" style="" >';
+		temp=temp+'<i style="" class="ion-android-remove"></i>';
+		temp=temp+'</div>';
+		temp=temp+'<div class="text-center mcenter" style="">';
+		temp=temp+'<input type="text" ng-model="5" ng-value="2">';
+		temp=temp+'</div>';
+    temp=temp+'<div  ng-click="aQuantity()" class="button button-small button-assertive mright" style="">';
+		temp=temp+'<i style="" class="ion-android-add"></i>';
+		temp=temp+'</div></div>';
+
+    alert('template page :'+temp);
 
 		  	var myPopup = $ionicPopup.show({
-        	template: '',
+        	template: temp,
         	title: 'Enter Address',
-        	subTitle: template,
+        	
         	scope: $scope,
         	buttons: [
               		{ text: 'Cancel' },
@@ -43,6 +46,7 @@ angular.module('starter.controllers', [])
                 		text: '<b>Submit</b>',
                 		type: 'button-assertive',
                 		onTap: function(e) {
+                      alert('submit pressed :');
                   			if ((!$scope.new_address.address)||(!$scope.new_address.apartment)||(!$scope.new_address.mobno)){
                           			e.preventDefault();
                   			} 
