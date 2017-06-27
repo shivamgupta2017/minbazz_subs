@@ -22,6 +22,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
  		$ionicHistory.goBack();
 	}
 
+
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(false);
@@ -43,27 +44,31 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
 
 */
 .run(function($rootScope, $ionicPlatform, $ionicHistory,$state, $ionicPopup){
-
   $ionicPlatform.registerBackButtonAction(function(e) {
-
       	e.preventDefault();
-
-      	if($state.is('app.editorial')||$state.is('signin')) {
+        //alert($state.current.name);
+      	if($state.is('app.editorial')||$state.is('signin')) 
+        {
         	e.stopPropagation();
-		 var c= confirm("Do You want to exit?");	
+		      var c= confirm("Do You want to exit?");	
             	if(c==1)
               	  ionic.Platform.exitApp();
             	else
               	  return false;
-		
-      }
+        }
 	else if($state.is('app.confirmation')){
 		$state.go('app.editorial');
 	}
 	else if($state.is('app.payment_step2')||$state.is('app.payment_step3')){
 		return false;
 	}
-	else{
+  else if($state.is('app.mysubscriptions'))
+  {
+    $state.go('app.editorial');
+  }
+
+	else
+  {
           	$ionicHistory.goBack();
 	}
     },200);

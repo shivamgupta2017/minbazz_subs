@@ -1191,7 +1191,7 @@ $scope.checkZipCode= function(data){
 /**********************************************************************************************************************************
 ********************************************************* Products by category id *************************************************
 **********************************************************************************************************************************/
-  .controller('categoryCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,$timeout, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService) {
+  .controller('categoryCtrl', function ($scope, AuthService,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,$timeout, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService) {
 	
 $pinroUiService.showLoading();
 Maestro.$getCategoryProducts($stateParams.id).then(function(res){
@@ -1200,8 +1200,20 @@ Maestro.$getCategoryProducts($stateParams.id).then(function(res){
 	$pinroUiService.hideLoading();
 });
 
-$scope.subscribeProducts=function(id,unit_id,unit,weight){
-	$state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
+$scope.subscribeProducts=function(id,unit_id,unit,weight)
+{   
+      if(AuthService.id())
+      {
+          alert('shivam');
+          $state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
+      }
+      else
+      {
+        $pinroUiService.showConfirm('signin', "Please login in order to subscribe");
+      }
+
+
+
 }
   var cart = angular.element(document.getElementsByClassName("shopping-cart"));
   var addToCartAnimation = function () {
@@ -2128,12 +2140,14 @@ $scope.$on('$ionicView.enter', function() {
     		}, 500)
   	}
 	$scope.goToCheckout = function(choice){ 
-  		if(AuthService.id()){
+  		if(AuthService.id())
+      {
     			$state.go('app.step_1',{is_subs:false},{reload:true});
-  		}else{
+  		}
+      else
+      {
 				localStorage.setItem('reloads',1);
-
-    			$pinroUiService.showConfirm('signin', "Please login to place order");
+   			$pinroUiService.showConfirm('signin', "Please login to place order");
   		}
   		$scope.closeCartModal();
 	}
@@ -2904,10 +2918,16 @@ $scope.getQty=function(productId,unit_id){
 }
   $scope.subscribeProducts=function(id,unit_id,unit,weight)
   {
-  $state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
+    //bhosdiwala
+     if(AuthService.id())
+      {
+          $state.go('app.step_1',{id:id,unit:unit,unit_id:unit_id,weight:weight,is_subs:true,is_package:false});
+      }
+      else
+      {
+        $pinroUiService.showConfirm('signin', "Please login in order to subscribe");
+      }
   }
-
-
 	$scope.goback=function(){
 		$ionicHistory.goBack(-1);
 	}
