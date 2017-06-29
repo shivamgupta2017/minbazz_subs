@@ -5,17 +5,22 @@
 	</ion-nav-title>
 
 
-	<div class="bar bar-subheader item-input-inset subheader-with-input" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px; height:40px;">
 
-	<button class="button button-block button-assertive" ng-click="unsubscribe(singleSubscriptions.product[0].total_used_data[0].total_price)">Unsubscribe</button>
+	<ion-content  style="background-color:#fff"  id="contentsearch" scroll="false" class=""> <!--on-scroll="getScrollPosition()"-->
+	
+	<div class="row" style="margin-top:10px; border:1px solid #ddd;  border-radius:5px;">
+
+		<button  class="col button button-assertive" ng-click="unsubscribe(singleSubscriptions.product[0].total_used_data[0].total_price)">Unsubscribe</button>
+		
+		<button  ng-show="singleSubscriptions.product[0].current_status==0" class="col button button-assertive" ng-click="change_subscription_status(singleSubscriptions.product[0].current_status)">Pause service</button>
+		
+		<button  ng-show="singleSubscriptions.product[0].current_status==1" class="col button button-assertive" ng-click="change_subscription_status(singleSubscriptions.product[0].current_status)">Restart service</button>
+
   		<!-- <label class="item-input-wrapper" style="background-color:white; z-index:13"> 
     			<input type="search" placeholder="Type here" ng-model="search1" style="margin-top:10px">
   		</label>
   		<img src="img/icons/search_icon.svg"> -->
 	</div> 
-
-	<ion-content  style="background-color:#fff"  id="contentsearch" scroll="false" class="padding has-subheader"> <!--on-scroll="getScrollPosition()"-->
-	
 
 	<div style="height:15vh; width:100vw; margin-bottom:5px;">
 			<div style="background-image:url(https://www.minbazaar.com/subs/admin/{{singleSubscriptions.product[0].image}}); background-size:contain; background-repeat:no-repat; display:inline-block; height:15vh; width:15vh;">
@@ -29,20 +34,21 @@
 	</div>
 	
 <ion-scroll direction="y" style="height:70vh; border-top:1px solid #ddd">
-<ion-list>
-	<ion-item  ng-repeat="detail in singleSubscriptions.product_detail"class="item item-text-wrap text-left item-icon-right"   can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
+	<ion-list>
+	<!--********************************************product detail*******************************************-->
+		<ion-item  ng-repeat="detail in singleSubscriptions.product_detail" class="item item-text-wrap text-left item-icon-right"   can-swipe="true" style="padding-top:0px; margin:0px; font-family:regular">
 		<i class="icon ion-ios-arrow-thin-left dark" ng-if="detail.status==0"></i>
-		<div style="height:15vw; font-size:12px; width:100%;">
-			<div style="border:1px solid black width:100%;">{{detail.date|date:'dd MMM, EEEE'}}<span style="float:right" ng-if="detail.status==1" class="balanced"> Delivered At {{detail.Time | limitTo:5}}</span><span style="float:right" ng-if="detail.status==0" class="positive"> Pending</span>
-<span style="float:right" ng-if="detail.status==2" class="assertive"> Paused</span>
-<span style="float:right" ng-if="detail.status==3" class="assertive"> On The Way</span>
-</div>
-			<span>{{detail.qty}} Quantity</span> <span ng-if="detail.extra_qty!='0'">+ {{detail.extra_qty}} Extra</span>
-		</div>
+			<div style="height:15vw; font-size:12px; width:100%;">
+				<div style="border:1px solid black width:100%;">{{detail.date|date:'dd MMM, EEEE'}}<span style="float:right" ng-if="detail.status==1" class="balanced"> Delivered At {{detail.Time | limitTo:5}}</span><span style="float:right" ng-if="detail.status==0" class="positive"> Pending</span>
+					<span style="float:right" ng-if="detail.status==2" class="assertive"> Paused</span>
+					<span style="float:right" ng-if="detail.status==3" class="assertive"> On The Way</span>
+				</div>
+				<span>{{detail.qty}} Quantity</span> <span ng-if="detail.extra_qty!='0'">+ {{detail.extra_qty}} Extra</span>
+			</div>
 
        		<ion-option-button ng-if="detail.status==0" class="button-light button-dark" ng-click="addExtra(detail.id,5);">&nbsp;Extra Qty</ion-option-button> 
         </ion-item>
-</ion-list>
+	</ion-list>
 </ion-scroll>
 <!---------------------------------------------------------Subscriptions list ------------------------------------------------------------>
 

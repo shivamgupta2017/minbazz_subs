@@ -140,7 +140,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     })
     .state('app.singlesubscription', {
-      url: '/singlesubscription/:product_id/:subscription_id/:unit_mapping_id',
+      url: '/singlesubscription/:product_id/:subscription_id/:unit_mapping_id/:sub_id',
       views: {
         'menuContent': {
           templateUrl: 'templates/single-subscription.html',

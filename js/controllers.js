@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function ($pinroUiService, $scope,$rootScope, $ionicModal,$rootScope, $ionicPopover,$timeout,$localStorage, $ionicScrollDelegate, StorageService, $state, Maestro, CartService, $ionicPopup,Dict, $ionicSlideBoxDelegate,  AuthService, State,Language) {
-
+//AIzaSyA9dQ2le_XofVAbsIAdX9rJg9m0q3ph7OM
 	var cart = angular.element(document.getElementsByClassName("shopping-cart"));
 	var carts= CartService.getAll();
 	var cartqty= carts.length;
@@ -453,8 +453,9 @@ var checkCartItems = function(){
     $scope.changePasswordModal.hide();
   };
 
-  $scope.openChangePasswordModal = function () {
-    $scope.changePasswordModal.show();
+  $scope.openChangePasswordModal = function () 
+  {
+      $scope.changePasswordModal.show();
   };
 
 // Change Language modal
@@ -1093,6 +1094,7 @@ $scope.checkZipCode= function(data){
   
   .controller('nextDaySelectionCtrl', function ($scope,$http, $stateParams, $ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, AuthService) {
 	//alert('hl');	
+  alert('nextDaySelectionCtrl:');
 	var data1=
   {
 		"cust_id":AuthService.id(),
@@ -1850,16 +1852,14 @@ $scope.openTimePicker=function(dates){
 **********************************************************************************************************************************/
 .controller('subscriptionsCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 
-
-
-
 $scope.$on('$ionicView.enter', function() {
   	$pinroUiService.showLoading();
     Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res)
     {      
       		$scope.subscriptions=res.data.response_data;
-		    //alert(JSON.stringify($scope.subscriptions));
-    	 //console.log('my subscription :'+JSON.stringify($scope.subscriptions));
+	         alert('shivam answer :'+JSON.stringify($scope.subscriptions));
+  	      //alert(JSON.stringify('shivam :'+$scope.subscriptions));
+      	 //console.log('my subscription :'+JSON.stringify($scope.subscriptions));
 
       	if(res.data.response_data.products.length==0 && res.data.response_data.package.length==0)
         {
@@ -1867,7 +1867,7 @@ $scope.$on('$ionicView.enter', function() {
 					    		$ionicHistory.nextViewOptions({
       								disableBack: true
     							});
-						 $ionicPopup.alert({
+					 	 $ionicPopup.alert({
      					title: 'No subscription found',
      					template: 'Please subscribe our products or packages',
     					 buttons: [
@@ -1884,37 +1884,51 @@ $scope.$on('$ionicView.enter', function() {
 
 
   	
-  	$scope.openSingleSub=function(p_id, s_id, u_m_id){	
+  	$scope.openSingleSub=function(p_id, s_id, u_m_id, id)
+    {
+      //alert('shivam :'+subscription_id);
 
-  		$state.go('app.singlesubscription',{product_id:p_id,subscription_id:s_id,unit_mapping_id:u_m_id});
-	}
+  		$state.go('app.singlesubscription',{product_id:p_id,subscription_id:s_id,unit_mapping_id:u_m_id,sub_id:id});
+
+	  }
   	$scope.openSinglePackage=function(p_id, s_id, u_m_id){	
-  		$state.go('app.singlepackage',{package_id:p_id,subscription_id:s_id,package_size_id:u_m_id});
+  	 
+    	$state.go('app.singlepackage',{package_id:p_id,subscription_id:s_id,package_size_id:u_m_id});
 	}
-  	$scope.change_subscription_status=function(cust_id, subscription_id, current_status){   
-      		if(!e) 
+  	$scope.change_subscription_status=function(cust_id, subscription_id, current_status)
+    {   
+      		
+          //alert('cust_id :'+cust_id+'subscription_id :'+subscription_id+'current_status :'+current_status);
+
+          if(!e) 
       			var e = window.event;
       		e.cancelBubble = true;
-      		if(e.stopPropagation) 
+      		
+          if(e.stopPropagation) 
           	e.stopPropagation();
-    		if(current_status==='1'){
+    		  
+          if(current_status==='1')
+          {
       			var p='restart';
-    		}
-    		else if(current_status==='0'){
+    		  }
+    		  else if(current_status==='0')
+          {
       			var p='pause';
-    		}
-		$scope.data={
+    		  }
+		      $scope.data={
          		cust_id : cust_id,
          		subs_id : subscription_id
       		}
       		$pinroUiService.showLoading();
       		Maestro.$pause_my_subscription($scope.data, p).then(function(res){
-			if(res.data.response.status==1){
+		    
+        	if(res.data.response.status==1)
+          {
                 		Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){
                 	   		$scope.subscriptions=res.data.response_data;
                 		});
                 		$pinroUiService.hideLoading();
-            		}
+          }
       		});
   	}
 
@@ -1927,20 +1941,23 @@ $scope.$on('$ionicView.enter', function() {
   .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 	 var data1={};
    //open single subscription
+   
 
 	data1.cust_id=AuthService.id();
 	data1.product_id=$stateParams.product_id;
 	data1.sub_id=$stateParams.subscription_id;
 	data1.unit_mapping_id=$stateParams.unit_mapping_id;		
+  data1.id=$stateParams.sub_id;
+
+  
+  //alert('shivam :'+JSON.stringify(data1));
+
 	$pinroUiService.showLoading();
-	
 	Maestro.$getSingleSub(data1).then(function(res){
 		$scope.singleSubscriptions=res.data.response_data;
-		alert(JSON.stringify(res));
-		$pinroUiService.hideLoading();
+    $pinroUiService .hideLoading();
+    //console.log('svhi :'+JSON.stringify($scope.singleSubscriptions));
 	});
-	
-  alert('data1 :'+JSON.stringify(data1));
 
 	$scope.addExtra=function(id){
       		$scope.data={
@@ -2013,6 +2030,47 @@ $scope.$on('$ionicView.enter', function() {
 
 	}
 	
+
+  $scope.change_subscription_status=function(current_status)
+    {     
+
+          // alert('shivam gupta :'+current_status);
+
+          
+          alert('shivam :'+JSON.stringify(data1));
+          var extra_data={
+            cust_id: data1.cust_id,
+            subscription_id: data1.id,
+            current_status: current_status 
+          };
+          
+          
+          if(current_status==='1')
+          {
+            var p='restart';
+          }
+          else if(current_status==='0')
+          {
+            var p='pause';
+          }
+          $scope.data={
+            cust_id : cust_id,
+            subs_id : subscription_id
+          }
+          $pinroUiService.showLoading();
+          Maestro.$pause_my_subscription($scope.data, p).then(function(res){
+          if(res.data.response.status==1)
+          {
+                    Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){
+                        $scope.subscriptions=res.data.response_data;
+                    });
+                    $pinroUiService.hideLoading();
+          }
+          });
+    }
+
+
+
   $scope.unsubscribe=function(total_price)
   {
   //shivam
@@ -2039,24 +2097,33 @@ $scope.$on('$ionicView.enter', function() {
 
 
   .controller('singlePackageCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
-	 var data1={};
+	 
+  alert('bakchod');
+  
+  var data1={};
 	data1.cust_id=AuthService.id();
 	data1.package_id=$stateParams.package_id;
 	data1.subscription_id=$stateParams.subscription_id;
 	data1.package_size_id=$stateParams.package_size_id;		
-	alert(JSON.stringify($stateParams));
-	$pinroUiService.showLoading();
+	data1.sub_id=$stateParams.sub_id;
+	
+  alert('shivam :'+JSON.stringify(data1));
 
-	$scope.openNextDaySelection= function(package_id,package_size_id,subscription_id){
-		alert(subscription_id);
+  
+  $scope.openNextDaySelection = function(package_id,package_size_id,subscription_id)
+  {
+    alert('open next day selection');
 		$state.go('app.nextdayselection',{package_id:package_id,package_size_id:package_size_id,subscription_id:subscription_id});
 	}
 
+
+  $pinroUiService.showLoading();
 	Maestro.$getSinglePackage(data1).then(function(res){
 		$scope.singlePackages=res.data.response_data;
-		alert(JSON.stringify(res));
 		$pinroUiService.hideLoading();
-	});
+	  alert('shivam :'+JSON.stringify($scope.singlePackages));
+
+  });
 	
 })
 /********************************************************************************************************************************************
@@ -3250,7 +3317,6 @@ $scope.$on("modal.shown", function(event, data){
 		
   		$pinroUiService.showLoading(); 
   		Maestro.$updateCustomer($scope.user).then(function(res){  
-    			console.log(res.data);
     			if(res.data.id){
        				$pinroUiService.hideLoading(); 
       				//error pop up dialog

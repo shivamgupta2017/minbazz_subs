@@ -455,13 +455,14 @@ return {
                 })
             },
             //update customer
-            $updateCustomer : function (data) {
+        $updateCustomer : function (data) {
 
-                var customerUpdateParams = angular.copy(request.params);
-                customerUpdateParams.userId = data.id;
-
-                return $http.post( request.url + '/update-customer.php', data, {
-                    params: customerUpdateParams,
+                //alert('hello :'+JSON.stringify(data));
+                //var customerUpdateParams = angular.copy(request.params);
+                //customerUpdateParams.userId = data.id;
+                //shivam
+                return $http.post( 'https://www.minbazaar.com/subs/admin/service/update_password',{
+                    params: data,
                     headers: {
                         "Content-Type": 'application/json'
                     }
