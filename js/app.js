@@ -130,6 +130,18 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
         }
       }
     })
+    
+    
+    .state('app.show_selection', {
+      url: '/show_selection/:id/:subscription_id',
+      views: {
+          'menuContent': {
+          templateUrl: 'templates/show_selection.html',
+          controller: 'show_selectionCtrl'
+        }
+      }
+    })
+
     .state('app.mysubscriptions', {
       url: '/subscriptions',
       views: {
@@ -158,7 +170,7 @@ angular.module('starter', ['ionic','ionic.rating','ionic-timepicker','ionic-mult
       }
     })
     .state('app.nextdayselection', {
-      url: '/nextdayselection/:package_id/:package_size_id/:subscription_id',
+      url: '/nextdayselection/:package_id/:package_size_id/:subscription_id/:table_id',
       views: {
         'menuContent': {
           templateUrl: 'templates/next-day-selection.html',

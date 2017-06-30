@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function ($pinroUiService, $scope,$rootScope, $ionicModal,$rootScope, $ionicPopover,$timeout,$localStorage, $ionicScrollDelegate, StorageService, $state, Maestro, CartService, $ionicPopup,Dict, $ionicSlideBoxDelegate,  AuthService, State,Language) {
+.controller('AppCtrl', function ($http ,$pinroUiService, $scope,$rootScope, $ionicModal,$rootScope, $ionicPopover,$timeout,$localStorage, $ionicScrollDelegate, StorageService, $state, Maestro, CartService, $ionicPopup,Dict, $ionicSlideBoxDelegate,  AuthService, State,Language) {
 //AIzaSyA9dQ2le_XofVAbsIAdX9rJg9m0q3ph7OM
 	var cart = angular.element(document.getElementsByClassName("shopping-cart"));
 	var carts= CartService.getAll();
@@ -29,54 +29,35 @@ angular.module('starter.controllers', [])
    // alert('shivam :'+$scope.readCount);
   }
 
-	$scope.checking=function(){
-    //bhosdiwala
-		var temp='<div style="height:50%; width:100%; padding:5px;  text-align:left; float:left;  font-size:18px;">';
-		temp=temp+'<div ng-click="dQuantity()" class="button button-small button-assertive mleft" style="" >';
-		temp=temp+'<i style="" class="ion-android-remove"></i>';
-		temp=temp+'</div>';
-		temp=temp+'<div class="text-center mcenter" style="">';
-		temp=temp+'<input type="text" ng-model="readCount" ng-value="2">';
-		temp=temp+'</div>';
-    temp=temp+'<div  ng-click="iQuantity()" class="button button-small button-assertive mright" style="">';
-		temp=temp+'<i style="" class="ion-android-add"></i>';
-		temp=temp+'</div></div>';
+	$scope.checking=function()
+  { 
 
-  //  alert('template page :'+temp);
+      var p = localStorage.getItem('userObj');
+      var data = JSON.parse(p);
+      data.amount = '100';//
+      
+      $pinroUiService.showLoading();
+      Maestro.$get_payment_link(data).then(function(res){ 
+      if(res.status===200){
+        Maestro.$pay_online(res.data).then(function(res)
+        {
+          alert('shivam :'+res);
+          $pinroUiService.hideLoading();
 
-		  	var myPopup = $ionicPopup.show({
-        	template: temp,
-        	title: 'Enter Address',
-        	
-        	scope: $scope,
-        	buttons: [
-              		{ text: 'Cancel' },
-              		{
-                		text: '<b>Submit</b>',
-                		type: 'button-assertive',
-                		onTap: function(e) {
-                      alert('submit pressed :');
-                  			if ((!$scope.new_address.address)||(!$scope.new_address.apartment)||(!$scope.new_address.mobno)){
-                          			e.preventDefault();
-                  			} 
-                    			else { 
-                        			return $scope.new_address;
-                  			}
-                		}
-        		}           
-          	]
-      	});
-    	myPopup.then(function(res){ 
-        	
-    		});
+        });
 
-		
+      }
+
+
+    
+    })    
+
 	}
 	//$pinroUiService.showLoading();
 	
 	Maestro.$getSubscribePackages(AuthService.id()).then(function(res){	
 		$scope.nextdaysselection=res.data.response_data;
-	//	alert(JSON.stringify(res));
+	   //alert(JSON.stringify(res));
 		//$scope.selectedSize={};
 		//$scope.products=
 		//$pinroUiService.hideLoading();
@@ -1094,13 +1075,16 @@ $scope.checkZipCode= function(data){
   
   .controller('nextDaySelectionCtrl', function ($scope,$http, $stateParams, $ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, AuthService) {
 	//alert('hl');	
-  alert('nextDaySelectionCtrl:');
+  //alert('nextDaySelectionCtrl:');
 	var data1=
   {
 		"cust_id":AuthService.id(),
 		"package_id":$stateParams.package_id,
-		"size_id":$stateParams.package_size_id
+		"size_id": $stateParams.package_size_id,
+    
 	}
+
+//  alert('shivam :'+JSON.stringify(data1));
 	$scope.data=
   {
 		"cust_id":AuthService.id(),
@@ -1130,7 +1114,7 @@ $scope.checkZipCode= function(data){
     $scope.next_day_selection_data=
     {
         cust_id: $scope.data.cust_id,
-	used_id:3
+      	used_id: $stateParams.table_id
     };
 
     $scope.next_day_selection_data.product_data=[];
@@ -2044,7 +2028,7 @@ $scope.$on('$ionicView.enter', function() {
             current_status: current_status 
           };
           
-          
+
           if(current_status==='1')
           {
             var p='restart';
@@ -2061,9 +2045,11 @@ $scope.$on('$ionicView.enter', function() {
           Maestro.$pause_my_subscription($scope.data, p).then(function(res){
           if(res.data.response.status==1)
           {
+
                     Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){
                         $scope.subscriptions=res.data.response_data;
                     });
+                    
                     $pinroUiService.hideLoading();
           }
           });
@@ -2096,7 +2082,8 @@ $scope.$on('$ionicView.enter', function() {
 })
 
 
-  .controller('singlePackageCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
+  .controller('singlePackageCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
+  {
 	 
   alert('bakchod');
   
@@ -2107,25 +2094,58 @@ $scope.$on('$ionicView.enter', function() {
 	data1.package_size_id=$stateParams.package_size_id;		
 	data1.sub_id=$stateParams.sub_id;
 	
-  alert('shivam :'+JSON.stringify(data1));
+  //alert('shivam :'+JSON.stringify(data1));
 
+  $scope.view=function(id, subscription_id)
+  { 
+
+    $state.go('app.show_selection', {id: id, subscription_id: subscription_id});
+    //shivam gupta
+  }
   
-  $scope.openNextDaySelection = function(package_id,package_size_id,subscription_id)
+  $scope.openNextDaySelection = function(package_id, package_size_id, subscription_id, table_id)
   {
-    alert('open next day selection');
-		$state.go('app.nextdayselection',{package_id:package_id,package_size_id:package_size_id,subscription_id:subscription_id});
+//    alert('shivam '+package_id+' package_size_id :'+package_size_id+'subscription_id :'+subscription_id);
+    //alert('table_id :'+table_id);
+		$state.go('app.nextdayselection',{package_id: package_id, package_size_id: package_size_id, subscription_id: subscription_id, table_id :table_id});
 	}
 
 
-  $pinroUiService.showLoading();
-	Maestro.$getSinglePackage(data1).then(function(res){
+    $pinroUiService.showLoading();
+  	Maestro.$getSinglePackage(data1).then(function(res){
 		$scope.singlePackages=res.data.response_data;
-		$pinroUiService.hideLoading();
-	  alert('shivam :'+JSON.stringify($scope.singlePackages));
+		alert('bhosdiwala :'+JSON.stringify($scope.singlePackages));
+    //$scope.singlePackages.package_product_length = $scope.singlePackages.package_product.length;
+    $pinroUiService.hideLoading();
+	  //alert('shivam :'+$scope.singlePackages.package_product_length);
 
   });
 	
 })
+.controller('show_selectionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
+ 
+
+  alert('shivam done');
+  
+  var data={
+    used_id : $stateParams.id,
+    subscription_id : $stateParams.subscription_id,
+    cust_id: AuthService.id()
+  };
+
+  Maestro.$get_next_day_need(data).then(function(res)
+  {
+      alert('res :'+JSON.stringify(res));
+  })
+
+
+  //lassan
+
+
+
+ }) 
+
+
 /********************************************************************************************************************************************
 *******************************************************Cart list controller *****************************************************************
 *********************************************************************************************************************************************/

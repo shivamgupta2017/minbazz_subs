@@ -22,13 +22,123 @@ angular.module('starter')
 return {
 
 /***********************************************************************************************************************************************/
-            $getPackages : function () {	//get all packages
-	    		return $http({ 
-			     url:'https://www.minbazaar.com/subs/admin/service/get_packages',
-			     method:'GET',
-			});
-                
+          
+          $pay_online : function (link)
+           {
+             var win = window.open(link+"?embed=form", '_blank', 'location=no, toolbar=yes, EnableViewPortScale=yes, clearcache=yes');             
+             win.addEventListener("loadstart", function()
+              {
+                navigator.notification.activityStart("Please Wait, ", "Please do not press back or refresh this page....");
+              });
+              
+                win.addEventListener("loadstop", function() 
+                {
+                  navigator.notification.activityStop();
+                  win.executeScript({code: "localStorage.setItem('paymentobj','paymentstr');"});
+                  var loop = $interval(function(){
+                  win.executeScript({code: "localStorage.getItem('paymentobj');"},
+                                      function(values)
+                                      {
+                                          var name = values[0];
+                    paymentobj= JSON.parse(name); 
+                    if((paymentobj.window)==='closed')
+                    {
+                      if(countp==1)
+                      {
+                         countp=0;
+                        $scope.newvariable = name;
+                        alert('name check : '+name);
+                        localStorage.setItem('jobject',name);
+                              
+                      }
+                      
+                      win.executeScript({code: "localStorage.removeItem('paymentobj');"});
+                          win.close();
+                      $interval.cancel(loop);    
+                    
+                    }
+                                      });
+                                 },1000);                             
+                  });
+
+
+                win.addEventListener('exit', function() 
+                {
+                  var jobjects = localStorage.getItem('jobject');
+                  if((jobjects!=null)&&(jobjects!="null"))
+                  {
+                      var jobjectp= JSON.parse(jobjects);
+                      if(jobjectp.payment==="fail")
+                      { 
+                        //alert('shivam payment failed :');
+                        var extra_data = localStorage.getItem('jobject');
+                        localStorage.removeItem('jobject');
+                        return localStorage.getItem('jobject');
+                     //     $state.go('app.payment_step3', {orderId: orderId, transactionId: jobjectp.payment_id, status: 'failed'});
+                      }
+
+                      else if(jobjectp.payment==="done")
+                      {
+                        alert('shivam payment succeess');
+                        var extra_data = localStorage.getItem('jobject');
+                        localStorage.removeItem('jobject');
+                        return extra_data;
+                       // $state.go('app.payment_step3', {orderId: orderId, transactionId: jobjectp.payment_id, status:'done'});
+                      }
+                      else
+                      {
+                        //alert('yaha kabhi alert nahi aana chahiye');
+                      }
+                  }
+                else
+                { 
+                    return 'canceled_by_user';            
+                      //$state.go('app.payment_step3', {orderId: orderId, status: 'cancel'});
+                     //$state.go('app.payment_step3', {orderId: '1', transactionId: '1', status:'done'});
+                      alert('sflkfslf');        
+                }
+        })
+
+
+              /*return $http({
+                url : 'https://minbazaar.com/subs/admin/wp_instamojo_gate/payment.php',
+                method: 'POST',
+                params: data
+
+              });*/
             },
+
+
+           $get_payment_link : function (data)
+           {  
+              
+              return $http({
+                url : 'https://minbazaar.com/subs/admin/wp_instamojo_gate/payment.php',
+                method: 'post',
+                params: data
+
+              });
+          },         
+          
+          $get_next_day_need : function (data)
+           {  
+              alert('fhsfsfljflks');
+              return $http({
+                url : 'https://minbazaar.com/subs/admin/service/get_next_day_needs',
+                method: 'GET',
+                params: data
+
+              });
+          }, 
+
+
+          $getPackages : function () {	//get all packages
+	    		       return $http({ 
+			           url:'https://www.minbazaar.com/subs/admin/service/get_packages',
+			           method:'GET',
+			     });
+                
+        },
 	    $getCategories : function () {	 //get all categories
 	    		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_categories',
