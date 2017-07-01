@@ -132,13 +132,22 @@ return {
           }, 
 
 
-          $getPackages : function () {	//get all packages
+        $getPackages : function () {	//get all packages
 	    		       return $http({ 
 			           url:'https://www.minbazaar.com/subs/admin/service/get_packages',
 			           method:'GET',
 			     });
                 
         },
+        $pause_my_subscription : function (data, current_status) {   
+                alert('current_status :'+current_status);
+                return $http({ 
+                 url:'https://www.minbazaar.com/subs/admin/service/pause_single_subscription/'+current_status,
+                 method:'GET',
+                 params: data
+                });
+            },
+
 	    $getCategories : function () {	 //get all categories
 	    		return $http({ 
 			     url:'https://www.minbazaar.com/subs/admin/service/get_categories',

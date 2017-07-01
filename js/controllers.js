@@ -1596,7 +1596,7 @@ var addAddress=function(selected_zip){
 				 $scope.subobject.quantity=res;        			
 			   $scope.readCount=null;
 
-         alert('$scope.subobject.quantity :'+$scope.subobject.quantity);
+         //alert('$scope.subobject.quantity :'+$scope.subobject.quantity);
       }
 			
   	});
@@ -1717,16 +1717,20 @@ $scope.openTimePicker=function(dates){
 									$scope.sendingObj.order_details=JSON.stringify(order_details);
 									Maestro.$create_order($scope.sendingObj).then(function(res){ 
 										$pinroUiService.hideLoading();
-						if(res.data.response_data.status===1){
+						if(res.data.response_data.status===1)
+            {
 							$localStorage.cart=[];
 							$rootScope.cartlength=$localStorage.cart.length;
 							$state.go('app.confirmation',{selected_address_id: $scope.subobject.delivery_add_id,isSub:true});
 						}
-									})
+								
+
+                	})
 									
               							}
-             							else{
-									alert("ok thanks bbyeee");
+             							else
+                          {
+									           alert("ok thanks bbyeee");
              							}
            						});/*confirm*/
 						}
@@ -1738,7 +1742,8 @@ $scope.openTimePicker=function(dates){
 						$pinroUiService.hideLoading();
                 			});	
 				}
-				else{
+				else
+        {
 					if($scope.subobject.custom_date!=1)
 						$scope.subobject.start_date=dates[0];
 					else
@@ -1750,20 +1755,23 @@ $scope.openTimePicker=function(dates){
                 			$scope.subobject.current_status=1;
                 			$scope.subobject.final_price='';
 				}
-        			if(($scope.subobject)&&($stateParams.is_subs==true || $stateParams.is_subs=="true")){
-/*confirm popup start*/
+  
+        			if(($scope.subobject)&&($stateParams.is_subs==true || $stateParams.is_subs=="true"))
+              {
            				var confirmPopup = $ionicPopup.confirm({
              					title: 'Confirmation',
              					template: 'Confirm Us by pressing yes button?'
            				});
-					confirmPopup.then(function(res) {
+	     				    confirmPopup.then(function(res) {
              					if(res){
 								var action="";
 								if($stateParams.is_package==true  || $stateParams.is_package=="true")
 									action="/package"
               							$pinroUiService.showLoading();
 								//alert(JSON.stringify($scope.subobject));
-              							Maestro.$add_new_subscription($scope.subobject,action).then(function(res){ 
+              		///bhenchod
+
+                  Maestro.$add_new_subscription($scope.subobject,action).then(function(res){ 
 									$pinroUiService.hideLoading();
 									if(res.data.response_data.status===1){
 										$state.go('app.confirmation',{
@@ -1925,7 +1933,8 @@ $scope.$on('$ionicView.enter', function() {
   .controller('singleSubscriptionCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) {
 	 var data1={};
    //open single subscription
-   
+    
+    alert('singleSubscriptionCtrl :');
 
 	data1.cust_id=AuthService.id();
 	data1.product_id=$stateParams.product_id;
@@ -1933,13 +1942,17 @@ $scope.$on('$ionicView.enter', function() {
 	data1.unit_mapping_id=$stateParams.unit_mapping_id;		
   data1.id=$stateParams.sub_id;
 
+  //alert('fuckers :'+JSON.stringify(data1));
   
   //alert('shivam :'+JSON.stringify(data1));
 
-	$pinroUiService.showLoading();
-	Maestro.$getSingleSub(data1).then(function(res){
-		$scope.singleSubscriptions=res.data.response_data;
-    $pinroUiService .hideLoading();
+	   $pinroUiService.showLoading();
+	   Maestro.$getSingleSub(data1).then(function(res){
+	 	 $scope.singleSubscriptions=res.data.response_data;
+     $pinroUiService .hideLoading();
+
+     
+
     //console.log('svhi :'+JSON.stringify($scope.singleSubscriptions));
 	});
 
@@ -1993,8 +2006,6 @@ $scope.$on('$ionicView.enter', function() {
 	    
               
             });
-
-
           }
 	 else if(res.data.response.status==0){
 			 $ionicPopup.alert({
@@ -2007,49 +2018,39 @@ $scope.$on('$ionicView.enter', function() {
    					});
 			$pinroUiService.hideLoading();
 		}
-          
         });
-
     });
-
 	}
-	
-
   $scope.change_subscription_status=function(current_status)
     {     
-
-          // alert('shivam gupta :'+current_status);
-
-          
-          alert('shivam :'+JSON.stringify(data1));
           var extra_data={
             cust_id: data1.cust_id,
             subscription_id: data1.id,
             current_status: current_status 
           };
-          
-
-          if(current_status==='1')
+          if(current_status==2)
           {
             var p='restart';
+            
           }
-          else if(current_status==='0')
+          else if(current_status==0)
           {
-            var p='pause';
+             var p='pause';
           }
           $scope.data={
-            cust_id : cust_id,
-            subs_id : subscription_id
+            cust_id : extra_data.cust_id,
+            subs_id : $scope.singleSubscriptions.product[0].id
           }
+//          alert('shivam :'+JSON.stringify($scope.data));
           $pinroUiService.showLoading();
           Maestro.$pause_my_subscription($scope.data, p).then(function(res){
           if(res.data.response.status==1)
           {
-
-                    Maestro.$getCustomerSubscriptions(AuthService.id()).then(function(res){
-                        $scope.subscriptions=res.data.response_data;
+                //shivam gupta chutiya
+                    Maestro.$getSingleSub(data1).then(function(res)
+                    {
+                      $scope.singleSubscriptions=res.data.response_data;
                     });
-                    
                     $pinroUiService.hideLoading();
           }
           });
@@ -2085,7 +2086,7 @@ $scope.$on('$ionicView.enter', function() {
   .controller('singlePackageCtrl', function ($scope,$http,$stateParams,$ionicLoading,$localStorage, $rootScope, $ionicPopup, $interval, $state, $ionicHistory, $ionicScrollDelegate,$ionicPlatform,ionicTimePicker, Maestro, $dataService,$ionicModal,$pinroUiService,$ionicNavBarDelegate, CartService, AuthService) 
   {
 	 
-  alert('bakchod');
+//  alert('bakchod');
   
   var data1={};
 	data1.cust_id=AuthService.id();
@@ -3248,11 +3249,8 @@ $scope.$on("modal.shown", function(event, data){
 
   $pinroUiService.showLoading();
   Maestro.$getCustomerAddresses(AuthService.id()).then(function(res){
-
     $scope.Addresses=res.data.response_data;
-    //alert('response :'+JSON.stringify($scope.Addresses));
     $pinroUiService.hideLoading();
-    //angular.element('#multidateopen').triggerHandler('click');
   });
 
   var getUserInfo = function(user_id){
