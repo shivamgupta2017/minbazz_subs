@@ -735,28 +735,38 @@ $scope.signUp = function () {
 		$scope.loading = true; //show loading
           	$pinroUiService.showLoading();
            	$scope.user.zip=0;
-        	$dataService.$signup($scope.user).then(function (res){ 
-        		if (res.data.response_data === 1){
-				$dataService.$login($scope.user).then(function (res1) {
-        				$pinroUiService.hideLoading(); 
-					if (res1.data && !res1.data.error) {			
-          					AuthService.storeUserCredentials(res1.data.response_data);
-						//localStorage.setItem('reloads',1);
-          					$state.go('app.editorial');		
-        				}
-				}); 
+        	$dataService.$signup($scope.user).then(function (res)
+        	{ 
+        		if (res.data.response_data === 1)
+        		{
+						$dataService.$login($scope.user).then(function (res1) 
+						{
+        					$pinroUiService.hideLoading(); 
+							if (res1.data && !res1.data.error) 
+							{			
+		          					AuthService.storeUserCredentials(res1.data.response_data);
+		          					$state.go('app.editorial');		
+		        			}
+						}); 
  
         		} 
-			else {
-          			$scope.signUpError = res.data.error;
+			else 
+			{		
+
+          			$scope.signUpError = "User is already exist";//res.data.error;
+          			$pinroUiService.hideLoading();
+ 					$scope.user.email='';
+										
 				/*if(res.data.error=="Mobile already exists.")
 				$scope.status4=true;*/
-        		}
+        	}
+
         		$scope.disableSubmit = false;
         		//$scope.loading = false;
 
       		}, function (err) {
-			$pinroUiService.hideLoading();
+      			alert('error');
+				$pinroUiService.hideLoading();
         		console.log(err);
         		$scope.signUpError = err.data.error;
        		 	$scope.disableSubmit = false;
